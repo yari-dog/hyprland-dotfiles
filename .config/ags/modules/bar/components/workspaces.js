@@ -142,8 +142,9 @@ export function Workspaces() {
                     label.child.label = group.getLabel();
                     label.class_name = group.getClassName();
                     return
-                })
-            })
+                }),
+            }),
+            onClicked: (self) => dispatch(self.child.attribute),
         }))
     })
     return Widget.EventBox({
