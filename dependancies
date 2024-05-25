@@ -1,0 +1,83 @@
+### window manager
+## hyprland
+
+# hyprland bits
+
+# audio
+pipewire
+portaudio
+playerctl (for xf86 controls)
+wpctl (for xf86 volume)
+
+# wallpaper
+swww
+
+# display manager
+none currently
+
+# notifications
+dunst
+( moving over to ags widgets soon )
+
+# launcher
+anyrun
+
+# gen
+ags (aylurs gtk shell) (widgets and shit)
+
+# clipboard
+wl-clipboard
+
+#screenshots
+grim
+slurp
+
+###
+# AGS
+gvfs (something to do with audio)
+cairomm (graphics stuff)
+dart-sass (compiling css)
+python-pillow (image library)
+python-materialyoucolor-git (does some sorta shit idk)
+
+### general
+
+# editor
+emacs
+doom emacs
+
+# display shit
+qt5 & 6
+
+# policy management
+polkit
+
+# shell
+fish
+
+# term
+foot
+starship
+kitty (backup if hyprland config breaks, hyprland default term)
+
+# notifications
+dunst
+(eventually switch to ags notifications, they have a thing for it)
+
+# dot management
+stow
+
+# input
+fctix5
+
+# fonts
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+nerdfonds
+ttf-material-design-iconic-font
+ttf-material-symbols-variable-git
+
+
+# bootloader
+systemd
