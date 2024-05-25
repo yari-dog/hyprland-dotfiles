@@ -3,6 +3,8 @@
 #+STARTUP: showeverything
 #+OPTIONS: toc:2
 
+
+
 * toc :toc:
 - [[#important-shit][important shit]]
   - [[#package-manager-elpaca][package manager elpaca]]
@@ -125,6 +127,9 @@
       "bp" '(previous-buffer :wk "previous buffer")
       "br" '(revert-buffer :wk "reload buffer (revert)")
       )
+    (yari/leader-keys
+      "e" '(:ignore t :wk "evaluat") ;; eval'ing shit
+      )
     )
 
 #+end_src
@@ -141,6 +146,7 @@
   ;; line numbers
   (global-display-line-numbers-mode 1)
   (global-visual-line-mode t)
+
 #+end_src
 
 ** text
@@ -174,6 +180,7 @@
 	  )
     )
 #+end_src
+
 
 * org mode
 ** enable toc
