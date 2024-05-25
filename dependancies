@@ -48,9 +48,10 @@ doom emacs
 
 # display shit
 qt5 & 6
+also their wayland alts
 
 # policy management
-polkit
+polkit-kde-agent
 
 # shell
 fish
@@ -81,3 +82,10 @@ ttf-material-symbols-variable-git
 
 # bootloader
 systemd
+
+# storage
+ntfs-3g (read ntfs)
+apfs-fuse (read apfs)
+
+# usb automount
+udiskie
