@@ -1,0 +1,5 @@
+.config/ags/node_modules
+.config/ags/scss/_material.css
+
+__pycache__/
+*.py[cod]

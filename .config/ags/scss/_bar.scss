@@ -1,0 +1,145 @@
+
+// gtk gjs css base
+
+.bar {
+}
+
+.bar-background {
+
+}
+
+.bar-layout-normal {
+    min-height: 2.5rem;
+}
+
+.bar-group {
+    background-color: $layer0;
+}
+
+.bar-island {
+    margin-top: 0.25rem;
+    @include normal-rounding;
+}
+
+// --------- left
+
+.bar-left {
+    @include normal-rounding;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.bar-left-container {
+    padding: 0.25rem 0.25rem;
+    padding-left: 3.5rem;
+
+}
+
+.bar-left-title {
+    padding: 0 2rem;
+}
+
+.bar-window-title-class {
+    margin: 0;
+}
+
+.bar-window-title-title {
+    margin: 0;
+}
+
+.bar-right {
+    @include normal-rounding;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.bar-right-container {
+    padding: 0.5rem 0.25rem;
+    padding-right: 3.5rem;
+}
+
+.bar-right-dateclock {
+    padding: 0 2rem;
+}
+
+// --------- workspaces
+
+.bar-workspaces {
+}
+
+.bar-workspaces-container {
+    background-color: $layer1;
+    @include large-rounding;
+    margin: 0.25rem 0.25rem;
+    padding: 0.25rem;
+}
+
+// base workspace styling
+.bar-workspaces-workspace {
+    // make square
+    min-width: 2.1rem;
+    min-height: 2.1rem;
+    padding: 0.125rem;
+}
+
+.bar-workspaces-workspace > label {
+    // make square
+    min-width: 1.8rem;
+    min-height: 1.8rem;
+    // make circle
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+// unused workspace styling
+.bar-workspaces-workspace-inactive {}
+
+.bar-workspaces-workspace-in-use {
+    background-color: $layer2;
+    color: $workspaceOnLayer2;
+}
+
+.bar-workspaces-workspace-in-use-alt-monitor > label {
+    background-color: $layer3;
+    color: $workspaceOnLayer2;
+}
+
+// active workspace styling
+.bar-workspaces-workspace-active > label {
+    background-color: $workspaceLayer3;
+    color: $workspaceOnLayer3;
+}
+
+//background
+// background-start workspace styling
+.bar-workspaces-workspace-background-start {
+    // make left half circle
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+// background-middle workspace styling
+.bar-workspaces-workspace-background-middle {
+}
+// background-end workspace styling
+.bar-workspaces-workspace-background-end {
+    // make right half circle
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+// background-only workspace styling
+.bar-workspaces-workspace-background-only {
+    // make circle
+    border-radius: 50%;
+}
+
+// --------- corners
+.corner-black {
+    background-color: $black;
+    @include large-rounding;
+}
+
+.bar-corner {
+    background-color: $layer0;
+    @include large-rounding;
+}
