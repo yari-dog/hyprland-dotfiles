@@ -9,6 +9,7 @@
 - [[#important-shit][important shit]]
   - [[#package-manager-elpaca][package manager elpaca]]
   - [[#evil-mode][evil mode]]
+  - [[#autocomplete][autocomplete]]
   - [[#keybinds][keybinds]]
 - [[#prefs][prefs]]
   - [[#general][general]]
@@ -106,34 +107,70 @@
   (use-package evil-tutor :ensure t)
 #+end_src
 
-** keybinds
+** autocomplete
 #+begin_src emacs-lisp
-  (use-package general
+  (use-package corfu
     :ensure t
-    :config
-    (general-evil-setup)
+    :custom
+    (corfu-cycle t) ;;cycle through all things
+    (corfu-auto t) ;;autocomplete
+    (corfu-auto-prefix 2) ;; 2 letters to start autocomplete
+    (corfu-auto-delay 0.0) ;; idk 0s to start?
+    :bind (:map corfu-map
+                ("RET" . nil) ;; unbind ret from insert
+                ("S-<return>" . corfu-insert)) ;; shift enter
+    :init
+    (global-corfu-mode))
 
-    ;; use 'SPC' as leader key
-    (general-create-definer yari/leader-keys
-      :states '(normal insert visual emacs)
-      :keymaps 'override
-      :prefix "SPC"
-      :global-prefix "M-SPC") ;; for insert mode
-    (yari/leader-keys
-      "b" '(:ignore t :wk "buffer") ;; b is the prefix for the rest, :ignore says "this isn't a real binding" 
-      "bb" '(switch-to-buffer :wk "switch buffer") ;; :wk is a tool hint for which-key plugin
-      "bk" '(kill-this-buffer :wk "kill buffer")
-      "bn" '(next-buffer :wk "next buffer")
-      "bp" '(previous-buffer :wk "previous buffer")
-      "br" '(revert-buffer :wk "reload buffer (revert)")
-      )
-    (yari/leader-keys
-      "e" '(:ignore t :wk "evaluat") ;; eval'ing shit
-      )
-    )
+  ;; get eglot to play nice with corfu
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
 
+  ;; there's probably more eglot shit i gotta set up but that's a later yari problem
 #+end_src
 
+** keybinds
+#+begin_src emacs-lisp
+(use-package general
+      :ensure t  
+      :config
+      (general-evil-setup)
+
+      (general-define-key
+       ;;:prefix "C-"
+       :states '(normal insert visual emacs)
+       :keymaps 'override
+       "C-n" '(windmove-left :wk "window left")
+       "C-e" '(windmove-down :wk "window down")
+       "C-i" '(windmove-up :wk "window up")
+       "C-o" '(windmove-right :wk "window right")
+       )
+
+      (general-create-definer yari/leader-keys
+                              :states '(normal insert visual emacs)
+                              :keymaps 'override
+                              :prefix "SPC"
+                              :global-prefix "M-SPC") ;; for insert mode
+      (yari/leader-keys
+       "." '(find-file :wk "find file")
+       "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "edit emacs config")
+       ) 
+      (yari/leader-keys
+       "b" '(:ignore t :wk "buffer") ;; b is the prefix for the rest, :ignore says "this isn't a real binding" 
+       "b s" '(switch-to-buffer :wk "switch buffer") ;; :wk is a tool hint for which-key plugin
+       "b k" '(kill-this-buffer :wk "kill buffer")
+       "b f" '(next-buffer :wk "next buffer")
+       "b b" '(previous-buffer :wk "previous buffer")
+       "b r" '(revert-buffer :wk "reload buffer (revert)")
+       "b i" '(ibuffer :wk "ibuffer")
+       )
+      (yari/leader-keys
+       "e" '(:ignore t :wk "buffer")
+       "e r" '(eval-region :wk "eval selected region")
+       "e b" '(eval-buffer :wk "eval buffer")
+       )
+      )
+
+#+end_src
 * prefs
 
 ** general
