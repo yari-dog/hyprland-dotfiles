@@ -9,6 +9,7 @@
   - [[#evil-mode][evil mode]]
   - [[#ivy][ivy]]
   - [[#keybinds][keybinds]]
+- [[#copilot][copilot]]
 - [[#corfu][corfu]]
 - [[#dashboard][dashboard]]
 - [[#diminish][diminish]]
@@ -203,6 +204,13 @@
      "C--" '(text-scale-decrease :wk "decrease font size"))
 
     )
+#+end_src
+* copilot
+#+begin_src emacs-lisp
+  (use-package copilot
+    :ensure (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+    :init
+    (add-hook 'prog-mode-hook 'copilot-mode))
 #+end_src
 * corfu
 #+begin_src emacs-lisp
