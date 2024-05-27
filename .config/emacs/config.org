@@ -6,15 +6,22 @@
 
 * toc :toc:
 - [[#important-shit][important shit]]
-  - [[#package-manager-elpaca][package manager elpaca]]
   - [[#evil-mode][evil mode]]
-  - [[#autocomplete][autocomplete]]
+  - [[#ivy][ivy]]
   - [[#keybinds][keybinds]]
+- [[#corfu][corfu]]
+- [[#dashboard][dashboard]]
+- [[#diminish][diminish]]
+- [[#eglot][eglot]]
+- [[#flycheck][flycheck]]
+- [[#languages][languages]]
+- [[#lsp-mode-etc][lsp mode etc]]
 - [[#prefs][prefs]]
   - [[#general][general]]
   - [[#text][text]]
   - [[#rainbow-mode][rainbow mode]]
   - [[#which-key][which key]]
+- [[#projectile][projectile]]
 - [[#shell-and-shit][shell and shit]]
   - [[#eshell][eshell]]
   - [[#vterm][vterm]]
@@ -23,76 +30,12 @@
 - [[#org-mode][org mode]]
   - [[#enable-toc][enable toc]]
   - [[#enable-bullets][enable bullets]]
+  - [[#diminish-org-indent-minor-mode][diminish org-indent minor mode]]
 - [[#extra-shit-as-loads][extra shit as loads]]
   - [[#buffer-move][buffer move]]
 - [[#theme][theme]]
 
 * important shit
-** package manager elpaca
-#+begin_src emacs-lisp
-  (defvar elpaca-installer-version 0.7)
-  (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
-  (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
-  (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
-  (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-                                :ref nil :depth 1
-                                :files (:defaults "elpaca-test.el" (:exclude "extensions"))
-                                :build (:not elpaca--activate-package)))
-  (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
-         (build (expand-file-name "elpaca/" elpaca-builds-directory))
-         (order (cdr elpaca-order))
-         (default-directory repo))
-    (add-to-list 'load-path (if (file-exists-p build) build repo))
-    (unless (file-exists-p repo)
-      (make-directory repo t)
-      (when (< emacs-major-version 28) (require 'subr-x))
-      (condition-case-unless-debug err
-          (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-                   ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
-                                                   ,@(when-let ((depth (plist-get order :depth)))
-                                                       (list (format "--depth=%d" depth) "--no-single-branch"))
-                                                   ,(plist-get order :repo) ,repo))))
-                   ((zerop (call-process "git" nil buffer t "checkout"
-                                         (or (plist-get order :ref) "--"))))
-                   (emacs (concat invocation-directory invocation-name))
-                   ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
-                                         "--eval" "(byte-recompile-directory \".\" 0 'force)")))
-                   ((require 'elpaca))
-                   ((elpaca-generate-autoloads "elpaca" repo)))
-              (progn (message "%s" (buffer-string)) (kill-buffer buffer))
-            (error "%s" (with-current-buffer buffer (buffer-string))))
-        ((error) (warn "%s" err) (delete-directory repo 'recursive))))
-    (unless (require 'elpaca-autoloads nil t)
-      (require 'elpaca)
-      (elpaca-generate-autoloads "elpaca" repo)
-      (load "./elpaca-autoloads")))
-  (add-hook 'after-init-hook #'elpaca-process-queues)
-  (elpaca `(,@elpaca-order))
-
-  ;; Install a package via the elpaca macro
-  ;; See the "recipes" section of the manual for more details.
-
-  ;; (elpaca example-package)
-
-  ;; Install use-package support
-  (elpaca elpaca-use-package
-    ;; Enable use-package :ensure support for Elpaca.
-    (elpaca-use-package-mode))
-
-  ;;When installing a package which modifies a form used at the top-level
-  ;;(e.g. a package which adds a use-package key word),
-  ;;use the :wait recipe keyword to block until that package has been installed/configured.
-  ;;For example:
-  ;;(use-package general :ensure (:wait t) :demand t)
-
-  ;; Expands to: (elpaca evil (use-package evil :demand t))
-  ;;(use-package evil :ensure t :demand t)
-
-  ;;Turns off elpaca-use-package-mode current declaration
-  ;;Note this will cause the declaration to be interpreted immediately (not deferred).
-  ;;Useful for configuring built-in emacs features.
-  (use-package emacs :ensure nil :config (setq ring-bell-function #'ignore))
-#+end_src
 ** evil mode
 #+begin_src emacs-lisp
   (use-package evil
@@ -103,6 +46,7 @@
     (setq evil-want-keybinding nil)
     (setq evil-vsplit-window-right t)
     (setq evil-split-window-below t)
+    (setq evil-want-C-i-jump nil) ;; fucking fixes tab
     ;;(setq evil-want-c-i-jump nil) ;; t breaks indenting lmao
     ;; nvm this didn't work, just edit in C-c '
     (evil-mode 1)) ;; start evil mode on load
@@ -115,15 +59,17 @@
   (use-package evil-tutor :ensure t)
 #+end_src
 
-** autocomplete
+** ivy
 #+begin_src emacs-lisp
   (use-package counsel
     :after ivy
     :ensure t
+    :diminish
     :config (counsel-mode))
 
   (use-package ivy
     :ensure t
+    :diminish
     :bind
     ;; ivy-resume resumes the last Ivy-based completion.
     (("C-c C-r" . ivy-resume)
@@ -160,101 +106,197 @@
   (defun reload-init-file ()
     (interactive)
     (load-file user-init-file)
-    (load-file user-init-file)
-  )
+    (load-file user-init-file))
 
   (use-package general
-        :ensure t  
-        :config
-        (general-evil-setup)
+    :ensure t  
+    :config
+    (general-evil-setup)
 
 
-        (general-create-definer yari/leader-keys
-                                :states '(normal insert visual emacs)
-                                :keymaps 'override
-                                :prefix "SPC"
-                                :global-prefix "M-SPC") ;; for insert mode
-        ;; general bindings 
-        (yari/leader-keys
-         "." '(find-file :wk "find file")
-         "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "edit emacs config")
-         "f r" '(counsel-recentf :wk "find recent files")
-         "TAB TAB" '(comment-line :wk "comment lines")
-         )
+    (general-create-definer yari/leader-keys
+      :states '(normal insert visual emacs)
+      :keymaps 'override
+      :prefix "SPC"
+      :global-prefix "M-SPC") ;; for insert mode
+    ;; general bindings 
+    (yari/leader-keys
+      "." '(find-file :wk "find file")
+      "SPC" '(counsel-M-x :wk "Counsel M-x")
+      "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "edit emacs config")
+      "f r" '(counsel-recentf :wk "find recent files")
+      "TAB TAB" '(comment-line :wk "comment lines"))
 
-        ;; window management
-        (general-define-key
-         ;; for window navigation in colemac mod-dh
-         :states '(normal insert visual emacs)
-         :keymaps 'override
-         ;; moving cursor between windows
-         ;; using C- prefix because I want to be able to do it no matter what mode i'm in
-         "C-n" '(evil-window-left :wk "window left")
-         "C-e" '(evil-window-down :wk "window down")
-         "C-i" '(evil-window-up :wk "window up")
-         "C-o" '(evil-window-right :wk "window right")
-         ) ;; general window stuff
-          (yari/leader-keys
-          "w" '(:ignore t :wk "windows")
-          "w k" '(evil-window-delete :wk "kill window")
-          "w m" '(evil-window-vnew :wk "make new window")
-          "w h" '(evil-window-vsplit :wk "side split")
-          "w d" '(evil-window-split :wk "down split")
-          )
-         ;; swaps buffers between windows
-        (yari/leader-keys 
-         "w N" '(buf-move-left :wk "swap window left")
-         "w E" '(buf-move-down :wk "swap window down")
-         "w I" '(buf-move-up :wk "swap window up")
-         "w O" '(buf-move-right :wk "swap window right")
-         ) ;;same as movement above but SPC w <> instead
-        (yari/leader-keys
-          "w n" '(evil-window-left :wk "window left")
-          "w e" '(evil-window-down :wk "window down")
-          "w i" '(evil-window-up :wk "window up")
-          "w o" '(evil-window-right :wk "window right")
-          )
+    ;; make C-i actually C-i and not tab because that's a thing for some reason
+    (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
+    ;; window management
+    (general-define-key
+     ;; for window navigation in colemac mod-dh
+     :states '(normal insert visual emacs)
+     :keymaps 'override
+     ;; moving cursor between windows
+     ;; using C- prefix because I want to be able to do it no matter what mode i'm in
+     "C-n" '(evil-window-left :wk "window left")
+     "C-e" '(evil-window-down :wk "window down")
+     "H-i" '(evil-window-up :wk "window up")
+     "C-o" '(evil-window-right :wk "window right"))
 
-        ;; buffer control
-        (yari/leader-keys
-         "b" '(:ignore t :wk "buffer") ;; b is the prefix for the rest, :ignore says "this isn't a real binding" 
-         "b s" '(switch-to-buffer :wk "switch buffer") ;; :wk is a tool hint for which-key plugin
-         "b k" '(kill-this-buffer :wk "kill buffer")
-         "b e" '(next-buffer :wk "next buffer")
-         "b n" '(previous-buffer :wk "previous buffer")
-         "b r" '(revert-buffer :wk "reload buffer (revert)")
-         "b i" '(ibuffer :wk "ibuffer")
-         )
+    ;; general window stuff
+    (yari/leader-keys
+      "w" '(:ignore t :wk "windows")
+      "w k" '(evil-window-delete :wk "kill window")
+      "w m" '(evil-window-vnew :wk "make new window")
+      "w h" '(evil-window-vsplit :wk "side split")
+      "w d" '(evil-window-split :wk "down split"))
 
-        ;; eval (mostly just for when modifying the config
-        (yari/leader-keys
-         "e" '(:ignore t :wk "buffer")
-         "e r" '(eval-region :wk "eval selected region")
-         "e b" '(eval-buffer :wk "eval buffer")
-         )
+    ;; swaps buffers between windows
+    (yari/leader-keys 
+      "w N" '(buf-move-left :wk "swap window left")
+      "w E" '(buf-move-down :wk "swap window down")
+      "w I" '(buf-move-up :wk "swap window up")
+      "w O" '(buf-move-right :wk "swap window right"))
 
-        ;; help binds
-        (yari/leader-keys
-          "h" '(:ignore t :wk "help")
-          "h f" '(describe-function :wk "describe function")
-          "h v" '(describe-variable :wk "describe variable")
-          "h r r" '(reload-init-file :wk "reload config") ;; sometimes need to run this twice i guess?
-          )
+    ;;same as movement above but SPC w <> instead
+    (yari/leader-keys
+      "w n" '(evil-window-left :wk "window left")
+      "w e" '(evil-window-down :wk "window down")
+      "w i" '(evil-window-up :wk "window up")
+      "w o" '(evil-window-right :wk "window right"))
 
-        ;; toggle
-        (yari/leader-keys
-          "t" '(:ignore t :wk "toggle")
-          "t t" '(vterm-toggle :wk "toggle vterm")
-          )
+    ;; buffer control
+    (yari/leader-keys
+      "b" '(:ignore t :wk "buffer") ;; b is the prefix for the rest, :ignore says "this isn't a real binding" 
+      "b s" '(switch-to-buffer :wk "switch buffer") ;; :wk is a tool hint for which-key plugin
+      "b k" '(kill-this-buffer :wk "kill buffer")
+      "b e" '(next-buffer :wk "next buffer")
+      "b n" '(previous-buffer :wk "previous buffer")
+      "b r" '(revert-buffer :wk "reload buffer (revert)")
+      "b i" '(ibuffer :wk "ibuffer"))
 
-        ;; zoom
-        (general-define-key
-         :states '(normal insert visual emacs)
-         :keymaps 'override
-         "C-=" '(text-scale-increase :wk "increase font size")
-         "C--" '(text-scale-decrease :wk "decrease font size")
-         )
+    ;; eval (mostly just for when modifying the config)
+    (yari/leader-keys
+      "e" '(:ignore t :wk "buffer")
+      "e r" '(eval-region :wk "eval selected region")
+      "e b" '(eval-buffer :wk "eval buffer"))
+
+    ;; help binds
+    (yari/leader-keys
+      "h" '(:ignore t :wk "help")
+      "h f" '(describe-function :wk "describe function")
+      "h v" '(describe-variable :wk "describe variable")
+      "h r r" '(reload-init-file :wk "reload config")) ;; sometimes need to run this twice i guess?
+
+    ;; toggle
+    (yari/leader-keys
+      "t" '(:ignore t :wk "toggle")
+      "t t" '(vterm-toggle :wk "toggle vterm"))
+
+    ;; projectile
+    (yari/leader-keys
+      "p" '(:ignore t :wk "projectile"))
+
+    ;; zoom
+    (general-define-key
+     :states '(normal insert visual emacs)
+     :keymaps 'override
+     "C-=" '(text-scale-increase :wk "increase font size")
+     "C--" '(text-scale-decrease :wk "decrease font size"))
+
+    )
+#+end_src
+* corfu
+#+begin_src emacs-lisp
+  (use-package corfu
+    :ensure t
+    :custom
+    (corfu-cycle t) ;;cycle through all things
+    (corfu-auto t) ;;autocomplete
+    (corfu-auto-prefix 1) ;; 2 letters to start autocomplete
+    (corfu-auto-delay 0.0) ;; idk 0s to start?
+    :bind (:map corfu-map
+                ("RET" . nil) ;; unbind ret from insert
+                ("S-<return>" . corfu-insert)) ;; shift enter
+    :init
+    (global-corfu-mode))
+
+  (use-package cape :ensure t)
+  ;; get eglot to play nice with corfu
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+
+  ;; there's probably more eglot shit i gotta set up but that's a later yari problem
+
+  (use-package kind-icon
+    :ensure t
+    :after corfu
+    :custom
+    (kind-icon-use-icons t)
+    (kind-icon-default-face 'corfu-default)
+    (kind-icon-blend-background nil)
+    (kind-icon-blend-frac 0.08)
+    :config
+    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+
+#+end_src
+* dashboard
+#+begin_src emacs-lisp
+  (use-package dashboard
+    :ensure t
+    :init
+    (setq initial-buffer-choice 'dashboard-open)
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t) ;; show all the icons stuff
+    (setq dashboard-banner-logo-title "arf arf arf :3") ;; logo title
+    (setq dashboard-startup-banner "~/.config/emacs/dashboard/banner_texts/puppymacs.txt") ;; image
+    (setq dashboard-center-content t)
+    (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name))) ;; make it show dashboard in client mode
+    (setq dashboard-items '((recents . 5) ;; last 5 recents
+                            (agenda . 5) ;; etc
+                            (bookmarks . 3)
+                            (projects . 3)
+                            (registers .3)))
+    :custom
+    (dashboard-modify-heading-icons '((recents . "file-text")
+                                      (bookmarks . "book")))
+    :config
+    (dashboard-setup-startup-hook)
   )
+#+end_src
+* diminish
+#+begin_src emacs-lisp
+(use-package diminish :ensure t) ;; hides minor modes from bar
+#+end_src
+* eglot
+#+begin_src emacs-lisp
+      ;; eglot is alr installed i just need to add hooks
+      (use-package eglot
+        :init
+        (add-hook 'python-mode-hook 'eglot-ensure)
+        (add-hook 'js-mode-hook 'eglot-ensure))
+#+end_src
+* flycheck
+#+begin_src emacs-lisp
+  (use-package flycheck
+  :ensure t
+  :defer t
+  :diminish
+  :init (global-flycheck-mode))
+#+end_src
+* languages
+#+begin_src emacs-lisp
+  (use-package rust-mode :ensure t)
+  #+end_src
+* lsp mode etc
+Maybe in the future use lsp, dap-mode looks neat for C etc but the setup is such a pain in the arse that i don't think it's worth it
+#+begin_src emacs-lisp
+  ;; (use-package lsp-mode
+  ;;   :ensure t
+  ;;   :hook
+  ;;   ((python-mode . lsp)))
+
+  ;; (use-package lsp-ui
+  ;;   :ensure t
+  ;;   :commands lsp-ui-mode)
 #+end_src
 * prefs
 ** general
@@ -266,15 +308,15 @@
 
   ;; line numbers
   (global-display-line-numbers-mode 1)
-  (global-visual-line-mode t)
 
-  ;; disable truncating lines
+  ;; disable truncating lines 
+  ;;(global-visual-line-mode nil)
   (visual-line-mode -1)
 
   ;; fix the fucking indents
   ;; (electric-indent-mode -1) this doesn't fix it either
 
-  ;; add <s shorthand to org mode this shit doesn't fucking work either 
+  ;; add \<s shorthand to org mode this shit doesn't fucking work either 
   (require 'org-tempo)
   (add-to-list 'org-modules 'org-tempo t)
 #+end_src
@@ -298,30 +340,38 @@
 ** rainbow mode
 #+begin_src emacs-lisp
   (use-package rainbow-mode
-    :hook org-mode prog -mode
-    )
+    :ensure t
+    :diminish
+    :hook org-mode prog-mode)
 #+end_src
 ** which key
 #+begin_src emacs-lisp
   (use-package which-key
     :ensure t
+    :diminish
     :init
     (which-key-mode 1)
     :config
     (setq which-key-side-window-location 'bottom ;; put it at the bottom
-	  which-key-sort-order #'which-key-key-order-alpha ;; 
-	  which-key-sort-uppercase-first nil ;;
-	  which-key-add-column-padding 1 ;;
-	  which-key-max-display-columns nil ;;
-	  which-key-min-display-lines 6 ;;
-	  which-key-side-window-slot -10 ;;
-	  which-key-side-window-max-height 0.25 ;;
-	  which-key-idle-delay 0.8 ;;
-	  which-key-max-description-length 25 ;;
-	  which-key-allow-imprecise-window-fit t ;;
-	  whiich-key-seperator " > " ;;
-	  )
-    )
+          which-key-sort-order #'which-key-key-order-alpha ;; 
+          which-key-sort-uppercase-first nil ;;
+          which-key-add-column-padding 1 ;;
+          which-key-max-display-columns nil ;;
+          which-key-min-display-lines 6 ;;
+          which-key-side-window-slot -10 ;;
+          which-key-side-window-max-height 0.25 ;;
+          which-key-idle-delay 0.8 ;;
+          which-key-max-description-length 25 ;;
+          which-key-allow-imprecise-window-fit nil ;;
+          whiich-key-seperator " > "))
+#+end_src
+* projectile
+#+begin_src emacs-lisp
+  (use-package projectile
+    :ensure t
+    :diminish
+    :config
+    (projectile-mode 1))
 #+end_src
 * shell and shit
 ** eshell
@@ -332,8 +382,7 @@ i dont rly wanna use this tbh
     :ensure t
     :config
     (setq shell-file-name "/bin/fish"
-          vterm-max-scrollback 5000)
-    )
+          vterm-max-scrollback 5000))
 #+end_src
 ** vterm toggle
 #+begin_src emacs-lisp
@@ -366,8 +415,7 @@ be able to edit files i need sudo to edit
     :config
     (yari/leader-keys
      "f u" '(sudo-edit-find-file :wk "sudo find file") ;; open file with sudo
-     "f U" '(sudo-edit :wk "sudo edit file") ;; escalate privalege to su on alr opened file
-     )
+     "f U" '(sudo-edit :wk "sudo edit file")) ;; escalate privalege to su on alr opened file
     )
 #+end_src
 * org mode
@@ -376,8 +424,7 @@ be able to edit files i need sudo to edit
   (use-package toc-org
     :ensure t
     :commands toc-org-enable
-    :init (add-hook 'org-mode-hook 'toc-org-enable)
-    )
+    :init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
 
 ** enable bullets
@@ -386,7 +433,12 @@ be able to edit files i need sudo to edit
   (use-package org-bullets :ensure t)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+end_src
-
+** diminish org-indent minor mode
+#+begin_src emacs-lisp
+  (with-eval-after-load 'org-indent
+    (require 'diminish)
+    (diminish 'org-indent-mode))
+#+end_src
 * extra shit as loads
 ** buffer move
 #+begin_src emacs-lisp
@@ -398,3 +450,4 @@ be able to edit files i need sudo to edit
   (add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
   (load-theme 'timu-rouge t)
 #+end_src
+    

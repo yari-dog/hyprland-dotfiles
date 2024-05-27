@@ -40,11 +40,7 @@ dart-sass (compiling css)
 python-pillow (image library)
 python-materialyoucolor-git (does some sorta shit idk)
 
-### general
-
-# editor
-emacs
-doom emacs
+### general'
 
 # display shit
 qt5 & 6
@@ -89,3 +85,10 @@ apfs-fuse (read apfs)
 
 # usb automount
 udiskie
+
+
+### emacs
+python-lsp-server (python)
+bash-language-server (bash scripts)
+clang (c/c++)
+typescript-language-server (ts & js)
