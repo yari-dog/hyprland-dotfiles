@@ -1,0 +1,5 @@
+(setq package-enable-at-startup nil)
+(setq tab-always-indent 'complete)
+(setq text-mode-ispell-word-completion nil)
+(setq read-extended-command-predicate #'command-completion-default-include-p)
+;;(provide 'early_init)
