@@ -323,7 +323,7 @@ git shit
   (visual-line-mode -1)
 
   ;; fix the fucking indents
-  (electric-indent-mode -1)
+  (electric-indent-mode 1)
 
   ;; automatic () pairing
   (electric-pair-mode -1)
