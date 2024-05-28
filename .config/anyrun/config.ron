@@ -3,7 +3,7 @@ Config(
   y: Absolute(15),
   width: Fraction(0.300000),
   height: Absolute(0),
-  hide_icons: false,
+  hide_icons: true,
   ignore_exclusive_zones: false,
   layer: Overlay,
   hide_plugin_info: true,

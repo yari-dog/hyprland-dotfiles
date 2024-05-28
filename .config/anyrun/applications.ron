@@ -1,0 +1,3 @@
+Config(
+  terminal: Some("foot"),
+)

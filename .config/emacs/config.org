@@ -6,38 +6,156 @@
 
 * toc :toc:
 - [[#important-shit][important shit]]
-  - [[#evil-mode][evil mode]]
-  - [[#ivy][ivy]]
-  - [[#keybinds][keybinds]]
+- [[#backup-location][backup location]]
+- [[#buf-move][buf-move]]
 - [[#copilot][copilot]]
 - [[#corfu][corfu]]
 - [[#dashboard][dashboard]]
+- [[#dired][dired]]
 - [[#diminish][diminish]]
 - [[#eglot][eglot]]
+- [[#evil-mode][evil mode]]
 - [[#flycheck][flycheck]]
+- [[#highlight-todo][highlight todo]]
+- [[#ivy][ivy]]
+- [[#keybinds][keybinds]]
 - [[#languages][languages]]
 - [[#lsp-mode-etc][lsp mode etc]]
-- [[#prefs][prefs]]
-  - [[#general][general]]
-  - [[#text][text]]
-  - [[#rainbow-mode][rainbow mode]]
-  - [[#which-key][which key]]
-- [[#projectile][projectile]]
-- [[#shell-and-shit][shell and shit]]
-  - [[#eshell][eshell]]
-  - [[#vterm][vterm]]
-  - [[#vterm-toggle][vterm toggle]]
-- [[#sudo-edit][sudo edit]]
+- [[#magit][magit]]
+- [[#modeline][modeline]]
 - [[#org-mode][org mode]]
   - [[#enable-toc][enable toc]]
   - [[#enable-bullets][enable bullets]]
   - [[#diminish-org-indent-minor-mode][diminish org-indent minor mode]]
-- [[#extra-shit-as-loads][extra shit as loads]]
-  - [[#buffer-move][buffer move]]
+- [[#prefs][prefs]]
+  - [[#general][general]]
+  - [[#text][text]]
+- [[#projectile][projectile]]
+- [[#rainbow-delim][rainbow delim]]
+- [[#rainbow-mode][rainbow mode]]
+- [[#solaire][solaire]]
+- [[#sudo-edit][sudo edit]]
 - [[#theme][theme]]
+- [[#tldr][tldr]]
+- [[#treemacs][treemacs]]
+- [[#vterm][vterm]]
+- [[#which-key][which key]]
 
 * important shit
-** evil mode
+load scripts
+#+begin_src emacs-lisp
+  (load-file (expand-file-name "keybinds.el" user-emacs-directory))
+#+end_src
+* backup location
+#+begin_src emacs-lisp
+  (setq backup-directory-alist '(("." . "~/.local/share/emacs/backup/")))
+#+end_src
+* buf-move
+move buffers
+#+begin_src emacs-lisp
+  (load-file (expand-file-name "custom-src/buf-move.el" user-emacs-directory))
+#+end_src
+* copilot
+github copilot
+#+begin_src emacs-lisp
+  (use-package copilot
+    :ensure (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+    :diminish
+    :config
+    (setq copilot-indent-offset-warning-disable t)
+    :init
+    (add-hook 'prog-mode-hook 'copilot-mode)
+    :bind (:map copilot-completion-map
+                ("<tab>" . 'copilot-accept-completion)
+                ("TAB" . 'copilot-accept-completion)
+                ("C-<tab>" . 'copilot-accept-completion-by-word)))
+#+end_src
+* corfu
+Completion frontend
+#+begin_src emacs-lisp
+  (use-package corfu
+    :ensure t
+    :custom
+    (corfu-cycle t) ;;cycle through all things
+    (corfu-auto t) ;;autocomplete
+    (corfu-auto-prefix 1) ;; 2 letters to start autocomplete
+    (corfu-auto-delay 0.0) ;; idk 0s to start?
+    :bind (:map corfu-map
+                ("RET" . nil) ;; unbind ret from insert
+                ("TAB" . corfu-quit)
+                ("<tab>" . nil)
+                ("<return>" . corfu-insert)
+                ("C-<return>" . corfu-quit))
+    :init
+    (global-corfu-mode))
+
+
+  (use-package cape :ensure t)
+  ;; get eglot to play nice with corfu
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+
+  ;; there's probably more eglot shit i gotta set up but that's a later yari problem
+
+  (use-package kind-icon
+    :ensure t
+    :after corfu
+    :custom
+    (kind-icon-use-icons t)
+    (kind-icon-default-face 'corfu-default)
+    (kind-icon-blend-background nil)
+    (kind-icon-blend-frac 0.08)
+    :config
+    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+
+#+end_src
+* dashboard
+the welcome screen
+#+begin_src emacs-lisp
+  (use-package dashboard
+    :ensure t
+    :init
+    (setq initial-buffer-choice 'dashboard-open)
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t) ;; show all the icons stuff
+    (setq dashboard-banner-logo-title "arf arf arf :3") ;; logo title
+    (setq dashboard-footer-messages '("awooooooooooooooooooooooooo"))
+    (setq dashboard-startup-banner "~/.config/emacs/dashboard/banner_texts/puppymacs.txt") ;; image
+    (setq dashboard-center-content t)
+    (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name))) ;; make it show dashboard in client mode
+    (setq dashboard-items '((recents . 5) ;; last 5 recents
+                            (projects . 3)))
+    (setq dashboard-projects-backend 'project-el)
+    :custom
+    (dashboard-modify-heading-icons '((recents . "file-text")))
+    :config
+    (dashboard-setup-startup-hook)
+  )
+#+end_src
+* dired
+#+begin_src emacs-lisp
+  (use-package dired-preview
+    :ensure t
+    :config
+    (setq dired-preview-delay 0.1)
+    (dired-preview-global-mode 1))
+#+end_src
+* diminish
+hide minor modes
+#+begin_src emacs-lisp
+(use-package diminish :ensure t) ;; hides minor modes from bar
+#+end_src
+* eglot
+completion backend (uses lsp's, check deps)
+#+begin_src emacs-lisp
+      ;; eglot is alr installed i just need to add hooks
+      (use-package eglot
+        :init
+        (add-hook 'python-mode-hook 'eglot-ensure)
+        (add-hook 'js-mode-hook 'eglot-ensure))
+#+end_src
+* evil mode
+vim like
 #+begin_src emacs-lisp
   (use-package evil
     :ensure t
@@ -59,8 +177,33 @@
     (evil-collection-init))
   (use-package evil-tutor :ensure t)
 #+end_src
-
-** ivy
+* flycheck
+checks syntax errors etc
+#+begin_src emacs-lisp
+  (use-package flycheck
+  :ensure t
+  :defer t
+  :diminish
+  :init (global-flycheck-mode))
+#+end_src
+* highlight todo
+#+begin_src emacs-lisp
+  (use-package hl-todo
+    :ensure t
+     :hook ((org-mode . hl-todo-mode)
+           (prog-mode . hl-todo-mode))
+    :config
+    (setq hl-todo-highlight-punctuation ":"
+          hl-todo-keyword-faces
+          `(("TODO"       warning bold)
+            ("FIXME"      error bold)
+            ("HACK"       font-lock-constant-face bold)
+            ("REVIEW"     font-lock-keyword-face bold)
+            ("NOTE"       success bold)
+            ("DEPRECATED" font-lock-doc-face bold))))
+#+end_src
+* ivy
+minibuffer completion and fancier commands and shit
 #+begin_src emacs-lisp
   (use-package counsel
     :after ivy
@@ -98,199 +241,13 @@
     (ivy-set-display-transformer 'ivy-switch-buffer
                                  'ivy-rich-switch-buffer-transformer))
 #+end_src
-
-
-
-** keybinds
+* keybinds
 #+begin_src emacs-lisp
-  ;; function to run load-file twice as a hack
-  (defun reload-init-file ()
-    (interactive)
-    (load-file user-init-file)
-    (load-file user-init-file))
-
-  (use-package general
-    :ensure t  
-    :config
-    (general-evil-setup)
-
-
-    (general-create-definer yari/leader-keys
-      :states '(normal insert visual emacs)
-      :keymaps 'override
-      :prefix "SPC"
-      :global-prefix "M-SPC") ;; for insert mode
-    ;; general bindings 
-    (yari/leader-keys
-      "." '(find-file :wk "find file")
-      "SPC" '(counsel-M-x :wk "Counsel M-x")
-      "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "edit emacs config")
-      "f r" '(counsel-recentf :wk "find recent files")
-      "TAB TAB" '(comment-line :wk "comment lines"))
-
-    ;; make C-i actually C-i and not tab because that's a thing for some reason
-    (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
-    ;; window management
-    (general-define-key
-     ;; for window navigation in colemac mod-dh
-     :states '(normal insert visual emacs)
-     :keymaps 'override
-     ;; moving cursor between windows
-     ;; using C- prefix because I want to be able to do it no matter what mode i'm in
-     "C-n" '(evil-window-left :wk "window left")
-     "C-e" '(evil-window-down :wk "window down")
-     "H-i" '(evil-window-up :wk "window up")
-     "C-o" '(evil-window-right :wk "window right"))
-
-    ;; general window stuff
-    (yari/leader-keys
-      "w" '(:ignore t :wk "windows")
-      "w k" '(evil-window-delete :wk "kill window")
-      "w m" '(evil-window-vnew :wk "make new window")
-      "w h" '(evil-window-vsplit :wk "side split")
-      "w d" '(evil-window-split :wk "down split"))
-
-    ;; swaps buffers between windows
-    (yari/leader-keys 
-      "w N" '(buf-move-left :wk "swap window left")
-      "w E" '(buf-move-down :wk "swap window down")
-      "w I" '(buf-move-up :wk "swap window up")
-      "w O" '(buf-move-right :wk "swap window right"))
-
-    ;;same as movement above but SPC w <> instead
-    (yari/leader-keys
-      "w n" '(evil-window-left :wk "window left")
-      "w e" '(evil-window-down :wk "window down")
-      "w i" '(evil-window-up :wk "window up")
-      "w o" '(evil-window-right :wk "window right"))
-
-    ;; buffer control
-    (yari/leader-keys
-      "b" '(:ignore t :wk "buffer") ;; b is the prefix for the rest, :ignore says "this isn't a real binding" 
-      "b s" '(switch-to-buffer :wk "switch buffer") ;; :wk is a tool hint for which-key plugin
-      "b k" '(kill-this-buffer :wk "kill buffer")
-      "b e" '(next-buffer :wk "next buffer")
-      "b n" '(previous-buffer :wk "previous buffer")
-      "b r" '(revert-buffer :wk "reload buffer (revert)")
-      "b i" '(ibuffer :wk "ibuffer"))
-
-    ;; eval (mostly just for when modifying the config)
-    (yari/leader-keys
-      "e" '(:ignore t :wk "buffer")
-      "e r" '(eval-region :wk "eval selected region")
-      "e b" '(eval-buffer :wk "eval buffer"))
-
-    ;; help binds
-    (yari/leader-keys
-      "h" '(:ignore t :wk "help")
-      "h f" '(describe-function :wk "describe function")
-      "h v" '(describe-variable :wk "describe variable")
-      "h r r" '(reload-init-file :wk "reload config")) ;; sometimes need to run this twice i guess?
-
-    ;; toggle
-    (yari/leader-keys
-      "t" '(:ignore t :wk "toggle")
-      "t t" '(vterm-toggle :wk "toggle vterm"))
-
-    ;; projectile
-    (yari/leader-keys
-      "p" '(:ignore t :wk "projectile"))
-
-    ;; zoom
-    (general-define-key
-     :states '(normal insert visual emacs)
-     :keymaps 'override
-     "C-=" '(text-scale-increase :wk "increase font size")
-     "C--" '(text-scale-decrease :wk "decrease font size"))
-
-    )
-#+end_src
-* copilot
-#+begin_src emacs-lisp
-  (use-package copilot
-    :ensure (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
-    :init
-    (add-hook 'prog-mode-hook 'copilot-mode))
-#+end_src
-* corfu
-#+begin_src emacs-lisp
-  (use-package corfu
-    :ensure t
-    :custom
-    (corfu-cycle t) ;;cycle through all things
-    (corfu-auto t) ;;autocomplete
-    (corfu-auto-prefix 1) ;; 2 letters to start autocomplete
-    (corfu-auto-delay 0.0) ;; idk 0s to start?
-    :bind (:map corfu-map
-                ("RET" . nil) ;; unbind ret from insert
-                ("S-<return>" . corfu-insert)) ;; shift enter
-    :init
-    (global-corfu-mode))
-
-  (use-package cape :ensure t)
-  ;; get eglot to play nice with corfu
-  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
-
-  ;; there's probably more eglot shit i gotta set up but that's a later yari problem
-
-  (use-package kind-icon
-    :ensure t
-    :after corfu
-    :custom
-    (kind-icon-use-icons t)
-    (kind-icon-default-face 'corfu-default)
-    (kind-icon-blend-background nil)
-    (kind-icon-blend-frac 0.08)
-    :config
-    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
-
-
-#+end_src
-* dashboard
-#+begin_src emacs-lisp
-  (use-package dashboard
-    :ensure t
-    :init
-    (setq initial-buffer-choice 'dashboard-open)
-    (setq dashboard-set-heading-icons t)
-    (setq dashboard-set-file-icons t) ;; show all the icons stuff
-    (setq dashboard-banner-logo-title "arf arf arf :3") ;; logo title
-    (setq dashboard-startup-banner "~/.config/emacs/dashboard/banner_texts/puppymacs.txt") ;; image
-    (setq dashboard-center-content t)
-    (setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name))) ;; make it show dashboard in client mode
-    (setq dashboard-items '((recents . 5) ;; last 5 recents
-                            (agenda . 5) ;; etc
-                            (bookmarks . 3)
-                            (projects . 3)
-                            (registers .3)))
-    :custom
-    (dashboard-modify-heading-icons '((recents . "file-text")
-                                      (bookmarks . "book")))
-    :config
-    (dashboard-setup-startup-hook)
-  )
-#+end_src
-* diminish
-#+begin_src emacs-lisp
-(use-package diminish :ensure t) ;; hides minor modes from bar
-#+end_src
-* eglot
-#+begin_src emacs-lisp
-      ;; eglot is alr installed i just need to add hooks
-      (use-package eglot
-        :init
-        (add-hook 'python-mode-hook 'eglot-ensure)
-        (add-hook 'js-mode-hook 'eglot-ensure))
-#+end_src
-* flycheck
-#+begin_src emacs-lisp
-  (use-package flycheck
-  :ensure t
-  :defer t
-  :diminish
-  :init (global-flycheck-mode))
+  ;; Load keybinds, which are defined in keybinds.el
+  (require 'keybinds)
 #+end_src
 * languages
+for languages without native modes
 #+begin_src emacs-lisp
   (use-package rust-mode :ensure t)
   #+end_src
@@ -306,125 +263,27 @@ Maybe in the future use lsp, dap-mode looks neat for C etc but the setup is such
   ;;   :ensure t
   ;;   :commands lsp-ui-mode)
 #+end_src
-* prefs
-** general
+* magit
+git shit
 #+begin_src emacs-lisp
-  ;; hide all the fucking bars
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-
-  ;; line numbers
-  (global-display-line-numbers-mode 1)
-
-  ;; disable truncating lines 
-  ;;(global-visual-line-mode nil)
-  (visual-line-mode -1)
-
-  ;; fix the fucking indents
-  ;; (electric-indent-mode -1) this doesn't fix it either
-
-  ;; add \<s shorthand to org mode this shit doesn't fucking work either 
-  (require 'org-tempo)
-  (add-to-list 'org-modules 'org-tempo t)
+  (use-package transient
+    :ensure t)
+  (use-package magit
+    :ensure t
+    :after transient)
 #+end_src
-
-** text
+* modeline
 #+begin_src emacs-lisp
-  (set-face-attribute 'font-lock-comment-face nil ;; set comments to italics
-                      :slant 'italic)
-  (set-face-attribute 'font-lock-keyword-face nil ;; set keywords to italics
-                      :slant 'italic)
-  ;; icons for ivy and stuff
-  (use-package all-the-icons
+  (use-package telephone-line
     :ensure t
-    :if (display-graphic-p))
-
-  (use-package all-the-icons-dired
-    :ensure t
-    :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
-#+end_src
-
-** rainbow mode
-#+begin_src emacs-lisp
-  (use-package rainbow-mode
-    :ensure t
-    :diminish
-    :hook org-mode prog-mode)
-#+end_src
-** which key
-#+begin_src emacs-lisp
-  (use-package which-key
-    :ensure t
-    :diminish
     :init
-    (which-key-mode 1)
-    :config
-    (setq which-key-side-window-location 'bottom ;; put it at the bottom
-          which-key-sort-order #'which-key-key-order-alpha ;; 
-          which-key-sort-uppercase-first nil ;;
-          which-key-add-column-padding 1 ;;
-          which-key-max-display-columns nil ;;
-          which-key-min-display-lines 6 ;;
-          which-key-side-window-slot -10 ;;
-          which-key-side-window-max-height 0.25 ;;
-          which-key-idle-delay 0.8 ;;
-          which-key-max-description-length 25 ;;
-          which-key-allow-imprecise-window-fit nil ;;
-          whiich-key-seperator " > "))
-#+end_src
-* projectile
-#+begin_src emacs-lisp
-  (use-package projectile
-    :ensure t
-    :diminish
-    :config
-    (projectile-mode 1))
-#+end_src
-* shell and shit
-** eshell
-i dont rly wanna use this tbh
-** vterm
-#+begin_src emacs-lisp
-  (use-package vterm
-    :ensure t
-    :config
-    (setq shell-file-name "/bin/fish"
-          vterm-max-scrollback 5000))
-#+end_src
-** vterm toggle
-#+begin_src emacs-lisp
-  (use-package vterm-toggle
-    :ensure t
-    :after vterm
-    :config
-    (setq vterm-toggle-fullscreen-p nil)
-    (setq vterm-toggle-scope 'project)
-    (add-to-list 'display-buffer-alist
-                 '((lambda (buffer-or-name _)
-                       (let ((buffer (get-buffer buffer-or-name)))
-                         (with-current-buffer buffer
-                           (or (equal major-mode 'vterm-mode)
-                               (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-                    (display-buffer-reuse-window display-buffer-at-bottom)
-                    ;;(display-buffer-reuse-window display-buffer-in-direction)
-                    ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                    ;;(direction . bottom)
-                    ;;(dedicated . t) ;dedicated is supported in emacs27
-                    (reusable-frames . visible)
-                    (window-height . 0.3))))
-#+end_src
-* sudo edit
-be able to edit files i need sudo to edit
-
-#+begin_src emacs-lisp
-  (use-package sudo-edit
-    :ensure t
-    :config
-    (yari/leader-keys
-     "f u" '(sudo-edit-find-file :wk "sudo find file") ;; open file with sudo
-     "f U" '(sudo-edit :wk "sudo edit file")) ;; escalate privalege to su on alr opened file
-    )
+    (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
+        telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
+        telephone-line-primary-right-separator 'telephone-line-cubed-right
+        telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
+    (setq telephone-line-height 24
+          telephone-line-evil-use-short-tag t)
+    (telephone-line-mode 1))
 #+end_src
 * org mode
 ** enable toc
@@ -447,15 +306,169 @@ be able to edit files i need sudo to edit
     (require 'diminish)
     (diminish 'org-indent-mode))
 #+end_src
-* extra shit as loads
-** buffer move
-#+begin_src emacs-lisp
-  (load-file "~/.config/emacs/custom_src/buf-move.el")
-#+end_src
 
+* prefs
+** general
+#+begin_src emacs-lisp
+  ;; hide all the fucking bars
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+
+  ;; line numbers
+  (global-display-line-numbers-mode 1)
+
+  ;; disable truncating lines 
+  (global-visual-line-mode -1)
+  (visual-line-mode -1)
+
+  ;; fix the fucking indents
+  (electric-indent-mode -1)
+
+  ;; automatic () pairing
+  (electric-pair-mode -1)
+  ;; block <> pairing
+  (load-file (expand-file-name "custom-src/fix-org-pairing.el" user-emacs-directory))
+
+  ;; show changes if file changed
+  (global-auto-revert-mode t)
+
+  ;; add \<s shorthand to org mode this shit doesn't fucking work either 
+  (require 'org-tempo)
+  (add-to-list 'org-modules 'org-tempo t)
+#+end_src
+** text
+#+begin_src emacs-lisp
+  (use-package all-the-icons
+    :ensure t
+    :if (display-graphic-p))
+
+  (use-package all-the-icons-dired
+    :ensure t
+    :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
+#+end_src
+* projectile
+project management
+#+begin_src emacs-lisp
+  ;; (use-package projectile
+  ;;   :ensure t
+  ;;   :diminish
+  ;;   :config
+  ;;   (projectile-mode 1)
+  ;;   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+#+end_src
+* rainbow delim
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t
+    :config
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+#+end_src
+* rainbow mode
+show colours as highlighted
+#+begin_src emacs-lisp
+  (use-package rainbow-mode
+    :ensure t
+    :diminish
+    :hook org-mode prog-mode)
+#+end_src
+* solaire
+differentiate code from non-code buffers, requires certain theme settings, will set up later!
+#+begin_src emacs-lisp
+  (use-package solaire-mode
+    :ensure t
+    :hook (after-init . solaire-global-mode))
+#+end_src
+* sudo edit
+be able to edit files i need sudo to edit
+#+begin_src emacs-lisp
+  (use-package sudo-edit
+    :ensure t
+    :config
+    (yari/leader-keys
+     "f u" '(sudo-edit-find-file :wk "sudo find file") ;; open file with sudo
+     "f U" '(sudo-edit :wk "sudo edit file")) ;; escalate privalege to su on alr opened file
+    )
+#+end_src
 * theme
 #+begin_src emacs-lisp
-  (add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
+  (add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory))
   (load-theme 'timu-rouge t)
+  (load-file (expand-file-name "themes/tabline.el" user-emacs-directory))
+  (add-hook 'server-after-make-frame-hook (load-file (expand-file-name "themes/tabline.el" user-emacs-directory)))
+  (set-face-attribute 'font-lock-comment-face nil ;; set comments to italics
+                      :slant 'italic)
+  (set-face-attribute 'font-lock-keyword-face nil ;; set keywords to italics
+                      :slant 'italic)
+  ;; icons for ivy and stuff
+
 #+end_src
+* tldr
+#+begin_src emacs-lisp
+  (use-package tldr :ensure t :defer t)
+#+end_src
+* treemacs
+#+begin_src emacs-lisp
+  (use-package  treemacs
+    :ensure t
+    :defer t
+    :config
+    (setq treemacs-no-png-images t)
+    (setq treemacs-follow-mode t)
+    (setq treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t))
+
+  (use-package treemacs-evil :ensure t :after (treemacs evil))
+  (use-package treemacs-magit :ensure t :after (treemacs magit))
+#+end_src
+* vterm
+#+begin_src emacs-lisp
+  (use-package vterm
+    :ensure t)
+    ;; using this breaks projectile
+    ;;:config
+    ;; (setq shell-file-name "/bin/fish"
+    ;;      vterm-max-scrollback 5000))
+  (use-package vterm-toggle
+    :ensure t
+    :after vterm
+    :config
+    (setq vterm-toggle-fullscreen-p nil)
+    (setq vterm-toggle-scope 'project)
+    (add-to-list 'display-buffer-alist
+                 '((lambda (buffer-or-name _)
+                       (let ((buffer (get-buffer buffer-or-name)))
+                         (with-current-buffer buffer
+                           (or (equal major-mode 'vterm-mode)
+                               (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                    (display-buffer-reuse-window display-buffer-at-bottom)
+                    ;;(display-buffer-reuse-window display-buffer-in-direction)
+                    ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                    ;;(direction . bottom)
+                    ;;(dedicated . t) ;dedicated is supported in emacs27
+                    (reusable-frames . visible)
+                    (window-height . 0.3))))
+#+end_src
+* which key
+#+begin_src emacs-lisp
+  (use-package which-key
+    :ensure t
+    :diminish
+    :init
+    (which-key-mode 1)
+    :config
+    (setq which-key-side-window-location 'bottom ;; put it at the bottom
+          which-key-sort-order #'which-key-key-order-alpha ;; 
+          which-key-sort-uppercase-first nil ;;
+          which-key-add-column-padding 1 ;;
+          which-key-max-display-columns nil ;;
+          which-key-min-display-lines 6 ;;
+          which-key-side-window-slot -10 ;;
+          which-key-side-window-max-height 0.25 ;;
+          which-key-idle-delay 0.8 ;;
+          which-key-max-description-length 25 ;;
+          which-key-allow-imprecise-window-fit nil ;;
+          whiich-key-seperator " > "))
+#+end_src
+
     

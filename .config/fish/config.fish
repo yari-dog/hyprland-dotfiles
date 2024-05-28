@@ -8,3 +8,5 @@ end
 thefuck --alias | source
 
 starship init fish | source
+
+alias emacs "command emacsclient -c -a emacs"
