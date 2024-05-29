@@ -6,7 +6,6 @@ import enableClickThrough from '../.common/utils/Clickthrough.js'
 //const enableClickThrough = (self) => self.input_shape_combine_region(dummyRegion)
 
 export default (monitor = 0, where = 'top-left') => {
-    console.log(where.split('-'))
     return Widget.Window({
         monitor,
         name: `corner-${where}-${monitor}`,

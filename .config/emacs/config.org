@@ -148,11 +148,13 @@ hide minor modes
 * eglot
 completion backend (uses lsp's, check deps)
 #+begin_src emacs-lisp
-      ;; eglot is alr installed i just need to add hooks
-      (use-package eglot
-        :init
-        (add-hook 'python-mode-hook 'eglot-ensure)
-        (add-hook 'js-mode-hook 'eglot-ensure))
+  ;; eglot is alr installed i just need to add hooks
+  (use-package eglot
+    :config
+    (setq eglot-events-buffer-size 0)
+    :init
+    (add-hook 'python-mode-hook 'eglot-ensure)
+    (add-hook 'js-mode-hook 'eglot-ensure))
 #+end_src
 * evil mode
 vim like
@@ -326,7 +328,7 @@ git shit
   (electric-indent-mode 1)
 
   ;; automatic () pairing
-  (electric-pair-mode -1)
+  (electric-pair-mode 1)
   ;; block <> pairing
   (load-file (expand-file-name "custom-src/fix-org-pairing.el" user-emacs-directory))
 
