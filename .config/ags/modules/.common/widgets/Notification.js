@@ -72,10 +72,16 @@ function NotificationTitle(notification) {
 
 
 function NotificationTextSection(notification, is_popup = false) {
+
+    // firstly, check if the notification is a popup
+    // or if it's a notification in the notification center (right-sidebar)
+    // this is important because the close button should behave differently depending on the context
     const close_command = (is_popup ?
 			   () => notification.dismiss() :
 			   () => notification.close())
 
+
+    // body needs to be truncated if it's too long
     const body_truncated = Widget.Revealer({
 	transition: 'slide_down',
 	reveal_child: true,
@@ -148,10 +154,15 @@ function NotificationTextSection(notification, is_popup = false) {
 }
 
 
-export default (notification, is_popup = false, props = {}) => {
-    const text_section = NotificationTextSection(notification);
+export default ({
+    notification = {},
+    is_popup = false,
+    ...props
+}= {}) => {
+    
+    const text_section = NotificationTextSection(notification, is_popup);
     const icon = Widget.Box({
-	child: NotificationIcon(notification, is_popup),
+	child: NotificationIcon(notification),
     });
 
     
