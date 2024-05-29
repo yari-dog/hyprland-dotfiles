@@ -1,0 +1,11 @@
+const Notifications = Service.import('Notifications');
+
+export default () => Widget.Box({
+    hpack: 'center',
+    children: [
+	Notifications.all().map(notification => Widget.Text({
+	    key: notification.id,
+	    children: notification.message,
+	})),
+    ],
+})

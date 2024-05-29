@@ -4,6 +4,7 @@ import GLib from 'gi://GLib'
 
 import { Bar, BarCorners } from './modules/bar/main.js'
 import Corner from './modules/screencorners/main.js'
+import Popups from './modules/popups/main.js'
 // SCSS compilation
 const COMPILED_STYLE_DIR = `${GLib.get_user_cache_dir()}/ags/user/generated`
 const STATE_DIR = `${GLib.get_user_state_dir()}`
@@ -33,11 +34,15 @@ function forMonitorsAsync(widget) {
 
 // actually do shit
 const Windows = () => [
+    // cornes
     forMonitors((id) => Corner(id, 'bottom-left', true)),
     forMonitors((id) => Corner(id, 'bottom-right', true)),
     forMonitors((id) => Corner(id, 'top-left', true)),
     forMonitors((id) => Corner(id, 'top-right', true)),
     forMonitors((id) => BarCorners(id)),
+
+    // popups (notifs, colorscheme etc)
+    forMonitors(Popups),
 ]
 
 App.config({

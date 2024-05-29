@@ -1,0 +1,47 @@
+.notification-box {
+    @include large-rounding;
+}
+
+.notification {
+    min-width: 30rem;
+    padding: 1rem;
+    margin: 0.25rem;
+    background-color: $layer1;
+    color: $onLayer1;
+    @include large-rounding;
+}
+
+.notification-icon {
+    @include normal-rounding;
+    background-color: $layer2;
+    color: $onLayer2;
+    min-width: 3.5rem;
+    min-height: 3.5rem;
+    font-size: 2rem;
+}
+
+.notification-icon-image {
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.notification-text {
+	margin-left: 1rem;
+}
+
+.notification-body {
+    color: $outline;
+}
+
+.notification-expand-button {
+    margin-left: 0.5rem;
+    @include normal-rounding;
+    min-width: 2rem;
+    min-height: 2rem;
+}
+
+.notification-expand-button:hover {
+	background-color: $layer2;
+	color: $onLayer2;
+}
