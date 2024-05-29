@@ -46,7 +46,7 @@
 .bar-window-title-title {
     margin: 0;
 }
-
+// --------- right
 .bar-right {
     @include normal-rounding;
     border-top-right-radius: 0;
@@ -59,7 +59,17 @@
 }
 
 .bar-right-dateclock {
-    padding: 0 2rem;
+    padding: 0 1rem;
+}
+
+.bar-right-opener-eventbox > box {
+    @include normal-rounding;
+    padding: 0 1rem;
+}
+
+.bar-right-opener-eventbox:hover > box {
+	background-color: $layer2;
+	color: $onLayer2;
 }
 
 // --------- workspaces

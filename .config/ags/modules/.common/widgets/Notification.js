@@ -27,7 +27,7 @@ function NotificationIcon(notification) {
 		    icon: icon,
 		    vpack: 'center',
 		}) :
-		MaterialIcon('chat', 'txt-hugerass', {hexpand: true})
+		MaterialIcon('chat', 'hugerass', {hexpand: true})
 	       )
     });
 }
@@ -172,10 +172,11 @@ export default ({
 	    'open': (self) => { self.child.reveal_child = true },
 	    'destroy': (self) => {
 		self.child.reveal_child = false;
-		Utils.timeout(1000, () => {
-		    self.destroy(); // not calling itself, but the Widget.EventBox.destroy();
-		}, self);
 	    },
+	    'close': (self) => {
+		self.destroy();
+	    },
+	    'notification': notification,
 	},
 	class_name: 'notification-box',
 	on_primary_click: (self) => {

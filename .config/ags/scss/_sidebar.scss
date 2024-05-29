@@ -1,0 +1,51 @@
+
+.sidebar {
+    background-color: $background;
+    color: $onLayer0;
+    @include large-rounding;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+.sidebar .sidebar-section {
+    background-color: $layer1;
+    color: $onLayer1;
+}
+
+.sidebar .sidebar-section > box {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    @include large-rounding;
+}
+
+// ----------------- right sidebar
+
+.sidebar-right {
+}
+
+// ------ quick settings
+.sidebar .quick-settings {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    @include large-rounding;
+}
+
+.sidebar .quick-setting-toggle-button {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    @include full-rounding;
+    background-color: $layer2;
+    color: $onLayer2;
+}
+
+.sidebar .quick-setting-toggle-button:hover {
+    background-color: $layer2Hover;
+    color: $onLayer2;
+}
+
+// ------ notifications
+.sidebar .notifications-stack {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    @include large-rounding;
+}

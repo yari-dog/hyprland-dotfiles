@@ -1,9 +1,8 @@
 import Notification from './Notification.js';
+import isNotificationCenterBlacklist from '../../.common/utils/isNotificationCenterBlacklist.js';
 const notifications = await Service.import('notifications');
 
-function isNotificationCenterBlacklist(notification) {
-	return notification.app_name === 'Spotify';
-}
+
 
 export default (is_popup = false) => {
     return Widget.Box({
@@ -11,12 +10,10 @@ export default (is_popup = false) => {
 	vertical: true,
 	class_name: 'notification-list',
 	name: 'notification-list',
-	children: (is_popup ?
-		   notifications.popups.map(Notification) :
-		   notifications.notifications.map(Notification)
-		  ),
+	children: [],
 	attribute: {
 	    'initialised': false,
+	    'notifications': new Map(),
 	    // function to dismiss a notification
 	    'dismissed': (self, id, force = false) => {
 		// make sure we have an id, and then make sure the child exists
@@ -27,7 +24,15 @@ export default (is_popup = false) => {
 		// check if the call is 'dismissed' or 'closed'
 		// if it's 'dismissed' but we aren't a popup list, don't run destroy.
 		if (!force && !is_popup) return;
+		if (isNotificationCenterBlacklist(child.attribute.notification) && !force) {
+		    child.attribute.notification.close();
+		    return;
+		}
+
+		// actually destroy the child
+		child.reveal_child = false;
 		child.attribute.destroy(child);
+		self.attribute.notifications.delete(id);
 	    },
 	    'notified': (self, id, is_init = false) => {
 		// init refers to initialising single pre-existing notifications
@@ -45,14 +50,19 @@ export default (is_popup = false) => {
 		if (notification && !notifications.dnd) {
 		    // make sure notification isn't spotify if it's not a popup
 		    if (!is_popup && isNotificationCenterBlacklist(notification)) return;
-		    // append to start of list
+		    // create notification widget
 		    const notification_widget = Notification({
 			notification: notification,
 			is_popup: is_popup
 		    });
-		    self.children = [notification_widget, ...self.children];
-		    notification_widget.attribute.open(notification_widget);
+
+		    const map = self.attribute.notifications
 		    
+		    // add to map
+		    map.set(id, notification_widget);
+		    self.pack_end(map.get(id), false, false, 0)
+		    self.show_all();
+		    map.get(id).attribute.open(map.get(id));
 		}
 	    },
 	    'load_past': (self) => {

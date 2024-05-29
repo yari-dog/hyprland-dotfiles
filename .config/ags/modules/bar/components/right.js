@@ -1,3 +1,4 @@
+import MaterialIcon from '../../.common/widgets/MaterialIcon.js'
 const { GLib } = imports.gi;
 
 function DateClock() {
@@ -15,15 +16,35 @@ function DateClock() {
         ]
     })
 }
-
-
+// notification icons:
+// no notifications: 'notifications'
+// notifications: 'notifications_unread'
+// notifications_disabled: 'notifications_off'
+// TODO: move to own file once the sidebar is implemented, and a permenant notifications list exists
+function NotificationIcon() {
+    const icon_name = 'notifications'
+    return MaterialIcon(icon_name, 'bar-right-notifications-icon txt-large', { vexpand: true })
+}
+    
+function SideBarOpener() {
+    return Widget.EventBox({
+	class_name: 'bar-right-opener-eventbox',
+	onPrimaryClick: () => {
+	    App.toggleWindow('right-sidebar')
+	},
+	child: Widget.Box({
+	    hpack: 'center', vpack: 'center',
+	    child: NotificationIcon(),
+	}),
+    })
+}
 
 export function Right() {
     const right = Widget.Box({
         class_name: 'bar-right-container',
-        children: [DateClock()],
+        children: [DateClock(), SideBarOpener()],
     })
-    return Widget.EventBox({
+    return Widget.Box({
         hexpand: false,
         hpack: 'end', //vpack: 'start',
         vexpand: true,
