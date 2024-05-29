@@ -104,7 +104,7 @@ function NotificationTextSection(notification, is_popup = false) {
 	    class_name: 'txt-smallie notification-body',
 	    use_markup: true,
 	    justification: 'left',
-	    max_width_chars: 1,
+	    max_width_chars: -1,
 	    wrap: true,
 	    label: notification.body,
 	})
@@ -122,7 +122,7 @@ function NotificationTextSection(notification, is_popup = false) {
 	],
     })
 
-    const expand_button = Widget.Button({
+    const close_button = Widget.Button({
 	vpack: 'start',
 	class_name: 'notification-expand-button',
 	on_clicked: (self) => {
@@ -148,8 +148,8 @@ function NotificationTextSection(notification, is_popup = false) {
 	},
 	children: [
 	    text,
-	    expand_button,
-	],
+	    close_button,
+	],   
     })
 }
 
@@ -165,38 +165,44 @@ export default ({
 	child: NotificationIcon(notification),
     });
 
+    const notification_content = Widget.Box({
+	hpack: 'center',
+	class_name: 'notification',
+	children: [
+	    icon,
+	    text_section,
+	],
+    });
+
+    const event_box_wrapper = Widget.EventBox({
+	on_primary_click: (self) => {
+	    const child = self.child.children[1];
+	    child.attribute.toggle_expanded(child);
+	},
+	child: notification_content,
+    });
     
-    let notification_box = Widget.EventBox({
+    let notification_box = Widget.Revealer({
+	reveal_child: false,
+	transition: 'slide_down',
 	attribute : {
 	    'id': notification.id,
-	    'open': (self) => { self.child.reveal_child = true },
+	    'open': (self) => { self.reveal_child = true },
 	    'destroy': (self) => {
-		self.child.reveal_child = false;
+		self.sensitive = false;
+		self.reveal_child = false;
+		Utils.timeout(500, () => {
+		    if (self) self.destroy();
+		});
 	    },
 	    'close': (self) => {
+		console.log('closing notification', is_popup)
 		self.destroy();
 	    },
 	    'notification': notification,
 	},
 	class_name: 'notification-box',
-	on_primary_click: (self) => {
-	    const child = self.child.child.children[1];
-	    child.attribute.toggle_expanded(child);
-	},
-	child: Widget.Revealer({
-	    attribute: {
-	    },
-	    reveal_child: false,
-	    transition: 'slide_down',
-	    child: Widget.Box({
-		hpack: 'center',
-		class_name: 'notification',
-		children: [
-		    icon,
-		    text_section,
-		],
-	    }),
-	}),
+	child: event_box_wrapper,
     });
 
     return notification_box;

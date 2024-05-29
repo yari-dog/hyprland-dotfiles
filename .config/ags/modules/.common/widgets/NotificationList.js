@@ -7,6 +7,7 @@ const notifications = await Service.import('notifications');
 export default (is_popup = false) => {
     return Widget.Box({
 	hpack: 'center',
+	vpack: 'start',
 	vertical: true,
 	class_name: 'notification-list',
 	name: 'notification-list',
@@ -18,16 +19,15 @@ export default (is_popup = false) => {
 	    'dismissed': (self, id, force = false) => {
 		// make sure we have an id, and then make sure the child exists
 		if (id === undefined) return;
-		const child = self.children.find((child) => child.attribute.id === id);
+		const child = self.attribute.notifications.get(id);
 		if (!child) return;
 
+		// TODO: make hover exist
+		if (child == null || child.attribute.hovered && !force) return;
+		
 		// check if the call is 'dismissed' or 'closed'
 		// if it's 'dismissed' but we aren't a popup list, don't run destroy.
 		if (!force && !is_popup) return;
-		if (isNotificationCenterBlacklist(child.attribute.notification) && !force) {
-		    child.attribute.notification.close();
-		    return;
-		}
 
 		// actually destroy the child
 		child.reveal_child = false;
