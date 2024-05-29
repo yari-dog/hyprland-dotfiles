@@ -426,7 +426,11 @@ be able to edit files i need sudo to edit
 * vterm
 #+begin_src emacs-lisp
   (use-package vterm
-    :ensure t)
+    :ensure t
+    :config
+    (setf exec-path-from-shell-variables '(
+                                           "HYPRLAND_INSTANCE_SIGNATURE"
+                                           )))
     ;; using this breaks projectile
     ;;:config
     ;; (setq shell-file-name "/bin/fish"

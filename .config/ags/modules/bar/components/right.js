@@ -1,4 +1,5 @@
 import MaterialIcon from '../../.common/widgets/MaterialIcon.js'
+const notifications = await Service.import('notifications')
 const { GLib } = imports.gi;
 
 function DateClock() {
@@ -23,9 +24,15 @@ function DateClock() {
 // TODO: move to own file once the sidebar is implemented, and a permenant notifications list exists
 function NotificationIcon() {
     const icon_name = 'notifications'
-    return MaterialIcon(icon_name, 'bar-right-notifications-icon txt-large', { vexpand: true })
+    return MaterialIcon(icon_name, 'bar-right-notifications-icon txt-norm', {
+	vexpand: true,
+	setup: (self) => self.hook(notifications, (self) => {
+	    // NOTE: dnd is set by setting the attribute in the notifications manager
+		    self.label = notifications ? 'notifications_unread' : 'notifications'
+	}),
+    })
 }
-    
+
 function SideBarOpener() {
     return Widget.EventBox({
 	class_name: 'bar-right-opener-eventbox',

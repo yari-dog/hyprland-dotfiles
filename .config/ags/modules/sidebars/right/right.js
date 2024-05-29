@@ -15,16 +15,17 @@ function cleanNotifications(notifications) {
 }
 
 function Notifications() {
-    const notifications_box =  Widget.Box({
-	class_name: 'sidebar-notifications',
-	name: 'notifications',
-	child: Widget.Scrollable({
-	    class_name: 'sidebar-notifications-scroll',
-	    name: 'notifications-scroll',
-	    hexpand: true, vexpand: true,
-	    hscroll: 'never', vscroll: 'automatic',
-	    propagate_natural_height: true,
-	    child: NotificationList(false),
+    const notifications_box =  Widget.Scrollable({
+	class_name: 'sidebar-notifications-scroll',
+	name: 'notifications-scroll',
+	hexpand: true,
+	hscroll: 'never', vscroll: 'automatic',
+	propagate_natural_height: true,
+	child: Widget.Box({
+	    class_name: 'sidebar-notifications',
+	    name: 'notifications',
+	    vexpand: true,
+	    children: [NotificationList(false)],
 	})
     });
     const no_notifications_box = Widget.Box({
@@ -52,7 +53,6 @@ function Notifications() {
 	    setup: (self) => self.hook(notifications, (self) => {
 		// check if there are notifications
 		const notifications = self.children.notifications.child.child.child.attribute.notifications;
-		console.log(cleanNotifications(notifications).size);
 		self.shown = cleanNotifications(notifications).size > 0 ? 'notifications' : 'no-notifications';
 	    }),
 	}),
