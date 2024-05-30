@@ -6,7 +6,8 @@ function NotificationIcon(notification) {
     if (notification.image) {
 	const css = 'background-image: url(' + notification.image + ');';
 	return Widget.Box({
-	    valign: 'center',
+	    vpack: 'center',
+	    hpack: 'center',
 	    hexpand: false,
 	    class_name: 'notification-icon notification-icon-image',
 	    css: `background-image: url("${notification.image}");`,
