@@ -90,12 +90,12 @@ function NotificationTextSection(notification, is_popup = false) {
 	    class_name: 'txt-smallie notification-body',
 	    use_markup: true,
 	    justification: 'left',
-	    max_width_chars: -1,
+	    lines: 1,
 	    truncate: 'end',
 	    label: notification.body.split("\n")[0],
 	}),
     })
-
+    
     const body = Widget.Revealer({
 	transition: 'slide_up',
 	reveal_child: false,
@@ -104,13 +104,12 @@ function NotificationTextSection(notification, is_popup = false) {
 	    class_name: 'txt-smallie notification-body',
 	    use_markup: true,
 	    justification: 'left',
-	    max_width_chars: -1,
 	    wrap: true,
 	    label: notification.body,
 	})
     })
 
-   
+
 
     const body_box = Widget.Box({
 	vertical: true,
@@ -118,9 +117,9 @@ function NotificationTextSection(notification, is_popup = false) {
 	attribute: {
 	    'should_truncate': (body.child.label !== body_truncated.child.label),
 	    'toggle_expanded': (self) => {
-		if (!self.attribute.should_truncate) return;
-		const truncated = self.children[0]
-		const body = self.children[1]
+		const truncated = self.children[1]
+		if (!truncated.child.get_layout().is_ellipsized()) return;
+		const body = self.children[0]
 		truncated.reveal_child = !truncated.reveal_child
 		if (!truncated.reveal_child) {
 		    body.reveal_child = true;
@@ -131,8 +130,8 @@ function NotificationTextSection(notification, is_popup = false) {
 	},
 	hexpand: false,
 	children: [
-	    body_truncated,
 	    body,
+	    body_truncated,
 	],
     })
 
