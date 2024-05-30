@@ -1,4 +1,4 @@
-# yari's dotfiles
+# yari's dotfiles :3
 This is the repo for my current hyprland setup.
 
 ___
