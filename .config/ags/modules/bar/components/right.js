@@ -23,12 +23,22 @@ function DateClock() {
 // notifications_disabled: 'notifications_off'
 // TODO: move to own file once the sidebar is implemented, and a permenant notifications list exists
 function NotificationIcon() {
-    const icon_name = 'notifications'
-    return MaterialIcon(icon_name, 'bar-right-notifications-icon txt-norm', {
+    return MaterialIcon('notifications', 'bar-right-notifications-icon txt-norm', {
 	vexpand: true,
 	setup: (self) => self.hook(notifications, (self) => {
 	    // NOTE: dnd is set by setting the attribute in the notifications manager
-		    self.label = notifications ? 'notifications_unread' : 'notifications'
+	    const dnd = notifications.dnd
+	    const has_notifications = notifications.notifications.length > 0
+	    if (dnd) {
+		self.label = 'notifications_off'
+		return
+	    } else if (has_notifications) {
+		self.label = 'notifications_unread'
+		return
+	    } else {
+		self.label = 'notifications'
+		return
+	    }
 	}),
     })
 }
