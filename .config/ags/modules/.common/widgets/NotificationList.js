@@ -2,6 +2,16 @@ import Notification from './Notification.js';
 import isNotificationCenterBlacklist from '../../.common/utils/isNotificationCenterBlacklist.js';
 const notifications = await Service.import('notifications');
 
+export function cleanNotifications(notifications) {
+    // convert map to array of [key, value] pairs
+    notifications = Array.from(notifications);
+    // filter out blacklisted notifications
+    notifications = notifications.filter(([key, notification]) => {
+	return !isNotificationCenterBlacklist(notification);
+    });
+    // convert back to map
+    return new Map(notifications);
+}
 
 
 export default (is_popup = false) => {

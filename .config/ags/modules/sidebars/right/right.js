@@ -1,33 +1,48 @@
 const notifications = await Service.import('notifications');
-import isNotificationCenterBlacklist from '../../.common/utils/isNotificationCenterBlacklist.js';
 import NotificationList from '../../.common/widgets/NotificationList.js';
+import {cleanNotifications} from '../../.common/widgets/NotificationList.js';
 import MaterialIcon from '../../.common/widgets/MaterialIcon.js';
 
-function cleanNotifications(notifications) {
-    // convert map to array of [key, value] pairs
-    notifications = Array.from(notifications);
-    // filter out blacklisted notifications
-    notifications = notifications.filter(([key, notification]) => {
-	return !isNotificationCenterBlacklist(notification);
-    });
-    // convert back to map
-    return new Map(notifications);
-}
 
 function Notifications() {
+    const clear_button = Widget.Button({
+	class_name: 'notifications-clear-button',
+	label: 'Clear all',
+	on_clicked: () => {
+	    notifications.clear();
+	},
+    });
+    
     const notifications_box =  Widget.Scrollable({
 	class_name: 'sidebar-notifications-scroll',
 	name: 'notifications-scroll',
 	hexpand: true,
 	hscroll: 'never', vscroll: 'automatic',
 	propagate_natural_height: true,
+	attribute: {
+	    'get_notifications': (self) => {
+		// child.child because scrollables are weird and their children are wrapped in a viewport
+		return self.child.child.attribute.get_notifications(self.child.child);
+	    }
+	},
 	child: Widget.Box({
 	    class_name: 'sidebar-notifications',
 	    name: 'notifications',
 	    vexpand: true,
-	    children: [NotificationList(false)],
-	})
+	    hpack: 'start',
+	    vertical: true,
+	    attribute: {
+		'get_notifications': (self) => {
+		    return self.children[0].attribute.notifications;
+		},
+	    },
+	    children: [
+		NotificationList(false),
+		clear_button,
+	    ],
+	}),
     });
+    
     const no_notifications_box = Widget.Box({
 	class_name: 'notifications-no-notifications',
 	hpack: 'center',
@@ -52,7 +67,7 @@ function Notifications() {
 	    },
 	    setup: (self) => self.hook(notifications, (self) => {
 		// check if there are notifications
-		const notifications = self.children.notifications.child.child.child.attribute.notifications;
+		const notifications = self.children.notifications.attribute.get_notifications(self.children.notifications);
 		self.shown = cleanNotifications(notifications).size > 0 ? 'notifications' : 'no-notifications';
 	    }),
 	}),

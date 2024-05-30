@@ -39,7 +39,7 @@ function NotificationTime(notification) {
     
     let time_string = ''
     if (notification_time.get_day_of_year() == now.get_day_of_year()) time_string = notification_time.format('%H:%M');
-    else if (notification_time.get_day_year() == now.get_day_of_year() - 1) time_string = "Yesterday";
+    else if (notification_time.get_day_of_year() == now.get_day_of_year() - 1) time_string = "Yesterday";
     else time_string = notification_time.format('%d/%m');
     
     return Widget.Label({
@@ -86,11 +86,11 @@ function NotificationTextSection(notification, is_popup = false) {
 	transition: 'slide_down',
 	reveal_child: true,
 	child: Widget.Label({
-	    xalign: 0,
+	    hpack: 'start',
 	    class_name: 'txt-smallie notification-body',
 	    use_markup: true,
 	    justification: 'left',
-	    max_width_chars: 1,
+	    max_width_chars: -1,
 	    truncate: 'end',
 	    label: notification.body.split("\n")[0],
 	}),
@@ -100,7 +100,7 @@ function NotificationTextSection(notification, is_popup = false) {
 	transition: 'slide_up',
 	reveal_child: false,
 	child: Widget.Label({
-	    xalign: 0,
+	    hpack: 'start',
 	    class_name: 'txt-smallie notification-body',
 	    use_markup: true,
 	    justification: 'left',
@@ -110,15 +110,45 @@ function NotificationTextSection(notification, is_popup = false) {
 	})
     })
 
-    const text = Widget.Box({
+   
+
+    const body_box = Widget.Box({
 	vertical: true,
-	hexpand: true,
+	class_name: 'notification-body-box',
+	attribute: {
+	    'should_truncate': (body.child.label !== body_truncated.child.label),
+	    'toggle_expanded': (self) => {
+		if (!self.attribute.should_truncate) return;
+		const truncated = self.children[0]
+		const body = self.children[1]
+		truncated.reveal_child = !truncated.reveal_child
+		if (!truncated.reveal_child) {
+		    body.reveal_child = true;
+		} else {
+		    body.reveal_child = false;
+		}
+	    }
+	},
+	hexpand: false,
+	children: [
+	    body_truncated,
+	    body,
+	],
+    })
+
+    const text = Widget.Box({
+	attribute: {
+	    'toggle_expanded': (self) => {
+		self.children[1].attribute.toggle_expanded(self.children[1]);
+	    }
+	},
+	vertical: true,
+	hexpand: true, vexpand: true,
 	vpack: 'center',
 	class_name: 'notification-text',
 	children: [
 	    NotificationTitle(notification),
-	    body_truncated,
-	    body
+	    body_box,
 	],
     })
 
@@ -136,14 +166,7 @@ function NotificationTextSection(notification, is_popup = false) {
     return Widget.Box({
 	attribute: {
 	    'toggle_expanded': (self) => {
-		const truncated = self.children[0].children[1]
-		const body = self.children[0].children[2]
-		truncated.reveal_child = !truncated.reveal_child
-		if (!truncated.reveal_child) {
-		    body.reveal_child = true;
-		} else {
-		    body.reveal_child = false;
-		}
+		self.children[0].attribute.toggle_expanded(self.children[0]);
 	    }
 	},
 	children: [

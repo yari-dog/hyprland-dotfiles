@@ -45,3 +45,22 @@
 	background-color: $layer2;
 	color: $onLayer2;
 }
+
+notification-body-box{
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+.notifications-clear-button {
+    @include normal-rounding;
+    min-width: 2rem;
+    min-height: 2rem;
+    margin-left: 0.5rem;
+    background-color: $layer1;
+    color: $onLayer1;
+}
+
+.notifications-clear-button:hover {
+	background-color: $layer1Hover;
+	color: $onLayer1;
+}
