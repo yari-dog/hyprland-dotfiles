@@ -210,12 +210,14 @@ export default ({
 	transition: 'slide_down',
 	attribute : {
 	    'id': notification.id,
+	    'isDestroyed': false,
 	    'open': (self) => { self.reveal_child = true },
 	    'destroy': (self) => {
 		self.sensitive = false;
 		self.reveal_child = false;
+		self.attribute.isDestroyed = true;
 		Utils.timeout(500, () => {
-		    if (self) self.destroy();
+		    if (!self.isDestroyed) self.destroy();
 		});
 	    },
 	    'close': (self) => {

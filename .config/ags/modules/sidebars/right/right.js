@@ -1,7 +1,7 @@
-const notifications = await Service.import('notifications');
 import NotificationList from '../../.common/widgets/NotificationList.js';
-import {cleanNotifications} from '../../.common/widgets/NotificationList.js';
 import MaterialIcon from '../../.common/widgets/MaterialIcon.js';
+import notificationService from '../../../services/notification_service.js';
+const notifications = notificationService.getHandler(false);
 
 
 function Notifications() {
@@ -66,13 +66,12 @@ function Notifications() {
 		'no-notifications': no_notifications_box,
 	    },
 	    setup: (self) => self.hook(notifications, (self) => {
-		// check if there are notifications
-		const notifications = self.children.notifications.attribute.get_notifications(self.children.notifications);
-		self.shown = cleanNotifications(notifications).size > 0 ? 'notifications' : 'no-notifications';
+		self.shown = notifications.notifications.length > 0 ? 'notifications' : 'no-notifications';
 	    }),
 	}),
     });
 }
+
 
 function QuickSettingToggle({callback, icon, ...props}) {
     return Widget.Button({

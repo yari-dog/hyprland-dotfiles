@@ -1,5 +1,6 @@
 import MaterialIcon from '../../.common/widgets/MaterialIcon.js'
-const notifications = await Service.import('notifications')
+import notificationService from '../../../services/notification_service.js'
+const notifications = notificationService.getHandler(false);
 const { GLib } = imports.gi;
 
 function DateClock() {
