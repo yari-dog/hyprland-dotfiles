@@ -119,7 +119,7 @@ function NotificationTextSection(notification, is_popup = false) {
 	    'should_truncate': (body.child.label !== body_truncated.child.label),
 	    'toggle_expanded': (self) => {
 		const truncated = self.children[1]
-		if (!truncated.child.get_layout().is_ellipsized()) return;
+		if (!truncated.child.get_layout().is_ellipsized() && truncated.child.label === notification.body) return;
 		const body = self.children[0]
 		truncated.reveal_child = !truncated.reveal_child
 		if (!truncated.reveal_child) {
@@ -219,7 +219,6 @@ export default ({
 		});
 	    },
 	    'close': (self) => {
-		console.log('closing notification', is_popup)
 		self.attribute.notification.close();
 	    },
 	    'notification': notification,
