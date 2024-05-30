@@ -29,6 +29,7 @@ there's a lot of dependencies in the [dependencies file](dependencies), at some 
 
 ### stow
 honestly, my recommendation for managing dotfiles is with [stow](https://www.gnu.org/software/stow/)
+
 it's a super simple program that symlinks it's contents to the parent directory of the directory it was invoked in
 
 deadass just

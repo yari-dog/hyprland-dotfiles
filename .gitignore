@@ -1,5 +1,8 @@
 .config/ags/node_modules
 .config/ags/scss/_material.css
 .config/emacs/*.*~
+
+README.html
+
 __pycache__/
 *.py[cod]
