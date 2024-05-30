@@ -252,6 +252,11 @@ minibuffer completion and fancier commands and shit
 for languages without native modes
 #+begin_src emacs-lisp
   (use-package rust-mode :ensure t)
+  (use-package markdown-mode
+    :ensure t
+    :mode (("\\.md\\'" . markdown-mode)
+           ("README\\.md\\'" . gfm-mode))
+    :init (setq markdown-command "pandoc --metadata title='html'"))
   #+end_src
 * lsp mode etc
 Maybe in the future use lsp, dap-mode looks neat for C etc but the setup is such a pain in the arse that i don't think it's worth it
