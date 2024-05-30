@@ -220,7 +220,7 @@ export default ({
 	    },
 	    'close': (self) => {
 		console.log('closing notification', is_popup)
-		self.destroy();
+		self.attribute.notification.close();
 	    },
 	    'notification': notification,
 	},

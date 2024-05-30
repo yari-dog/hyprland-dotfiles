@@ -34,6 +34,17 @@ export default (is_popup = false) => {
 
 		// TODO: make hover exist
 		if (child == null || child.attribute.hovered && !force) return;
+
+		// if the notification is a blacklisted notification, it's in
+		// the map, but not a child of the notification list box
+		// it needs to have 'closed' called on it
+		if (isNotificationCenterBlacklist(child.attribute.notification) && !force && !is_popup) {
+		    // destroy the widget
+		    child.attribute.close(child);
+		    // remove from map
+		    self.attribute.notifications.delete(id);
+		    return;
+		}
 		
 		// check if the call is 'dismissed' or 'closed'
 		// if it's 'dismissed' but we aren't a popup list, don't run destroy.
@@ -58,8 +69,6 @@ export default (is_popup = false) => {
 		// actually do notification shit
 		const notification = notifications.getNotification(id);
 		if (notification && !notifications.dnd) {
-		    // make sure notification isn't spotify if it's not a popup
-		    if (!is_popup && isNotificationCenterBlacklist(notification)) return;
 		    // create notification widget
 		    const notification_widget = Notification({
 			notification: notification,
@@ -70,6 +79,12 @@ export default (is_popup = false) => {
 		    
 		    // add to map
 		    map.set(id, notification_widget);
+
+		    // make sure notification isn't spotify if it's not a popup
+		    // it should still be added to the map, as it allows it to be destroyed once it expires
+		    // from the popup timer
+		    if (!is_popup && isNotificationCenterBlacklist(notification)) return;
+
 		    self.pack_end(map.get(id), false, false, 0)
 		    self.show_all();
 		    map.get(id).attribute.open(map.get(id));
