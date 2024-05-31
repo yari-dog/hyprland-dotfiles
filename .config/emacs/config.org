@@ -438,7 +438,7 @@ be able to edit files i need sudo to edit
   (use-package vterm
     :ensure t
     :config
-    (setf exec-path-from-shell-variables '(
+    (setf exec-path-from-shell-copy-env '(
                                            "HYPRLAND_INSTANCE_SIGNATURE"
                                            )))
     ;; using this breaks projectile

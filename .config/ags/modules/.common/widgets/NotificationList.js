@@ -1,7 +1,7 @@
 import Notification from './Notification.js';
 import isNotificationCenterBlacklist from '../../.common/utils/isNotificationCenterBlacklist.js';
 import notificationService from '../../../services/notification_service.js';
-
+const test = await Service.import('notifications');
 
 export default (is_popup = false) => {
     // get the correct notifications handler
@@ -36,7 +36,16 @@ export default (is_popup = false) => {
 		// this is to build the past notifications without endlessly recursing
 		// id is undefined on service initialisation
 
-		if (id === undefined) return;
+		console.log(id, id === undefined)
+		console.log(notifications.notifications.length)
+		if (id === undefined) {
+		    if (self.attribute.initialised) {
+			return;
+		    } else {
+			self.attribute.initialised = true;
+			self.attribute.init(self);
+		    }
+		}
 
 		// actually do notification shit
 		const notification = notifications.getNotification(id);
@@ -51,15 +60,18 @@ export default (is_popup = false) => {
 		    notification_widget.attribute.open(notification_widget);
 		}
 	    },
+	    // cant use setup method here cause the notifications.notifications is initialised asynchronously
+	    'init': (self) => {
+		notifications.notifications.forEach((notification) => {
+		    self.attribute.notified(self, notification.id)
+		})
+	    },
 	},
 	setup: (self) => { // "element" is "self"
 	    self 
 		.hook(notifications, (element, id) => element.attribute.notified(element, id), 'notified')
 		.hook(notifications, (element, id) => element.attribute.dismissed(element, id), 'dismissed')
 		.hook(notifications, (element, id) => element.attribute.dismissed(element, id, true), 'closed');
-	    notifications.notifications.forEach((notification) => {
-		self.attribute.notified(self, notification.id);	
-	    });
 	},
     });
 }

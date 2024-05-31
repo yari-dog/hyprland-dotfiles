@@ -156,7 +156,7 @@ class NotificationService extends Service{
     }
 
     isBlacklistedFromNotifCenter(notification) {
-	return notification.appName === 'Spotify';
+	return notification?.appName === 'Spotify';
     }
 
     getNotification(id) {
