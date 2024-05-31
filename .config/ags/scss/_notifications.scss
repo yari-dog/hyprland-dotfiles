@@ -64,3 +64,17 @@ notification-body-box{
 	background-color: $layer1Hover;
 	color: $onLayer1;
 }
+
+.notification-action {
+    @include small-rounding;
+    min-width: 2rem;
+    min-height: 2rem;
+    margin: 0.125rem 0;
+    background-color: $layer2;
+    color: $onLayer2;
+}
+
+.notification-action:hover {
+	background-color: $layer2Hover;
+	color: $onLayer2;
+}

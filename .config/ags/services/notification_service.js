@@ -133,7 +133,6 @@ class NotificationService extends Service{
     // mirror logic from notifications service
     // notifications changed
     #notify(id) {
-	console.log('service',id);
 	if (id === undefined) {
 	    this.#clearPastBlacklisted();
 	    this.emit('notified-init');

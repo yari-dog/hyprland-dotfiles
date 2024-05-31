@@ -22,6 +22,8 @@ export default (is_popup = false) => {
 		const child = self.children.find((child) => child.attribute.notification.id === id);
 		if (!child) return;
 
+		
+		
 		// check if the call is 'dismissed' or 'closed'
 		// if it's 'dismissed' but we aren't a popup list, don't run destroy.
 		if (!force && !is_popup) return;
@@ -33,7 +35,6 @@ export default (is_popup = false) => {
 		// determin if this is an init call
 		if (id === undefined) return
 
-		
 		const notification = notifications.getNotification(id);
 		
 		if (notification && (!notifications.dnd || !is_popup)) {

@@ -1,5 +1,7 @@
 // some logic from end-4
 const { GLib } = imports.gi;
+const hyprland = await Service.import('hyprland');
+import service from '../../../services/notification_service.js';
 import MaterialIcon from './MaterialIcon.js';
 
 function NotificationIcon(notification) {
@@ -82,6 +84,18 @@ function NotificationTextSection(notification, is_popup = false) {
 			   () => notification.close())
 
 
+    const actions = [...notification.actions.map((action) => {
+	return Widget.Button({
+	    class_name: 'notification-action',
+	    label: action.label,
+	    on_clicked: () => {
+		notification.invoke(action.id);
+	    },
+	})
+    })]
+
+
+    
     // body needs to be truncated if it's too long
     const body_truncated = Widget.Revealer({
 	transition: 'slide_down',
@@ -100,13 +114,20 @@ function NotificationTextSection(notification, is_popup = false) {
     const body = Widget.Revealer({
 	transition: 'slide_up',
 	reveal_child: false,
-	child: Widget.Label({
-	    hpack: 'start',
-	    class_name: 'txt-smallie notification-body',
-	    use_markup: true,
-	    justification: 'left',
-	    wrap: true,
-	    label: notification.body,
+	child: Widget.Box({
+	    class_name: 'notification-body-full',
+	    vertical: true,
+	    children: [
+		Widget.Label({
+		    hpack: 'start',
+		    class_name: 'txt-smallie notification-body',
+		    use_markup: true,
+		    justification: 'left',
+		    wrap: true,
+		    label: notification.body,
+		}),
+		...actions,
+	    ],
 	})
     })
 
@@ -116,18 +137,29 @@ function NotificationTextSection(notification, is_popup = false) {
 	vertical: true,
 	class_name: 'notification-body-box',
 	attribute: {
-	    'should_truncate': (body.child.label !== body_truncated.child.label),
+	    // if the label is not truncated, or if the body only has a label and no actions.
+	    'should_truncate': (self) => {
+		const truncated_body_revealer = self.children[1];
+		const truncated_body_label = truncated_body_revealer.child;
+		const body_actions = self.children[0].child.children.slice(1);
+
+		console.log(truncated_body_label.get_layout().is_ellipsized(), truncated_body_label === notification.body, body_actions.length)
+		return (truncated_body_label.get_layout().is_ellipsized() ||
+			truncated_body_label !== notification.body ||
+			body_actions.length > 0);
+	    },
 	    'toggle_expanded': (self) => {
-		const truncated = self.children[1]
-		if (!truncated.child.get_layout().is_ellipsized() && truncated.child.label === notification.body) return;
+		console.log(self.attribute.should_truncate(self))
+		if (!self.attribute.should_truncate(self)) return;
 		const body = self.children[0]
+		const truncated = self.children[1];
 		truncated.reveal_child = !truncated.reveal_child
 		if (!truncated.reveal_child) {
 		    body.reveal_child = true;
 		} else {
 		    body.reveal_child = false;
 		}
-	    }
+	    },
 	},
 	hexpand: false,
 	children: [
@@ -198,9 +230,37 @@ export default ({
     });
 
     const event_box_wrapper = Widget.EventBox({
+	cursor: 'pointer',
+
+	// clicking the box should by default open the notification
+	// but if it's expanded (or it can't be expanded) it should open the notification
+	attribute: {
+	    'expand': (self) => {
+		self.child.children[1].attribute.toggle_expanded(self.child.children[1]);
+	    },
+	    'open': (self) => {
+		// i don't think hyprland automatically focuses to the workspace with the notification so i'm doing it manually
+		// find the workspace with the notification
+		const clients = hyprland.clients;
+		let client = null;
+		for (let i = 0; i < clients.length; i++) {
+		    if (clients[i].class === notification.appEntry) {
+			client = hyprland.getClient(clients[i].address);
+			break;
+		    }
+		}
+
+		if (!client) return;
+		hyprland.messageAsync(`dispatch focuswindow ${client.class}`)
+		notification.invoke("default");
+	    },
+	    'click': (self) => {
+		self.attribute.expand(self);
+		self.attribute.open(self);
+	    },
+	},
 	on_primary_click: (self) => {
-	    const child = self.child.children[1];
-	    child.attribute.toggle_expanded(child);
+	    self.attribute.click(self);
 	},
 	child: notification_content,
     });
