@@ -142,10 +142,17 @@ function NotificationTextSection(notification, is_popup = false) {
 		const truncated_body_revealer = self.children[1];
 		const truncated_body_label = truncated_body_revealer.child;
 		const body_actions = self.children[0].child.children.slice(1);
+		// check if there's only 1 action and that action is "default"
+		let has_actions = true;
+		if (body_actions.length == 1) {
+		    if (body_actions[0].label == "default") has_actions = false;
+		} else if (body_actions.length == 0) {
+		    has_actions = false;
+		}
 
 		return (truncated_body_label.get_layout().is_ellipsized() ||
-			truncated_body_label !== notification.body ||
-			body_actions.length > 0);
+			truncated_body_label.label !== notification.body ||
+			has_actions);
 	    },
 	    'toggle_expanded': (self) => {
 		if (!self.attribute.should_truncate(self)) return;
