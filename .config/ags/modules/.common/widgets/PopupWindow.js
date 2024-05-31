@@ -1,3 +1,5 @@
+import closeEverything from '../utils/closeEverything.js';
+
 export default ({
     name, child, ...props
 }) => {
@@ -8,7 +10,6 @@ export default ({
 	child: Widget.Box({
 	    setup: (self) => {
 		self.keybind('Escape', () => {
-		    console.log('here')
 		    closeEverything();
 		})
 	    },
