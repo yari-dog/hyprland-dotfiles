@@ -75,7 +75,8 @@
     "b e" '(next-buffer :wk "next buffer")
     "b n" '(previous-buffer :wk "previous buffer")
     "b r" '(revert-buffer :wk "reload buffer (revert)")
-    "b i" '(ibuffer :wk "ibuffer"))
+    "b i" '(ibuffer :wk "ibuffer")
+    "b R" '(rename-buffer :wk "rename buffer"))
 
   ;; eval (mostly just for when modifying the config)
   (yari/leader-keys
@@ -161,6 +162,15 @@
     "o f" '(counsel-find-file :wk "find file")
     "o r" '(counsel-recentf :wk "recent files")
     "o b" '(counsel-bookmark :wk "bookmarks"))
+
+  ;; projectile
+  (yari/leader-keys
+    "p" '(:ignore t :wk "projectile")
+    "p f" '(counsel-projectile-find-file :wk "find file")
+    "p p" '(counsel-projectile-switch-project :wk "switch project")
+    "p r" '(counsel-projectile-recentf :wk "recent files")
+    "p d" '(counsel-projectile-find-dir :wk "find directory")
+    "p m" '(projectile-command-map :wk "projectile mode map"))
 ) 
 
 (provide 'keybinds)
