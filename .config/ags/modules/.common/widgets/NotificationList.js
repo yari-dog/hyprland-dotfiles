@@ -1,7 +1,6 @@
 import Notification from './Notification.js';
 import isNotificationCenterBlacklist from '../../.common/utils/isNotificationCenterBlacklist.js';
 import notificationService from '../../../services/notification_service.js';
-const test = await Service.import('notifications');
 
 export default (is_popup = false) => {
     // get the correct notifications handler
@@ -36,17 +35,10 @@ export default (is_popup = false) => {
 		// this is to build the past notifications without endlessly recursing
 		// id is undefined on service initialisation
 
-		console.log(id, id === undefined)
-		console.log(notifications.notifications.length)
-		if (id === undefined) {
-		    if (self.attribute.initialised) {
-			return;
-		    } else {
-			self.attribute.initialised = true;
-			self.attribute.init(self);
-		    }
-		}
-
+		// determin if this is an init call
+		// cant do this in setup because notifications.notifications is async
+		// so it's empte
+		if (id === undefined) return
 		// actually do notification shit
 		const notification = notifications.getNotification(id);
 		if (notification && !notifications.dnd) {
@@ -62,6 +54,8 @@ export default (is_popup = false) => {
 	    },
 	    // cant use setup method here cause the notifications.notifications is initialised asynchronously
 	    'init': (self) => {
+		if (self.attribute.initialised) return
+		self.attribute.initialised = true; // stop race condition
 		notifications.notifications.forEach((notification) => {
 		    self.attribute.notified(self, notification.id)
 		})
@@ -71,7 +65,8 @@ export default (is_popup = false) => {
 	    self 
 		.hook(notifications, (element, id) => element.attribute.notified(element, id), 'notified')
 		.hook(notifications, (element, id) => element.attribute.dismissed(element, id), 'dismissed')
-		.hook(notifications, (element, id) => element.attribute.dismissed(element, id, true), 'closed');
+		.hook(notifications, (element, id) => element.attribute.dismissed(element, id, true), 'closed')
+		.hook(notifications, (element) => element.attribute.init(element), 'notified-init');
 	},
     });
 }

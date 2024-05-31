@@ -15,6 +15,7 @@ class Handler extends Service {
 		['notified']: ['int'],
 		['dismissed']: ['int'],
 		['closed']: ['int'],
+		['notified-init']: [],
 	    },
 	    {
 		['notifications']: ['array', 'r'],
@@ -74,6 +75,7 @@ class Handler extends Service {
 	this.service.connect('notified', (_, id) => this.#notify(id));
 	this.service.connect('dismissed', (_, id) => this.#dismissed(id));
 	this.service.connect('closed', (_, id) => this.#closed(id));
+	this.service.connect('notified-init', () => this.emit('notified-init'));
 	this.service.connect('changed', () => this.emit('changed'));
     }
 }
@@ -90,6 +92,7 @@ class NotificationService extends Service{
 		'dismissed': ['int'],
 		'closed': ['int'],
 		'notified': ['int'],
+		'notified-init': [],
 	    },
 	    {
 		// name, type, and permissions (r, w, rw)
@@ -120,6 +123,7 @@ class NotificationService extends Service{
     // it implements an interface that the notification list can use
     #popupHandler = new Handler(this, true);
     #notificationHandler = new Handler(this, false);
+    #init = false; // is service initialised? (has it emitted notified-init yet?)
     
     constructor(){
 	super();
@@ -129,6 +133,12 @@ class NotificationService extends Service{
     // mirror logic from notifications service
     // notifications changed
     #notify(id) {
+	console.log('service',id);
+	if (id === undefined) {
+	    this.#clearPastBlacklisted();
+	    this.emit('notified-init');
+	    return;
+	}
 	this.emit('notified', id);
 	return
     }
@@ -147,6 +157,17 @@ class NotificationService extends Service{
     #closed(id) {
 	this.emit('closed', id);
 	return
+    }
+
+    #changed() {
+	// determine if this is initialisation
+	if (!this.#init) {
+	    this.#clearPastBlacklisted();
+	    this.#init = true;
+	    this.emit('notified-init');
+	    return;
+	}
+	this.emit('changed');
     }
 
 
@@ -172,6 +193,14 @@ class NotificationService extends Service{
 	return notifications.clear();
     }
 
+    #clearPastBlacklisted() {
+	notifications.notifications.forEach(notification => {
+	    if (this.isBlacklistedFromNotifCenter(notification)) {
+		notification.close();
+	    }
+	});
+    }
+
     // widget.hook returns itself
     // internally it takes {service, callback, signal}
     // and called .connect() on the service
@@ -181,7 +210,7 @@ class NotificationService extends Service{
 	notifications.connect('notified', (_, id) => this.#notify(id));
 	notifications.connect('dismissed', (_, id) => this.#dismissed(id));
 	notifications.connect('closed', (_, id) => this.#closed(id));
-	notifications.connect('changed', () => this.emit('changed'));
+	notifications.connect('changed', () => this.#changed());
     }
 }
 
