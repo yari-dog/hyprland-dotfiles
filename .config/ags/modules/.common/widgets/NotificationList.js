@@ -30,19 +30,13 @@ export default (is_popup = false) => {
 		child.attribute.destroy(child);
 	    },
 	    'notified': (self, id) => {
-		// init refers to initialising single pre-existing notifications
-		// and is called from the load_past method
-		// this is to build the past notifications without endlessly recursing
-		// id is undefined on service initialisation
-
 		// determin if this is an init call
-		// cant do this in setup because notifications.notifications is async
-		// so it's empte
 		if (id === undefined) return
-		// actually do notification shit
+
+		
 		const notification = notifications.getNotification(id);
-		if (notification && !notifications.dnd) {
-		    // create notification widget
+		
+		if (notification && (!notifications.dnd || !is_popup)) {
 		    const notification_widget = Notification({
 			notification: notification,
 			is_popup: is_popup
