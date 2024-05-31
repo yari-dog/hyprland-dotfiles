@@ -77,8 +77,18 @@ function QuickSettingToggle({callback, icon, ...props}) {
     return Widget.Button({
 	class_name: 'quick-setting-toggle-button',
 	...props,
+	onClicked: (self) => {
+	    callback(self);
+	},
 	child: MaterialIcon(icon, 'larger', {hexpand: true, vexpand: true}),
     })
+}
+
+function ToggleDnd(self) {
+    notifications.dnd = !notifications.dnd;
+    self.child.label = notifications.dnd ? 'notifications_off' : 'notifications';
+    self.toggleClassName('active', notifications.dnd)
+    return notifications.dnd;
 }
 
 function QuickSettings() {
@@ -87,7 +97,7 @@ function QuickSettings() {
 	hpack: 'end',
 	children: [
 	    QuickSettingToggle({icon: 'dark_mode', callback: () => {}}),
-	    QuickSettingToggle({icon: 'notifications', callback: () => {}}),
+	    QuickSettingToggle({icon: 'notifications', callback: (self) => {ToggleDnd(self)}}),
 	    QuickSettingToggle({icon: 'settings', callback: () => {}}),
 	    QuickSettingToggle({icon: 'logout', callback: () => {}}), 
 	]

@@ -43,6 +43,11 @@
     color: $onLayer2;
 }
 
+.sidebar .quick-setting-toggle-button.active {
+	background-color: $layer2Active;
+	color: $onLayer2;
+}
+
 // ------ notifications
 .sidebar .notifications-stack {
     margin: 0.5rem;
