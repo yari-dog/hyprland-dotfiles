@@ -143,13 +143,11 @@ function NotificationTextSection(notification, is_popup = false) {
 		const truncated_body_label = truncated_body_revealer.child;
 		const body_actions = self.children[0].child.children.slice(1);
 
-		console.log(truncated_body_label.get_layout().is_ellipsized(), truncated_body_label === notification.body, body_actions.length)
 		return (truncated_body_label.get_layout().is_ellipsized() ||
 			truncated_body_label !== notification.body ||
 			body_actions.length > 0);
 	    },
 	    'toggle_expanded': (self) => {
-		console.log(self.attribute.should_truncate(self))
 		if (!self.attribute.should_truncate(self)) return;
 		const body = self.children[0]
 		const truncated = self.children[1];
@@ -170,6 +168,9 @@ function NotificationTextSection(notification, is_popup = false) {
 
     const text = Widget.Box({
 	attribute: {
+	    'should_truncate': (self) => {
+		return self.children[1].attribute.should_truncate(self.children[1]);
+	    },
 	    'toggle_expanded': (self) => {
 		self.children[1].attribute.toggle_expanded(self.children[1]);
 	    }
@@ -199,7 +200,10 @@ function NotificationTextSection(notification, is_popup = false) {
 	attribute: {
 	    'toggle_expanded': (self) => {
 		self.children[0].attribute.toggle_expanded(self.children[0]);
-	    }
+	    },
+	    'should_truncate': (self) => {
+		return self.children[0].attribute.should_truncate(self.children[0]);
+	    },
 	},
 	children: [
 	    text,
@@ -235,10 +239,13 @@ export default ({
 	// clicking the box should by default open the notification
 	// but if it's expanded (or it can't be expanded) it should open the notification
 	attribute: {
+	    'should_truncate': (self) => {
+		return self.child.children[1].attribute.should_truncate(self.child.children[1]);
+	    },
 	    'expand': (self) => {
 		self.child.children[1].attribute.toggle_expanded(self.child.children[1]);
 	    },
-	    'open': (self) => {
+	    'open': (self, forced = false) => {
 		// i don't think hyprland automatically focuses to the workspace with the notification so i'm doing it manually
 		// find the workspace with the notification
 		const clients = hyprland.clients;
@@ -252,10 +259,14 @@ export default ({
 
 		if (!client) return;
 		hyprland.messageAsync(`dispatch focuswindow ${client.class}`)
-		notification.invoke("default");
+		if (!forced) notification.invoke("default");
 	    },
 	    'click': (self) => {
-		self.attribute.expand(self);
+		if (self.attribute.should_truncate(self)) {
+		    self.attribute.expand(self);
+		    return;
+		}
+		
 		self.attribute.open(self);
 	    },
 	},
@@ -283,10 +294,19 @@ export default ({
 	    'close': (self) => {
 		self.attribute.notification.close();
 	    },
+	    'invoked': (self, action) => {
+		if (!action) return;
+		if (action === 'default') {
+		    self.child.attribute.open(self.child, true);
+		}
+	    },
 	    'notification': notification,
 	},
 	class_name: 'notification-box',
 	child: event_box_wrapper,
+	setup: (self) => {
+	    self.hook(notification, (self, action) => self.attribute.invoked(self, action), 'invoked');
+	}
     });
 
     return notification_box;
