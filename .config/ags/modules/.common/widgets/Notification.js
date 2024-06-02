@@ -141,11 +141,13 @@ function NotificationTextSection(notification, is_popup = false) {
 	    'should_truncate': (self) => {
 		const truncated_body_revealer = self.children[1];
 		const truncated_body_label = truncated_body_revealer.child;
-		const body_actions = self.children[0].child.children.slice(1);
+		const body_actions = notification.actions;
+
+		// log the body actions
 		// check if there's only 1 action and that action is "default"
 		let has_actions = true;
 		if (body_actions.length == 1) {
-		    if (body_actions[0].label == "default") has_actions = false;
+		    if (body_actions[0].id == "default") has_actions = false;
 		} else if (body_actions.length == 0) {
 		    has_actions = false;
 		}

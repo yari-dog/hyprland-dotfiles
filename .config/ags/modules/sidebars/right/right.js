@@ -75,6 +75,7 @@ function Notifications() {
 
 function QuickSettingToggle({callback, icon, ...props}) {
     return Widget.Button({
+	cursor: 'pointer',
 	class_name: 'quick-setting-toggle-button',
 	...props,
 	onClicked: (self) => {

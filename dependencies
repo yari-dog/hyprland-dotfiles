@@ -79,6 +79,9 @@ ttf-material-symbols-variable-git
 # bootloader
 systemd
 
+# kernel
+linux-zen
+
 # storage
 ntfs-3g (read ntfs)
 apfs-fuse (read apfs)
@@ -93,3 +96,4 @@ bash-language-server (bash scripts)
 clang (c/c++)
 typescript-language-server (ts & js)
 pandoc (markdown live preview)
+

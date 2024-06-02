@@ -1,6 +1,7 @@
 import MaterialIcon from '../../.common/widgets/MaterialIcon.js'
 import notificationService from '../../../services/notification_service.js'
 const notifications = notificationService.getHandler(false);
+const network = await Service.import('network');
 const { GLib } = imports.gi;
 
 function DateClock() {
@@ -44,15 +45,34 @@ function NotificationIcon() {
     })
 }
 
+function NetworkIcon() {
+    return Widget.Box({
+	child: MaterialIcon('network_wifi', 'bar-right-network-icon txt-norm', {
+	    vexpand: true,
+	    setup: (self) => self.hook(network, (self) => {
+		const connected = network.connectivity === "full" ? true : false;
+		const ethernet = network.primary === "wired" ? true : false;
+		if (!connected) self.label = 'error';
+		else if (ethernet) self.label = 'lan';
+		else self.label = 'wifi';
+	    }),
+	}),
+    })
+}
+
 function SideBarOpener() {
     return Widget.EventBox({
+	cursor: 'pointer',
 	class_name: 'bar-right-opener-eventbox',
 	onPrimaryClick: () => {
 	    App.toggleWindow('right-sidebar')
 	},
 	child: Widget.Box({
 	    hpack: 'center', vpack: 'center',
-	    child: NotificationIcon(),
+	    children: [
+		NotificationIcon(),
+		NetworkIcon(),
+	    ],
 	}),
     })
 }

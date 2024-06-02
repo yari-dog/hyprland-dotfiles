@@ -24,6 +24,7 @@ export default ({
                  min-height: ${fillMonitor.includes('v') ? dimensions.height : 0}px;`
     
     return Widget.EventBox({
+	cursor: 'default',
 	child: Widget.Box({
 	    expand: expand,
 	    css: css,

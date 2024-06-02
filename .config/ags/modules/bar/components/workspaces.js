@@ -151,6 +151,7 @@ export function Workspaces() {
         vexpand: true,
         hpack: 'center', vpack: 'start',
         class_name: 'bar-workspaces bar-island bar-group',
+	cursor: 'pointer',
         child: workspaces,
     })
 }

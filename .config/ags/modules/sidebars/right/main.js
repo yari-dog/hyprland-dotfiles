@@ -1,6 +1,7 @@
 import PopupWindow from '../../.common/widgets/PopupWindow.js';
 import Right from './right.js';
 import clickCloseRegion from '../../.common/utils/clickCloseRegion.js';
+import enableClickThrough from '../../.common/utils/Clickthrough.js';
 
 export default () => PopupWindow({
     keymode: 'on-demand',
