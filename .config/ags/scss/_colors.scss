@@ -1,8 +1,6 @@
 // credit to end-4 dots
-
 $rootTransparency: 0.31; // Transparency = 1 - opacity
 $transparency: 0.75;
-
 // Transparent versions
 @if $transparent == True {
   $background: transparentize($background, $rootTransparency);

@@ -13,6 +13,7 @@
 - [[#dashboard][dashboard]]
 - [[#dired][dired]]
 - [[#diminish][diminish]]
+- [[#discord][discord]]
 - [[#eglot][eglot]]
 - [[#evil-mode][evil mode]]
 - [[#flycheck][flycheck]]
@@ -145,6 +146,12 @@ hide minor modes
 #+begin_src emacs-lisp
 (use-package diminish :ensure t) ;; hides minor modes from bar
 #+end_src
+* discord
+#+begin_src emacs-lisp
+  (use-package elcord
+    :ensure t)
+  (elcord-mode)
+#+end_src
 * eglot
 completion backend (uses lsp's, check deps)
 #+begin_src emacs-lisp
@@ -154,7 +161,8 @@ completion backend (uses lsp's, check deps)
     (setq eglot-events-buffer-size 0)
     :init
     (add-hook 'python-mode-hook 'eglot-ensure)
-    (add-hook 'js-mode-hook 'eglot-ensure))
+    (add-hook 'js-mode-hook 'eglot-ensure)
+    (add-hook 'c-mode-common-hook 'eglot-ensure))
 #+end_src
 * evil mode
 vim like
@@ -257,6 +265,18 @@ for languages without native modes
     :mode (("\\.md\\'" . markdown-mode)
            ("README\\.md\\'" . gfm-mode))
     :init (setq markdown-command "pandoc --metadata title='html'"))
+
+  ;; c mode
+  (use-package cc-mode
+    :ensure t
+    :config
+    (setq c-default-style "linux"
+          c-basic-offset 4)
+    (setq-default c-tab-always-indent nil)
+    (add-hook 'c-mode-common-hook
+              (lambda ()
+                (c-set-style "linux")
+                (setq c-basic-offset 4))))
   #+end_src
 * lsp mode etc
 Maybe in the future use lsp, dap-mode looks neat for C etc but the setup is such a pain in the arse that i don't think it's worth it
