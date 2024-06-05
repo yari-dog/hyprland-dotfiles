@@ -9,7 +9,7 @@
 }
 
 .bar-layout-normal {
-    min-height: 2.5rem;
+    //min-height: 2.5rem;
 }
 
 .bar-group {
@@ -40,11 +40,12 @@
 }
 
 .bar-window-title-class {
-    margin: 0;
+    margin-top: -0.1rem;
+    margin-bottom: -0.5rem;
 }
 
 .bar-window-title-title {
-    margin: 0;
+    margin-top: 0;
 }
 // --------- right
 .bar-right {
@@ -54,7 +55,7 @@
 }
 
 .bar-right-container {
-    padding: 0.5rem 0.25rem;
+    padding: 0.25rem 0.25rem;
     padding-right: 3.5rem;
 }
 
@@ -62,13 +63,19 @@
     padding: 0 1rem;
 }
 
+.bar-right-opener-eventbox {
+}
+
 .bar-right-opener-eventbox > box {
     @include normal-rounding;
+    padding: 0 1rem;
 }
 
 .bar-right-opener-eventbox:hover > box {
-	background-color: $layer2;
-	color: $onLayer2;
+    background-color: $layer1;
+}
+
+.bar-right-opener-eventbox label {
 }
 
 // --------- workspaces
@@ -106,18 +113,18 @@
 
 .bar-workspaces-workspace-in-use {
     background-color: $layer2;
-    color: $workspaceOnLayer2;
+    color: $onLayer2;
 }
 
 .bar-workspaces-workspace-in-use-alt-monitor > label {
     background-color: $layer3;
-    color: $workspaceOnLayer2;
+    color: $onLayer2;
 }
 
 // active workspace styling
 .bar-workspaces-workspace-active > label {
-    background-color: $workspaceLayer3;
-    color: $workspaceOnLayer3;
+    background-color: $primary;
+    color: $onPrimary;
 }
 
 //background
