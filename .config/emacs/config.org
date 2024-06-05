@@ -136,10 +136,10 @@ the welcome screen
 * dired
 #+begin_src emacs-lisp
   (use-package dired-preview
-    :ensure t
-    :config
-    (setq dired-preview-delay 0.1)
-    (dired-preview-global-mode 1))
+     :ensure t
+     :config
+     (setq dired-preview-delay 0.1)
+     (dired-preview-global-mode 1))
 #+end_src
 * diminish
 hide minor modes
@@ -149,8 +149,9 @@ hide minor modes
 * discord
 #+begin_src emacs-lisp
   (use-package elcord
-    :ensure t)
-  (elcord-mode)
+    :ensure t
+    :init
+    (elcord-mode))
 #+end_src
 * eglot
 completion backend (uses lsp's, check deps)
@@ -268,7 +269,6 @@ for languages without native modes
 
   ;; c mode
   (use-package cc-mode
-    :ensure t
     :config
     (setq c-default-style "linux"
           c-basic-offset 4)
