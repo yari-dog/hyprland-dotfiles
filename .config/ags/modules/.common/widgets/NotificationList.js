@@ -36,6 +36,9 @@ export default (is_popup = false) => {
 		if (id === undefined) return
 
 		const notification = notifications.getNotification(id);
+
+		// check if notification with the same ID is already displayed
+		if (self.children.find((child) => child.attribute.notification.id === id)) return;
 		
 		if (notification && (!notifications.dnd || !is_popup)) {
 		    const notification_widget = Notification({
