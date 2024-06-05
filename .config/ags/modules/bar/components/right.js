@@ -6,17 +6,16 @@ const { GLib } = imports.gi;
 
 function DateClock() {
     return Widget.Box({
-        vpack: 'center',
         class_name: "bar-right-dateclock txt-large",
-        children: [
-            Widget.Label({
-                class_name: 'bar-right-time',
-                label: GLib.DateTime.new_now_local().format('%H:%M'),
-                setup: (self) => self.poll(5000, label => {
-                    label.label = GLib.DateTime.new_now_local().format('%H:%M')
-                })
+        child: Widget.Label({
+	    vpack: 'center',
+            class_name: 'bar-right-time',
+            label: GLib.DateTime.new_now_local().format('%H:%M'),
+            setup: (self) => self.poll(5000, label => {
+                label.label = GLib.DateTime.new_now_local().format('%H:%M')
             })
-        ]
+        })
+        
     })
 }
 // notification icons:
@@ -25,8 +24,8 @@ function DateClock() {
 // notifications_disabled: 'notifications_off'
 // TODO: move to own file once the sidebar is implemented, and a permenant notifications list exists
 function NotificationIcon() {
-    return MaterialIcon('notifications', 'bar-right-notifications-icon txt-norm', {
-	vexpand: true,
+    return MaterialIcon('notifications', 'medium', {
+	vpack: 'center',
 	setup: (self) => self.hook(notifications, (self) => {
 	    // NOTE: dnd is set by setting the attribute in the notifications manager
 	    const dnd = notifications.dnd
@@ -46,16 +45,14 @@ function NotificationIcon() {
 }
 
 function NetworkIcon() {
-    return Widget.Box({
-	child: MaterialIcon('network_wifi', 'bar-right-network-icon txt-norm', {
-	    vexpand: true,
-	    setup: (self) => self.hook(network, (self) => {
-		const connected = network.connectivity === "full" ? true : false;
-		const ethernet = network.primary === "wired" ? true : false;
-		if (!connected) self.label = 'error';
-		else if (ethernet) self.label = 'lan';
-		else self.label = 'wifi';
-	    }),
+    return MaterialIcon('network_wifi', 'medium', {
+	vpack: 'center',
+	setup: (self) => self.hook(network, (self) => {
+	    const connected = network.connectivity === "full" ? true : false;
+	    const ethernet = network.primary === "wired" ? true : false;
+	    if (!connected) self.label = 'error';
+	    else if (ethernet) self.label = 'lan';
+	    else self.label = 'wifi';
 	}),
     })
 }
@@ -63,29 +60,30 @@ function NetworkIcon() {
 function SideBarOpener() {
     return Widget.EventBox({
 	cursor: 'pointer',
+	//vexpand: true,
 	class_name: 'bar-right-opener-eventbox',
 	onPrimaryClick: () => {
 	    App.toggleWindow('right-sidebar')
 	},
 	child: Widget.Box({
-	    hpack: 'center', vpack: 'center',
 	    children: [
 		NotificationIcon(),
 		NetworkIcon(),
 	    ],
-	}),
+	    
+	})
     })
 }
 
 export function Right() {
     const right = Widget.Box({
+	vpack: 'center',
         class_name: 'bar-right-container',
         children: [DateClock(), SideBarOpener()],
     })
     return Widget.Box({
         hexpand: false,
         hpack: 'end', //vpack: 'start',
-        vexpand: true,
         class_name: 'bar-title bar-right bar-group',
         child: right,
     })

@@ -60,11 +60,12 @@ class GroupingActiveStatus {
     }
 
     getClassName() {
-        if (!this.in_use) return 'bar-workspaces-workspace';
+	const size = 'txt-small'
+        if (!this.in_use) return `bar-workspaces-workspace ${size}`;
         if (!this.determined) this.determineGrouping();
         const active = this.active ? 'bar-workspaces-workspace-active' : ''
         const altActive = this.isActiveOnSecondaryMonitor() ? 'bar-workspaces-workspace-in-use-alt-monitor' : ''
-        return `bar-workspaces-workspace bar-workspaces-workspace-in-use ${active} ${altActive} bar-workspaces-workspace-background-${this.background_grouping}`
+        return `bar-workspaces-workspace bar-workspaces-workspace-in-use ${active} ${altActive} bar-workspaces-workspace-background-${this.background_grouping} ${size}`;
     }
 }
 
@@ -137,7 +138,6 @@ export function Workspaces() {
                     justification: 'fill',
                 }),
                 setup: (self) => self.hook(hyprland, (label) => {
-                    //const background_grouping, foreground_grouping, active = getGroupingStatus(self.attribute);
                     let group = getGroupingStatus(self.attribute);
                     label.child.label = group.getLabel();
                     label.class_name = group.getClassName();
@@ -147,9 +147,10 @@ export function Workspaces() {
             onClicked: (self) => dispatch(self.child.attribute),
         }))
     })
+
     return Widget.EventBox({
         vexpand: true,
-        hpack: 'center', vpack: 'start',
+        hpack: 'center', vpack: 'end',
         class_name: 'bar-workspaces bar-island bar-group',
 	cursor: 'pointer',
         child: workspaces,

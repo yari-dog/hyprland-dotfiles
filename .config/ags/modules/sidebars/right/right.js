@@ -2,6 +2,8 @@ import NotificationList from '../../.common/widgets/NotificationList.js';
 import MaterialIcon from '../../.common/widgets/MaterialIcon.js';
 import notificationService from '../../../services/notification_service.js';
 const notifications = notificationService.getHandler(false);
+const hyprland = await Service.import('hyprland');
+const { Gdk, Gtk } = imports.gi;
 
 
 function Notifications() {
@@ -19,24 +21,12 @@ function Notifications() {
 	hexpand: true,
 	hscroll: 'never', vscroll: 'automatic',
 	propagate_natural_height: true,
-	attribute: {
-	    'get_notifications': (self) => {
-		// child.child because scrollables are weird and their children are wrapped in a viewport
-		return self.child.child.attribute.get_notifications(self.child.child);
-	    }
-	},
 	child: Widget.Box({
 	    class_name: 'sidebar-notifications',
 	    name: 'notifications',
 	    vexpand: true,
 	    hpack: 'start',
-	    vertical: true,
-	    attribute: {
-		'get_notifications': (self) => {
-		    return self.children[0].attribute.notifications;
-		},
-	    },
-	    children: [
+	    vertical: true,children: [
 		NotificationList(false),
 		clear_button,
 	    ],
@@ -54,7 +44,7 @@ function Notifications() {
 	    }),
 	]
     });
-	    
+    
     return Widget.Box({
 	class_name: 'notifications-stack sidebar-section',
 	child: Widget.Stack({
@@ -73,17 +63,20 @@ function Notifications() {
 }
 
 
-function QuickSettingToggle({callback, icon, ...props}) {
+
+function QuickSettingToggle({callback, icon, menu, ...props}) {
     return Widget.Button({
 	cursor: 'pointer',
 	class_name: 'quick-setting-toggle-button',
 	...props,
-	onClicked: (self) => {
-	    callback(self);
+	attribute: {
+	    'menu': menu,
 	},
-	child: MaterialIcon(icon, 'larger', {hexpand: true, vexpand: true}),
+	onClicked: callback,
+	child: MaterialIcon(icon, 'medium', {})//{hexpand: true, vexpand: true}),
     })
 }
+
 
 function ToggleDnd(self) {
     notifications.dnd = !notifications.dnd;
@@ -92,7 +85,57 @@ function ToggleDnd(self) {
     return notifications.dnd;
 }
 
+function IconMenuItem({icon, label, ...props}) {
+    return Widget.MenuItem({
+	cursor: 'pointer',
+	class_name: 'menu-item',
+	child: Widget.Box({
+	    spacing: 10,
+	    children: [
+		MaterialIcon(icon, 'medium', {}),
+		Widget.Label({label: label, class_name: 'txt txt-medium'}),
+	    ],
+	}),
+	...props,
+    });
+}
+
+
 function QuickSettings() {
+    const logout_menu = QuickSettingToggle({
+	icon: 'logout',
+	menu: Widget.Menu({
+	    class_name: 'menu',
+	    children: [
+		IconMenuItem({
+		    icon: 'logout',
+		    label: 'logout',
+		    onActivate: () => {
+			hyprland.messageAsync('dispatch exit');
+		    },
+		}),
+		IconMenuItem({
+		    icon: 'power_settings_new',
+		    label: 'shutdown',
+		    onActivate: () => {
+			Utils.exec('systemctl poweroff')
+		    },
+		}),
+		IconMenuItem({
+		    icon: 'restart_alt',
+		    label: 'restart',
+		    onActivate: () => {
+			Utils.exec('systemctl reboot')
+		    },
+		}),
+
+	    ],
+	}),
+	callback: (self) => {
+	    self.attribute.menu.popup_at_widget(self, Gdk.Gravity.SOUTH_EAST, Gdk.Gravity.STATIC, null);
+	},
+    })
+    
     return Widget.Box({
 	class_name: 'quick-settings sidebar-section',
 	hpack: 'end',
@@ -100,17 +143,21 @@ function QuickSettings() {
 	    QuickSettingToggle({icon: 'dark_mode', callback: () => {}}),
 	    QuickSettingToggle({icon: 'notifications', callback: (self) => {ToggleDnd(self)}}),
 	    QuickSettingToggle({icon: 'settings', callback: () => {}}),
-	    QuickSettingToggle({icon: 'logout', callback: () => {}}), 
+	    logout_menu,
+	    //QuickSettingToggle({icon: 'logout', callback: (self) => {}}),
 	]
     });
 }
 
-export default () => {
+export default () => {  
     return Widget.Box({
 	class_name: 'sidebar sidebar-right',
 	vertical: true,
-	vexpand: true, hexpand: true,
+	vexpand: true, hexpand: false,
 	vpack: 'start',
+	
+	
+	homogeneous: false,
 	children: [
 	    QuickSettings(),
 	    Notifications(),

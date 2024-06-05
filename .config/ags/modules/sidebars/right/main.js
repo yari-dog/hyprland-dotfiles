@@ -5,16 +5,20 @@ import enableClickThrough from '../../.common/utils/Clickthrough.js';
 
 export default () => PopupWindow({
     keymode: 'on-demand',
-    anchor: ['top', 'right', 'bottom'],
+    anchor: ['top', 'right', 'bottom', 'left'],
     name: 'right-sidebar',
     layer: 'overlay',
-    child: Widget.Box({
-	children: [
+    child: Widget.Overlay({
+	overlays: [
 	    clickCloseRegion({
 		nameToClose: 'right-sidebar',
 		fillMonitor: 'hv'
 	    }),
-	    Right(),
+	    Widget.Box({
+		hpack: 'end',
+		vpack: 'start',
+		child: Right(),
+	    })
 	],
     }),
 })

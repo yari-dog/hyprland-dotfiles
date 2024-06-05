@@ -18,15 +18,19 @@ export default ({
     fillMonitor = '',
     multiMonitor = false,
     expand = true,
+    ...props
 }) => {
     const dimensions = getMonitorDimensions(monitor)
     const css = `min-width: ${fillMonitor.includes('h') ? dimensions.width : 0}px;
                  min-height: ${fillMonitor.includes('v') ? dimensions.height : 0}px;`
     
     return Widget.EventBox({
+	...props,
+	vexpand: true,
 	cursor: 'default',
 	child: Widget.Box({
 	    expand: expand,
+	    vexpand: true,
 	    css: css,
 	}),
 	setup: (self) => {
