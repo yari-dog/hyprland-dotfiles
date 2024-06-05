@@ -100,8 +100,6 @@ class NotificationService extends Service{
 		'notifications': ['array', 'r'],
 		'popups': ['array', 'r'],
 		'dnd': ['bool', 'rw'],
-		// extentions
-		'test': ['function', 'r']
 	    },
 	)
     }
