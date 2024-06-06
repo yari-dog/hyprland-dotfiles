@@ -43,13 +43,13 @@ function ClientTitle() {
 export function Left() {
     const left = Widget.Box({
 	homogeneous: false,
-        class_name: 'bar-left-container',
+        class_name: 'bar-left-group bar-box',
         children: [ClientTitle()],
     })
     return Widget.EventBox({
 	hexpand: false,
 	hpack: 'start',
-        class_name: 'bar-title bar-left bar-group',
-        child: left,
+        class_name: 'bar-left bar-group',
+	child: left,
     })
 }

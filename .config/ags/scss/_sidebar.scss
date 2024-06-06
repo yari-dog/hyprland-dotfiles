@@ -1,6 +1,6 @@
 
 .sidebar {
-    background-color: $background;
+    background-color: $layer0;
     color: $onLayer0;
     @include large-rounding;
     margin: 0.5rem;
@@ -10,6 +10,9 @@
 .sidebar .sidebar-section {
     background-color: $layer1;
     color: $onLayer1;
+    @include large-rounding;
+    margin: 0.5rem;
+    padding: 0.5rem;
 }
 
 .sidebar .sidebar-section > box {
@@ -25,9 +28,6 @@
 
 // ------ quick settings
 .sidebar .quick-settings {
-    margin: 0.5rem;
-    padding: 0.5rem;
-    @include large-rounding;
 }
 
 .sidebar .quick-setting-toggle-button {
@@ -46,15 +46,47 @@
 }
 
 .sidebar .quick-setting-toggle-button.active {
-	background-color: $layer2Active;
-	color: $onLayer2;
+    background-color: $layer2Active;
+    color: $onLayer2;
+}
+
+// ------ control panel
+.sidebar .control-panel {
+    padding: 0;
+}
+
+.sidebar .control-panel .icon-material {
+    color: $onLayer2;
+}
+
+.sidebar .control-panel button {
+    padding: 0.5rem;
+    @include normal-rounding;
+}
+
+.sidebar .control-panel button:hover {
+    background-color: $layer2Hover;
+}
+
+.volume-slider {
+    margin-left: 0.5rem;
+    trough {
+	background-color: $layer3;
+	min-height: 1.2rem;
+	@include large-rounding;
+    }
+    highlight {
+	background-color: $primary;
+	@include large-rounding;
+    }
+    slider {
+	background-color: $primary;
+	@include large-rounding;
+    }
 }
 
 // ------ notifications
 .sidebar .notifications-stack {
-    margin: 0.5rem;
-    padding: 0.5rem;
-    @include large-rounding;
 }
 
 .sidebar-notifications-scroll {

@@ -14,6 +14,12 @@
 
 .bar-group {
     background-color: $layer0;
+    color: $onLayer0;
+    @include normal-rounding;
+}
+
+.bar-box {
+    padding: 0.25rem 3rem;
 }
 
 .bar-island {
@@ -21,22 +27,21 @@
     @include normal-rounding;
 }
 
+.bar-container {
+}
+
 // --------- left
 
 .bar-left {
-    @include normal-rounding;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
 
-.bar-left-container {
-    padding: 0.25rem 0.25rem;
+.bar-left-group {
     padding-left: 3.5rem;
-
 }
 
 .bar-left-title {
-    padding: 0 2rem;
 }
 
 .bar-window-title-class {
@@ -49,30 +54,28 @@
 }
 // --------- right
 .bar-right {
-    @include normal-rounding;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.bar-right-container {
-    padding: 0.25rem 0.25rem;
+.bar-right-group {
     padding-right: 3.5rem;
 }
 
 .bar-right-dateclock {
-    padding: 0 1rem;
 }
 
 .bar-right-opener-eventbox {
+    
 }
 
 .bar-right-opener-eventbox > box {
-    @include normal-rounding;
     padding: 0 1rem;
+    @include normal-rounding;
 }
 
 .bar-right-opener-eventbox:hover > box {
-    background-color: $layer1;
+    background-color: $layer1Hover;
 }
 
 .bar-right-opener-eventbox label {
@@ -156,6 +159,6 @@
 }
 
 .bar-corner {
-    background-color: $layer0;
+    background-color: $layer1;
     @include large-rounding;
 }

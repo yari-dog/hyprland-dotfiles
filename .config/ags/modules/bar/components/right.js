@@ -78,13 +78,14 @@ function SideBarOpener() {
 export function Right() {
     const right = Widget.Box({
 	vpack: 'center',
-        class_name: 'bar-right-container',
+        class_name: 'bar-right-group bar-box',
+	spacing: 10,
         children: [DateClock(), SideBarOpener()],
     })
     return Widget.Box({
         hexpand: false,
         hpack: 'end', //vpack: 'start',
-        class_name: 'bar-title bar-right bar-group',
+        class_name: 'bar-right bar-group',
         child: right,
     })
 }

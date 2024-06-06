@@ -46,7 +46,7 @@ function NotificationTime(notification) {
     else time_string = notification_time.format('%d/%m');
     
     return Widget.Label({
-	class_name: 'txt-smaller txt-semibold notification-time',
+	class_name: 'txt txt-smaller txt-semibold notification-time',
 	justification: 'right',
 	vpack: 'center',
 	label: time_string,
@@ -58,7 +58,7 @@ function NotificationTitle(notification) {
 	xalign: 0,
 	hexpand: true,
 	justification: 'left',
-	class_name: 'txt-smallie notification-title',
+	class_name: 'txt txt-smallie notification-title',
 	max_width_chars: 1,
 	truncate: 'end',
 	label: notification.summary,
@@ -86,7 +86,7 @@ function NotificationTextSection(notification, is_popup = false) {
 
     const actions = [...notification.actions.map((action) => {
 	return Widget.Button({
-	    class_name: 'notification-action',
+	    class_name: 'notification-action txt',
 	    label: action.label,
 	    on_clicked: () => {
 		notification.invoke(action.id);
@@ -102,7 +102,7 @@ function NotificationTextSection(notification, is_popup = false) {
 	reveal_child: true,
 	child: Widget.Label({
 	    hpack: 'start',
-	    class_name: 'txt-smallie notification-body',
+	    class_name: 'txt txt-smallie notification-body',
 	    use_markup: true,
 	    justification: 'left',
 	    lines: 1,
@@ -120,7 +120,7 @@ function NotificationTextSection(notification, is_popup = false) {
 	    children: [
 		Widget.Label({
 		    hpack: 'start',
-		    class_name: 'txt-smallie notification-body',
+		    class_name: 'txt txt-smallie notification-body',
 		    use_markup: true,
 		    justification: 'left',
 		    wrap: true,
