@@ -24,6 +24,7 @@
 // ----------------- right sidebar
 
 .sidebar-right {
+    min-width: 42rem;
 }
 
 // ------ quick settings
@@ -114,4 +115,57 @@
 
 .menu-item:last-child {
 	margin-bottom: 0;
+}
+
+// ------ switcher
+.sidebar .sidebar-switcher {
+    padding: 0.5rem;
+    background-color: $layer2;
+    color: $onLayer2;
+    @include large-rounding;
+}
+
+.sidebar .sidebar-switcher > .switcher-button {
+    margin: 0 0.25rem;
+    padding: 0.5rem;
+    min-width: 2rem;
+    min-height: 2rem;
+    @include full-rounding;
+    background-color: $layer2;
+    color: $onLayer2;
+}
+
+.sidebar .sidebar-switcher > .switcher-button.active {
+    background-color: $layer2Active;
+    color: $onLayer2;
+}
+
+.sidebar .sidebar-switcher > .switcher-button:hover {
+    background-color: $layer2Hover;
+    color: $onLayer2;
+}
+
+// ------ settings
+.sidebar .settings-box {
+    padding: 0.5rem;
+    background-color: $layer2;
+    color: $onLayer2;
+    @include large-rounding;
+}
+
+.sidebar .setting-switch {
+    @include large-rounding;
+    background-color: $layer3;
+    color: $onLayer3;
+    
+    slider {
+	min-width: 1.5rem;
+	min-height: 1.5rem;
+	background-color: $primary;
+	@include full-rounding;
+    }
+
+    image {
+	
+    }
 }

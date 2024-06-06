@@ -27,8 +27,6 @@
     @include normal-rounding;
 }
 
-.bar-container {
-}
 
 // --------- left
 
@@ -159,6 +157,6 @@
 }
 
 .bar-corner {
-    background-color: $layer1;
+    background-color: $layer0;
     @include large-rounding;
 }
