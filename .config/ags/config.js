@@ -2,6 +2,8 @@
 import Gdk from 'gi://Gdk'
 import GLib from 'gi://GLib'
 
+import settings from './services/settings_service.js'
+
 import { Bar, BarCorners } from './modules/bar/main.js'
 import Corner from './modules/screencorners/main.js'
 import Popups from './modules/popups/main.js'
@@ -33,14 +35,20 @@ function forMonitorsAsync(widget) {
     return range(n, 0).forEach((n) => widget(n))
 }
 
+let corners = []
+if (settings.theme.screen_corners) {
+    corners = [
+	forMonitors((id) => Corner(id, 'bottom-left', true)),
+	forMonitors((id) => Corner(id, 'bottom-right', true)),
+	forMonitors((id) => Corner(id, 'top-left', true)),
+	forMonitors((id) => Corner(id, 'top-right', true)),
+    ]
+}
+
 // actually do shit
 const Windows = () => [
     // cornes
-    forMonitors((id) => Corner(id, 'bottom-left', true)),
-    forMonitors((id) => Corner(id, 'bottom-right', true)),
-    forMonitors((id) => Corner(id, 'top-left', true)),
-    forMonitors((id) => Corner(id, 'top-right', true)),
-    forMonitors((id) => BarCorners(id)),
+    corners.flat(),
     
     // popups (notifs, colorscheme etc)
     forMonitors(Popups),
@@ -53,3 +61,6 @@ App.config({
   windows: Windows().flat(1),
 })
 forMonitors(Bar)
+if (settings.bar.corners) {
+    forMonitors((id) => BarCorners(id))
+}
