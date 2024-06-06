@@ -1,0 +1,23 @@
+{
+    "theme": {
+	"transparent": false,
+	"transparency": 0.9,
+	"light_mode": false,
+	"backend": "haishoku",
+	"available_backends": {
+	    "haishoku": "haishoku",
+	    "colorthief": "colorthief",
+	    "default": ""
+	},
+	"screen_corners": true,
+	"wallpaper_dir": "~/wallpapers/"
+    },
+    "animations": {
+	"speed": 1
+    },
+
+    "bar": {
+	"corners": true,
+	"floating": false
+    }
+}
