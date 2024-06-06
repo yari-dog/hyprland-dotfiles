@@ -93,7 +93,7 @@ function IconMenuItem({icon, label, ...props}) {
 	    spacing: 10,
 	    children: [
 		MaterialIcon(icon, 'medium', {}),
-		Widget.Label({label: label, class_name: 'txt txt-medium'}),
+		Widget.Label({label: label, class_name: 'txt txt-small'}),
 	    ],
 	}),
 	...props,
@@ -132,7 +132,7 @@ function QuickSettings() {
 	    ],
 	}),
 	callback: (self) => {
-	    self.attribute.menu.popup_at_widget(self, Gdk.Gravity.SOUTH_EAST, Gdk.Gravity.STATIC, null);
+	    self.attribute.menu.popup_at_widget(self, Gdk.Gravity.SOUTH_EAST, Gdk.Gravity.NORTH_EAST, null);
 	},
     })
     
