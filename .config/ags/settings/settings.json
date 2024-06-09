@@ -1,7 +1,7 @@
 {
     "theme": {
         "transparent": false,
-        "transparency": 0.9,
+        "transparency": 0.95,
         "light_mode": false,
         "backend": "haishoku",
         "available_backends": {

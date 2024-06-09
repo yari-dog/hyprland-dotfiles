@@ -21,7 +21,7 @@ export default (monitor = 0, where = 'top-left') => {
         setup: (self) => {
 	    enableClickThrough(self);
 	    self.hook(settings, (self, setting) => {
-		if (setting === 'screen_corners') {
+		if (settings.is_modified('screen_corners', setting)) {
 		    self.visible = settings.settings.theme.screen_corners;
 		}
 	    }, 'modified');

@@ -1,9 +1,12 @@
+const { Gio } = imports.gi;
+
 class SettingsService extends Service {
     static {
 	Service.register(
 	    this,
 	    {
-		['modified']: ['string']
+		// when a setting is modified through ags, string is empty if the settings file was changed directly
+		['modified']: ['string'],
 	    },
 	    {
 		'settings': ['object', 'rw']
@@ -25,6 +28,7 @@ class SettingsService extends Service {
 	    return undefined;
 	},
 	set: (target, prop, value) => {
+	    console.log(`Setting ${prop} to ${value}`);
 	    target[prop] = value;
 	    Utils.writeFile(JSON.stringify(this.#settings, null, 4), this.#file)
 		.catch((err) => {
@@ -32,7 +36,7 @@ class SettingsService extends Service {
 		})
 		.then(() => {
 		    try {
-			this.#settings = new Proxy(this.load(), this.#proxy);
+			this.load();
 			this.modified(prop);
 		    } catch (err) {
 			console.error(err);
@@ -49,11 +53,16 @@ class SettingsService extends Service {
     constructor() {
 	super();
 	this.#file = `${App.configDir}/settings/settings.json`;
-	this.#settings = new Proxy(this.load(), this.#proxy);
+	this.load();
+	Utils.monitorFile(this.#file, (file, event) => {
+	    if (event === Gio.FileMonitorEvent.CHANGED) {
+		this.updated();
+	    }
+	});
     }
 
     load() {
-	return JSON.parse(Utils.readFile(this.#file));
+	this.#settings= new Proxy(JSON.parse(Utils.readFile(this.#file)), this.#proxy);
     }
 
     get settings() {
@@ -64,6 +73,35 @@ class SettingsService extends Service {
 	this.emit('modified', field);
     }
 
+    updated() {
+	this.load();
+	this.emit('modified', '');
+    }
+
+    get_field(field) { // this is used to get the field from the settings object, using a string with dot notation
+	let fields = field.split('.');
+	let obj = this.#settings;
+	for (let i = 0; i < fields.length; i++) {
+	    obj = obj[fields[i]];
+	}
+	return obj;
+    }
+
+    set_field(field, value) { // this is used to set the field from the settings object, using a string with dot notation
+	let fields = field.split('.');
+	let obj = this.#settings;
+	for (let i = 0; i < fields.length - 1; i++) {
+	    obj = obj[fields[i]];
+	}
+	obj[fields[fields.length - 1]] = value;
+    }
+
+    is_modified(field, hook_field) {  // field is the field that is being checked, hook_field is the field that was given to the widget by emit
+	if (hook_field === '' || field === hook_field) {
+	    return true;
+	}
+	return false;
+    }
 }
 
 const service = new SettingsService();

@@ -153,6 +153,11 @@
     @include large-rounding;
 }
 
+.sidebar .settings-box > .setting-item-box {
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
 .sidebar .setting-switch {
     @include large-rounding;
     background-color: $layer3;

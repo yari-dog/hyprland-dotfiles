@@ -1,43 +1,109 @@
 import MaterialIcon from '../../../.common/widgets/MaterialIcon.js';
 import settings from '../../../../services/settings_service.js';
 
-function SettingSwitch({
+
+// general settings
+// label    | (child)
+
+function SettingItem({
     label = 'Setting',
-    switch_props = {},
+    label_props = {
+	hexpand: true,
+    },
+    child = Widget.Box(),
 }) {
     return Widget.Box({
-	class_name: 'setting-switch-box',
-	hpack: 'fill',
+	class_name: 'setting-item-box',
+	hexpand: true,
 	children: [
 	    Widget.Label({
-		class_name: 'setting-toggle-label',
+		class_name: 'setting-item-label',
 		label: label,
+		hpack: 'start',
+		...label_props,
 	    }),
-	    Widget.Switch({
-		class_name: 'setting-switch',
-		setup: (self) => switch_props.setup(self),
-		on_activate: (self) => switch_props.on_activate(self),
-	    }),
+	    child,
 	],
+    })
+}
+
+function SettingSwitch({
+    label = 'Setting',
+    switch_props = {
+	field: 'setting',
+	extra_setup: (self) => {},
+	on_activate_extra: (self) => {},
+    },
+}) {
+    return SettingItem({
+	label: label,
+	child: Widget.Switch({
+	    class_name: 'setting-switch',
+	    cursor: 'pointer',
+	    setup: (self) => {
+		self.set_active(settings.get_field(switch_props.field));
+		self.hook(settings, (self, setting) => {
+		    // get last record from dot notation of field
+		    const field_str = switch_props.field.split('.').reduce((o, i) => o[i], settings.settings);
+
+		    // if the field has been modified, update the switch
+		    // and call the extra activate function
+		    if (settings.is_modified(field_str, setting)) {
+			self.on_activate(self);
+		    }
+		}, 'modified');
+		switch_props.extra_setup?.(self);
+	    },
+	    on_activate: (self) => {
+		settings.set_field(switch_props.field, self.get_active());
+		switch_props.on_activate_extra?.(self);
+	    },
+	}),
+    })
+}
+
+function ScreenCorners() {
+    return SettingSwitch({
+	label: 'Screen Corners',
+	switch_props: {
+	    field: 'theme.screen_corners',
+	},
+    })
+}
+
+function LightMode() {
+    return SettingSwitch({
+	label: 'Light Mode',
+	switch_props: {
+	    field: 'theme.light_mode',
+	    on_activate_extra: (self) => {
+		Utils.execAsync(`${App.configDir}/scripts/theme_gen/theme.sh ${settings.settings.theme.light_mode ? '-l' : ''}`)
+	    },
+	},
+    })
+}
+
+function Transparency() {
+    return SettingSwitch({
+	label: 'Transparent',
+	switch_props: {
+	    field: 'theme.transparent',
+	},
+	on_activate_extra: (self) => {
+	    // toggle transparency slider visibility
+	}
     })
 }
 
 function Settings() {
     return Widget.Box({
 	class_name: 'settings-box',
+	vertical: true,
 	hexpand: true,
 	children: [
-	    SettingSwitch({
-		label: 'Screen Corners',
-		switch_props: {
-		    setup: (self) => {
-			self.set_active(settings.settings.theme.screen_corners);
-		    },
-		    on_activate: (self) => {
-			settings.settings.theme.screen_corners = self.get_active();
-		    },
-		},
-	    }),
+	    ScreenCorners(),
+	    LightMode(),
+	    Transparency(),
 	],
     });
 }
