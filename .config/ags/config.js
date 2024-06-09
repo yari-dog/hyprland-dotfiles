@@ -35,21 +35,15 @@ function forMonitorsAsync(widget) {
     return range(n, 0).forEach((n) => widget(n))
 }
 
-let corners = []
-if (settings.theme.screen_corners) {
-    corners = [
-	forMonitors((id) => Corner(id, 'bottom-left', true)),
-	forMonitors((id) => Corner(id, 'bottom-right', true)),
-	forMonitors((id) => Corner(id, 'top-left', true)),
-	forMonitors((id) => Corner(id, 'top-right', true)),
-    ]
-}
 
 // actually do shit
 const Windows = () => [
     // cornes
-    corners.flat(),
-    
+    forMonitors((id) => Corner(id, 'bottom-left', true)),
+    forMonitors((id) => Corner(id, 'bottom-right', true)),
+    forMonitors((id) => Corner(id, 'top-left', true)),
+    forMonitors((id) => Corner(id, 'top-right', true)),
+
     // popups (notifs, colorscheme etc)
     forMonitors(Popups),
 
@@ -61,6 +55,4 @@ App.config({
   windows: Windows().flat(1),
 })
 forMonitors(Bar)
-if (settings.bar.corners) {
-    forMonitors((id) => BarCorners(id))
-}
+forMonitors((id) => BarCorners(id))

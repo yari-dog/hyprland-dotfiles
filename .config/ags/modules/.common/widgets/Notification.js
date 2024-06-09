@@ -234,7 +234,7 @@ export default ({
     });
 
     const notification_content = Widget.Box({
-	hpack: 'center',
+	hexpand: true,
 	class_name: 'notification',
 	children: [
 	    icon,
@@ -287,6 +287,7 @@ export default ({
     
     let notification_box = Widget.Revealer({
 	reveal_child: false,
+	hexpand: true,
 	transition: 'slide_down',
 	attribute : {
 	    'id': notification.id,

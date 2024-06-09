@@ -7,7 +7,7 @@ export default (is_popup = false) => {
     const notifications = notificationService.getHandler(is_popup);
     
     return Widget.Box({
-	hpack: 'center',
+	hexpand: true,
 	vpack: 'start',
 	vertical: true,
 	class_name: 'notification-list',

@@ -24,7 +24,7 @@ export default () => {
 	    class_name: 'sidebar-notifications',
 	    name: 'notifications',
 	    vexpand: true,
-	    hpack: 'start',
+	    hexpand: true,
 	    vertical: true,children: [
 		NotificationList(false),
 		clear_button,

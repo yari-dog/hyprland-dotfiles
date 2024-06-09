@@ -2,6 +2,8 @@ import MaterialIcon from '../../../.common/widgets/MaterialIcon.js';
 import notificationService from '../../../../services/notification_service.js';
 const notifications = notificationService.getHandler(false);
 
+const { Gdk } = imports.gi;
+
 function QuickSettingToggle({callback, icon, menu, ...props}) {
     return Widget.Button({
 	cursor: 'pointer',

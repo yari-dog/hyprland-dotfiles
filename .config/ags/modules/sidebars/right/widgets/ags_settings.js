@@ -31,10 +31,10 @@ function Settings() {
 		label: 'Screen Corners',
 		switch_props: {
 		    setup: (self) => {
-			self.set_active(settings.theme.screen_corners);
+			self.set_active(settings.settings.theme.screen_corners);
 		    },
 		    on_activate: (self) => {
-			settings.theme.screen_corners = self.get_active();
+			settings.settings.theme.screen_corners = self.get_active();
 		    },
 		},
 	    }),

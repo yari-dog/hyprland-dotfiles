@@ -3,6 +3,7 @@ class SettingsService extends Service {
 	Service.register(
 	    this,
 	    {
+		['modified']: ['string']
 	    },
 	    {
 		'settings': ['object', 'rw']
@@ -28,8 +29,15 @@ class SettingsService extends Service {
 	    Utils.writeFile(JSON.stringify(this.#settings, null, 4), this.#file)
 		.catch((err) => {
 		    console.error(err);
+		})
+		.then(() => {
+		    try {
+			this.#settings = new Proxy(this.load(), this.#proxy);
+			this.modified(prop);
+		    } catch (err) {
+			console.error(err);
+		    }
 		});
-	    
 	    return true;
 	},
     }
@@ -52,7 +60,11 @@ class SettingsService extends Service {
 	return this.#settings;
     }
 
+    modified(field) {
+	this.emit('modified', field);
+    }
+
 }
 
 const service = new SettingsService();
-export default service.settings;
+export default service;

@@ -12,9 +12,6 @@ export default () => {
 	    'notifications': Notifications(),
 	    'settings': AGSSettings(),
 	},
-	setup: (self) => {
-	    self.shown =   'notifications'
-	}
     })
     
     const switcher = Widget.Box({
@@ -52,6 +49,7 @@ export default () => {
 		    self.attribute.activate(self, child)
 		}
 	    });
+	    self.attribute.activate(self, switcher.children[0]) // activate first child (notifications)
 	},
 	attribute: {
 	    'activate': (self, caller) => {

@@ -1,5 +1,6 @@
 import Corner from '../.common/widgets/Corner.js'
 import enableClickThrough from '../.common/utils/Clickthrough.js'
+import settings from '../../services/settings_service.js'
 //import Cairo from 'gi://cairo'
 
 //const dummyRegion = new Cairo.Region()
@@ -12,11 +13,18 @@ export default (monitor = 0, where = 'top-left') => {
         anchor: where.split('-'),
         exclusivity: 'ignore',
         layer: 'overlay',
-        visible: true,
+        visible: settings.settings.theme.screen_corners,
         child: Corner(
             where,
             { class_name: 'corner-black' },
         ),
-        setup: enableClickThrough,
+        setup: (self) => {
+	    enableClickThrough(self);
+	    self.hook(settings, (self, setting) => {
+		if (setting === 'screen_corners') {
+		    self.visible = settings.settings.theme.screen_corners;
+		}
+	    }, 'modified');
+	},
     });
 }
