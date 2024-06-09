@@ -24,6 +24,13 @@ ___
 
 ## general info
 
+### my build
+| i9 9900k                  |
+| 6900 XT                   |
+| asus maximus XI hero wifi |
+| too many SSDs             |
+| i use arch btw            |
+
 ### dependencies
 there's a lot of dependencies in the [dependencies file](dependencies), at some point i'll put them here, but not rn
 
