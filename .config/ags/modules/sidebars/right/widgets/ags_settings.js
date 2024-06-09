@@ -50,7 +50,8 @@ function SettingSwitch({
 		    // if the field has been modified, update the switch
 		    // and call the extra activate function
 		    if (settings.is_modified(field_str, setting)) {
-			self.on_activate(self);
+			self.set_active(settings.get_field(switch_props.field));
+			switch_props.hook_extra?.(self);
 		    }
 		}, 'modified');
 		switch_props.extra_setup?.(self);
@@ -77,9 +78,6 @@ function LightMode() {
 	label: 'Light Mode',
 	switch_props: {
 	    field: 'theme.light_mode',
-	    on_activate_extra: (self) => {
-		theme.set_theme();
-	    },
 	},
     })
 }

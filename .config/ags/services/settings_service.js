@@ -7,7 +7,6 @@ class SettingsService extends Service {
 	    {
 		// when a setting is modified through ags, string is empty if the settings file was changed directly
 		['modified']: ['string'],
-		['theme_modified']: [],
 	    },
 	    {
 		'settings': ['object', 'rw']

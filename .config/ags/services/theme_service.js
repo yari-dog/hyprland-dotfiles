@@ -22,7 +22,29 @@ class ThemeService extends Service {
     
     constructor() {
 	super();
-	
+	settings.connect('modified', (_, key) => {
+	    if (key === '') { // if there was a file update outside of ags, run set theme
+		this.set_theme();
+	    }
+
+	    // find location of key that was modified
+	    // if it's in theme, run set_theme
+	    // check recursively
+	    const theme = settings.settings.theme;
+	    const check = (obj, modified_key) => {
+		for (const key in obj) {
+		    if (key === modified_key) {
+			this.set_theme();
+			return;
+		    }
+		    if (typeof obj[key] === 'object') {
+			check(obj[key]);
+		    }
+		}
+	    }
+	    check(theme, key);
+	    
+	})
     }
 
     async run_theme_script(args) {

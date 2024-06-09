@@ -39,7 +39,6 @@ else
     light_mode=''
 fi
 
-echo "$backend"
 
 # if backend is not provided, use '' else '--backend $backend'
 if [ -z "$backend" ]; then
