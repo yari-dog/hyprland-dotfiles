@@ -3,6 +3,7 @@ import Gdk from 'gi://Gdk'
 import GLib from 'gi://GLib'
 
 import settings from './services/settings_service.js'
+import theme from './services/theme_service.js'
 
 import { Bar, BarCorners } from './modules/bar/main.js'
 import Corner from './modules/screencorners/main.js'
@@ -12,17 +13,7 @@ import RightSideBar from './modules/sidebars/right/main.js'
 const COMPILED_STYLE_DIR = `${GLib.get_user_cache_dir()}/ags/user/generated`
 const STATE_DIR = `${GLib.get_user_state_dir()}`
 
-Utils.exec(`mkdir -p "${GLib.get_user_state_dir()}/ags/scss"`);
-Utils.exec(`bash -c 'echo "" > ${GLib.get_user_state_dir()}/ags/scss/_musicwal.scss'`); // reset music styles
-Utils.exec(`bash -c 'echo "" > ${GLib.get_user_state_dir()}/ags/scss/_musicmaterial.scss'`); // reset music styles
-async function applyStyle() {
-    Utils.exec(`mkdir -p ${COMPILED_STYLE_DIR}`);
-    Utils.exec(`sass -I "${GLib.get_user_state_dir()}/ags/scss" -I "${App.configDir}/scss/fallback" "${App.configDir}/scss/main.scss" "${COMPILED_STYLE_DIR}/style.css"`);
-    App.resetCss();
-    App.applyCss(`${COMPILED_STYLE_DIR}/style.css`);
-    console.log('[LOG] Styles loaded')
-}
-applyStyle().catch(print);
+await theme.init().catch(print);
 
 // Some utility for monitors
 const range = (length, start = 1) => Array.from({ length }, (_, i) => i + start);

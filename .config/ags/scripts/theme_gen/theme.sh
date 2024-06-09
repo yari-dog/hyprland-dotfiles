@@ -48,10 +48,6 @@ else
 	backend="--backend $backend"
 fi
 
-echo "$IMG"
-echo "$light_mode"
-echo "$backend"
-
 wal -c
 
 wal -i "$IMG" -n -q -e $backend $light_mode 
@@ -65,4 +61,6 @@ cp "$CACHE_DIR"/generated/colors.scss "$STATE_DIR"/scss/_material.scss
 # ags
 sass -I "$STATE_DIR/scss" -I "$CONFIG_DIR/scss" "$CONFIG_DIR/scss/main.scss" "$CACHE_DIR/generated/style.css"
 # following line breaks ags when the script is run from ags
-ags run-js "App.resetCss(); App.applyCss('${CACHE_DIR}/generated/style.css');" &
+
+#ags run-js "App.resetCss(); App.applyCss('${CACHE_DIR}/generated/style.css');"
+$SCRIPT_DIR/theme_gen/apply.sh
