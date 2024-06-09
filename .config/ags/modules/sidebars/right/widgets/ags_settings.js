@@ -1,5 +1,6 @@
 import MaterialIcon from '../../../.common/widgets/MaterialIcon.js';
 import settings from '../../../../services/settings_service.js';
+import theme from '../../../../services/theme_service.js';
 
 
 // general settings
@@ -77,7 +78,7 @@ function LightMode() {
 	switch_props: {
 	    field: 'theme.light_mode',
 	    on_activate_extra: (self) => {
-		Utils.execAsync(`${App.configDir}/scripts/theme_gen/theme.sh ${settings.settings.theme.light_mode ? '-l' : ''}`)
+		theme.set_theme();
 	    },
 	},
     })

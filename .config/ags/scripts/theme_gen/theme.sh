@@ -11,17 +11,20 @@ STATE_DIR="$XDG_STATE_HOME"/ags
 
 IMG=""
 light_mode=false
+backend=""
 
-while getopts "li" opt; do
-    case $opt in
-	l) light_mode=true
-	   ;;
-	i) IMG="$OPTARG"
-	   ;;
-	\?) echo "Invalid option -$OPTARG" >&2
-	    ;;
-    esac
+# get flags and arguments
+# -i expects an argument, but is not required
+# same for -b
+# -l is a flag, and is not required
+while getopts 'i:lb:' flag; do
+	case "${flag}" in
+		i) IMG="${OPTARG}" ;;
+		l) light_mode=true ;;
+		b) backend="${OPTARG}" ;;
+	esac
 done
+
 
 # if image path is not provided, use swww query
 if [ -z "$IMG" ]; then
@@ -36,11 +39,22 @@ else
     light_mode=''
 fi
 
-echo "$IMG" "$light_mode"
+echo "$backend"
+
+# if backend is not provided, use '' else '--backend $backend'
+if [ -z "$backend" ]; then
+	backend=''
+else
+	backend="--backend $backend"
+fi
+
+echo "$IMG"
+echo "$light_mode"
+echo "$backend"
 
 wal -c
 
-wal -i "$IMG" -n -q -e --backend haishoku $light_mode 
+wal -i "$IMG" -n -q -e $backend $light_mode 
 
 cp "$HOME"/.cache/wal/colors.scss "$CACHE_DIR"/generated/colors.scss
 
