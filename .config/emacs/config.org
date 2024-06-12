@@ -28,6 +28,8 @@
   - [[#enable-toc][enable toc]]
   - [[#enable-bullets][enable bullets]]
   - [[#diminish-org-indent-minor-mode][diminish org-indent minor mode]]
+  - [[#other-settings][other settings]]
+  - [[#org-roam][org-roam]]
 - [[#prefs][prefs]]
   - [[#general][general]]
   - [[#text][text]]
@@ -177,9 +179,14 @@ vim like
     (setq evil-vsplit-window-right t)
     (setq evil-split-window-below t)
     (setq evil-want-C-i-jump nil) ;; fucking fixes tab
+    ;; unbind RET from evil
+    (with-eval-after-load 'evil-maps
+    (define-key evil-motion-state-map (kbd "RET") nil))
     ;;(setq evil-want-c-i-jump nil) ;; t breaks indenting lmao
     ;; nvm this didn't work, just edit in C-c '
-    (evil-mode 1)) ;; start evil mode on load
+    (evil-mode 1));; start evil mode on load
+
+
   (use-package evil-collection ;; install the collection
     :ensure t
     :after evil
@@ -277,6 +284,8 @@ for languages without native modes
               (lambda ()
                 (c-set-style "linux")
                 (setq c-basic-offset 4))))
+
+  ;; 
   #+end_src
 * lsp mode etc
 Maybe in the future use lsp, dap-mode looks neat for C etc but the setup is such a pain in the arse that i don't think it's worth it
@@ -332,6 +341,60 @@ git shit
   (with-eval-after-load 'org-indent
     (require 'diminish)
     (diminish 'org-indent-mode))
+#+end_src
+** other settings
+#+begin_src emacs-lisp
+  ;; follow links in org mode with RET
+  (setq org-return-follows-link t)
+#+end_src
+** org-roam
+#+begin_src emacs-lisp
+  (use-package org-roam
+    :ensure t
+    :custom
+    (org-roam-directory "~/org-roam")
+    (org-roam-completion-system 'ivy)
+    (org-roam-complete-everywhere t)
+    (org-roam-dailies-directory "journal/")
+    (org-roam-dailies-capture-templates
+     '(("d" "default" entry "* %<%H:%M> %?" :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+    (org-roam-capture-templates
+     '(("d" "default" plain "%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+     ;; project template
+     ("p" "project" plain "* %?"
+        :if-new (file+head "project/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: project\n")
+        :unnarrowed t)
+     ;; bibliography template
+     ("b" "bibliography" plain "* %?"
+        :if-new (file+head "bibliographs/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: bibliography\n")
+        :unnarrowed t)
+     ;; note template
+     ("n" "note" plain "* %?"
+        :if-new (file+head "notes/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: note\n")
+        :unnarrowed t))
+     )
+  
+    ;; method to get the type of a node
+    (cl-defmethod org-roam-node-type ((node org-roam-node))
+      "Return the type of an `org-roam-node'."
+      (condition-case nil
+          (file-name-nondirectory
+           (directory-file-name
+            (file-name-directory
+             (file-relative-name (org-roam-node-file node) org-roam-directory))))
+        (error "file")))
+
+
+    ;; set the display template for org-roam-node
+    (setq org-roam-node-display-template
+          (concat "${type:15} ${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+
+
+    :config
+    (org-roam-setup))
+
 #+end_src
 
 * prefs
@@ -408,7 +471,8 @@ differentiate code from non-code buffers, requires certain theme settings, will 
 #+begin_src emacs-lisp
   (use-package solaire-mode
     :ensure t
-    :hook (after-init . solaire-global-mode))
+    :config
+    (solaire-global-mode 1))
 #+end_src
 * sudo edit
 be able to edit files i need sudo to edit
@@ -424,7 +488,19 @@ be able to edit files i need sudo to edit
 * theme
 #+begin_src emacs-lisp
   (add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory))
-  (load-theme 'timu-rouge t)
+  ;(load-theme 'timu-rouge t)
+  (use-package doom-themes
+    :ensure t
+    :config
+    (load-theme 'doom-gruvbox t)
+    (setq doom-themes-enable-bold t
+          doom-themes-enable-italic t)
+    (doom-themes-neotree-config)
+    (doom-themes-org-config)
+    (doom-themes-visual-bell-config)
+    )
+
+
   (load-file (expand-file-name "themes/tabline.el" user-emacs-directory))
   (add-hook 'server-after-make-frame-hook (load-file (expand-file-name "themes/tabline.el" user-emacs-directory)))
   (set-face-attribute 'font-lock-comment-face nil ;; set comments to italics
@@ -440,18 +516,18 @@ be able to edit files i need sudo to edit
 #+end_src
 * treemacs
 #+begin_src emacs-lisp
-  (use-package  treemacs
-    :ensure t
-    :defer t
-    :config
-    (setq treemacs-no-png-images t)
-    (setq treemacs-follow-mode t)
-    (setq treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode t))
+    (use-package  treemacs
+      :ensure t
+      :defer t
+      :config
+      (setq treemacs-no-png-images t)
+      (setq treemacs-follow-mode t)
+      (setq treemacs-filewatch-mode t)
+      (treemacs-fringe-indicator-mode t))
 
-  (use-package treemacs-evil :ensure t :after (treemacs evil))
-  (use-package treemacs-magit :ensure t :after (treemacs magit))
-  (use-package treemacs-projectile :ensure t :after (treemacs projectile))
+    (use-package treemacs-evil :ensure t :after (treemacs evil))
+    (use-package treemacs-magit :ensure t :after (treemacs magit))
+    (use-package treemacs-projectile :ensure t :after (treemacs projectile))
 #+end_src
 * vterm
 #+begin_src emacs-lisp

@@ -101,7 +101,7 @@ function Settings() {
 	hexpand: true,
 	children: [
 	    ScreenCorners(),
-	    LightMode(),
+	    //LightMode(),
 	    Transparency(),
 	],
     });

@@ -49,7 +49,7 @@ fi
 
 wal -c
 
-wal -i "$IMG" -n -q -e $backend $light_mode 
+wal -s -t -i "$IMG" -n -q -e $backend $light_mode 
 
 cp "$HOME"/.cache/wal/colors.scss "$CACHE_DIR"/generated/colors.scss
 

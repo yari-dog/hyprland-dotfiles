@@ -33,6 +33,7 @@
 
   ;; make C-i actually C-i and not tab because that's a thing for some reason
   (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
+
   ;; window management
   (general-define-key
    ;; for window navigation in colemac mod-dh
@@ -99,6 +100,16 @@
     ;; not docs
     "h x" '(describe-command :wk "Display full documentation for command")
     "h v" '(describe-variable :wk "Describe variable"))
+
+  ;; move cursor
+  (yari/leader-keys
+    "m" '(:ignore t :wk "move")
+    ;; page down + up
+    "m e" '(evil-scroll-page-down :wk "scroll down")
+    "m i" '(evil-scroll-page-up :wk "scroll up")
+    ;; bottom + top of buffer
+    "m E" '(evil-goto-line :wk "go to line")
+    "m I" '(evil-goto-first-line :wk "go to first line"))
 
   ;; tabs
   (yari/leader-keys
@@ -171,6 +182,13 @@
     "p r" '(counsel-projectile-recentf :wk "recent files")
     "p d" '(counsel-projectile-find-dir :wk "find directory")
     "p m" '(projectile-command-map :wk "projectile mode map"))
+
+  ;; roam
+  (yari/leader-keys
+    "r" '(:ignore t :wk "roam")
+    "r f" '(org-roam-node-find :wk "find node")
+    "r i" '(org-roam-node-insert :wk "insert node")
+    "r b" '(org-roam-buffer-toggle :wk "toggle roam buffer"))
 ) 
 
 (provide 'keybinds)
