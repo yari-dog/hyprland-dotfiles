@@ -97,7 +97,7 @@ class SettingsService extends Service {
     }
 
     is_modified(field, hook_field) {  // field is the field that is being checked, hook_field is the field that was given to the widget by emit
-	if (hook_field === '' || field === hook_field) {
+	if (hook_field === '' || field === hook_field || hook_field === undefined) {
 	    return true;
 	}
 	return false;

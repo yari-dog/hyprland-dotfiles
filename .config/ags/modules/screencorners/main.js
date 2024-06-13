@@ -21,6 +21,7 @@ export default (monitor = 0, where = 'top-left') => {
         setup: (self) => {
 	    enableClickThrough(self);
 	    self.hook(settings, (self, setting) => {
+		console.log('corner', setting);
 		if (settings.is_modified('screen_corners', setting)) {
 		    self.visible = settings.settings.theme.screen_corners;
 		}

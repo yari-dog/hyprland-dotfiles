@@ -1,3 +1,4 @@
+import settings from '../../services/settings_service.js'
 import { Workspaces } from './components/workspaces.js'
 import { Left } from './components/left.js'
 import { Right } from './components/right.js'
@@ -41,8 +42,15 @@ export function BarCorners(monitor = 0) {
             exclusivity: 'exclusive',
             visible: true,
             class_name: '',
-            child: Corner('top-left', { class_name: 'bar-corner' })
-        }),
+            child: Corner('top-left', { class_name: 'bar-corner' }),
+	    setup: (self) => {
+		self.hook(settings, (self, setting) => {
+		    if (settings.is_modified('corners', setting)) {
+			self.visible = settings.settings.bar.corners
+		    }
+		}, 'modified')
+            }
+	}),
         Widget.Window({
             monitor,
             name: `bar-corner-tr${monitor}`,
@@ -50,7 +58,14 @@ export function BarCorners(monitor = 0) {
             exclusivity: 'exclusive',
             visible: true,
             class_name: '',
-            child: Corner('top-right', { class_name: 'bar-corner' })
+            child: Corner('top-right', { class_name: 'bar-corner' }),
+	    setup: (self) => {
+		self.hook(settings, (self, setting) => {
+		    if (settings.is_modified('corners', setting)) {
+			self.visible = settings.settings.bar.corners
+		    }
+		}, 'modified')
+	    }
         }),
     ]
 }

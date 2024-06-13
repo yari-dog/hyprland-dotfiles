@@ -16,7 +16,7 @@
         "speed": 1
     },
     "bar": {
-        "corners": true,
+        "corners": false,
         "floating": false
     }
 }

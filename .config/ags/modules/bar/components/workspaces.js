@@ -124,6 +124,7 @@ const getGroupingStatus = (index) => {
 
 export function Workspaces() {
     const workspaces = Widget.Box({
+	vexpand: true,
         class_name: 'bar-workspaces-container bar-group-child',
         children: Array.from({length: SHOWN}, (_, i) => i + 1).map(i => Widget.Button({
             child: Widget.Box({
