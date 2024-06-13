@@ -27,8 +27,8 @@
   ;; general bindings 
   (yari/leader-keys
     "." '(find-file :wk "find file")
-    "SPC" '(counsel-M-x :wk "Counsel M-x")
-    "f r" '(counsel-recentf :wk "find recent files")
+    "SPC" '(execute-extended-command :wk "M-x")
+    "f r" '(find-file :wk "find file")
     "TAB TAB" '(comment-line :wk "comment lines"))
 
   ;; make C-i actually C-i and not tab because that's a thing for some reason
@@ -170,18 +170,17 @@
     "o c" '((lambda () (interactive) (find-config-file "config.org")) :wk "edit emacs config")
     "o i" '((lambda () (interactive) (find-config-file "init.el")) :wk "edit emacs init")
     "o k" '((lambda () (interactive) (find-config-file "keybinds.el")) :wk "edit emacs keybinds")
-    "o f" '(counsel-find-file :wk "find file")
-    "o r" '(counsel-recentf :wk "recent files")
-    "o b" '(counsel-bookmark :wk "bookmarks"))
+    "o f" '(find-file :wk "find file")
+    )
 
   ;; projectile
   (yari/leader-keys
-    "p" '(:ignore t :wk "projectile")
-    "p f" '(counsel-projectile-find-file :wk "find file")
-    "p p" '(counsel-projectile-switch-project :wk "switch project")
-    "p r" '(counsel-projectile-recentf :wk "recent files")
-    "p d" '(counsel-projectile-find-dir :wk "find directory")
-    "p m" '(projectile-command-map :wk "projectile mode map"))
+    ;; "p" '(:ignore t :wk "projectile")
+    ;; "p f" '(counsel-projectile-find-file :wk "find file")
+    ;; "p p" '(counsel-projectile-switch-project :wk "switch project")
+    ;; "p r" '(counsel-projectile-recentf :wk "recent files")
+    ;; "p d" '(counsel-projectile-find-dir :wk "find directory")
+    "p" '(projectile-command-map :wk "projectile mode map"))
 
   ;; roam
   (yari/leader-keys

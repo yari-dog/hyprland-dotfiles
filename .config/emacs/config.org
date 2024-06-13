@@ -33,6 +33,7 @@
 - [[#prefs][prefs]]
   - [[#general][general]]
   - [[#text][text]]
+  - [[#buffers][buffers]]
 - [[#projectile][projectile]]
 - [[#rainbow-delim][rainbow delim]]
 - [[#rainbow-mode][rainbow mode]]
@@ -41,6 +42,7 @@
 - [[#theme][theme]]
 - [[#tldr][tldr]]
 - [[#treemacs][treemacs]]
+- [[#vertico--co][vertico & co]]
 - [[#vterm][vterm]]
 - [[#which-key][which key]]
 
@@ -221,43 +223,43 @@ checks syntax errors etc
             ("DEPRECATED" font-lock-doc-face bold))))
 #+end_src
 * ivy
-minibuffer completion and fancier commands and shit
+minibuffer completion and fancier commands and shit, swapped for vertico+consult+odorless+embark+marginalia+corfu
 #+begin_src emacs-lisp
-  (use-package counsel
-    :after ivy
-    :ensure t
-    :diminish
-    :config (counsel-mode))
+  ;; (use-package counsel
+  ;;   :after ivy
+  ;;   :ensure t
+  ;;   :diminish
+  ;;   :config (counsel-mode))
 
-  (use-package ivy
-    :ensure t
-    :diminish
-    :bind
-    ;; ivy-resume resumes the last Ivy-based completion.
-    (("C-c C-r" . ivy-resume)
-     ("C-x B" . ivy-switch-buffer-other-window))
-    :custom
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-count-format "(%d/%d) ")
-    (setq enable-recursive-minibuffers t)
-    :config
-    (ivy-mode))
+  ;; (use-package ivy
+  ;;   :ensure t
+  ;;   :diminish
+  ;;   :bind
+  ;;   ;; ivy-resume resumes the last Ivy-based completion.
+  ;;   (("C-c C-r" . ivy-resume)
+  ;;    ("C-x B" . ivy-switch-buffer-other-window))
+  ;;   :custom
+  ;;   (setq ivy-use-virtual-buffers t)
+  ;;   (setq ivy-count-format "(%d/%d) ")
+  ;;   (setq enable-recursive-minibuffers t)
+  ;;   :config
+  ;;   (ivy-mode))
 
-  (use-package all-the-icons-ivy-rich
-    :ensure t
-    :init (all-the-icons-ivy-rich-mode 1))
+  ;; (use-package all-the-icons-ivy-rich
+  ;;   :ensure t
+  ;;   :init (all-the-icons-ivy-rich-mode 1))
 
-  (use-package ivy-rich
-    :after ivy
-    :ensure t
-    :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
-    :custom
-    (ivy-virtual-abbreviate 'full
-     ivy-rich-switch-buffer-align-virtual-buffer t
-     ivy-rich-path-style 'abbrev)
-    :config
-    (ivy-set-display-transformer 'ivy-switch-buffer
-                                 'ivy-rich-switch-buffer-transformer))
+  ;; (use-package ivy-rich
+  ;;   :after ivy
+  ;;   :ensure t
+  ;;   :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
+  ;;   :custom
+  ;;   (ivy-virtual-abbreviate 'full
+  ;;    ivy-rich-switch-buffer-align-virtual-buffer t
+  ;;    ivy-rich-path-style 'abbrev)
+  ;;   :config
+  ;;   (ivy-set-display-transformer 'ivy-switch-buffer
+  ;;                                'ivy-rich-switch-buffer-transformer))
 #+end_src
 * keybinds
 #+begin_src emacs-lisp
@@ -437,6 +439,12 @@ git shit
     :ensure t
     :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 #+end_src
+
+** buffers
+#+begin_src emacs-lisp
+  (setq split-height-threshold 0)
+  (setq split-width-threshold most-positive-fixnum)
+#+end_src
 * projectile
 project management
 #+begin_src emacs-lisp
@@ -528,6 +536,41 @@ be able to edit files i need sudo to edit
     (use-package treemacs-evil :ensure t :after (treemacs evil))
     (use-package treemacs-magit :ensure t :after (treemacs magit))
     (use-package treemacs-projectile :ensure t :after (treemacs projectile))
+#+end_src
+* vertico & co
+minibuffer autocompletion and shit!
+#+begin_src emacs-lisp
+  (use-package vertico
+    :ensure t
+    :init
+    (vertico-mode)
+    :config
+    (setq vertico-cycle t))
+
+  (use-package vertico-posframe
+    :ensure t
+    :init
+    (vertico-posframe-mode))
+
+  (use-package orderless
+    :ensure t
+    :config
+    (setq completion-styles '(orderless basic)
+          completion-category-defaults nil
+          completion-category-overrides '((file (styles . (partial-completion))))))
+
+  (use-package consult
+    :ensure t)
+
+  (use-package embark
+    :ensure t
+    :bind
+    ("C-S-a" . embark-act))
+
+  (use-package marginalia
+    :ensure t
+    :init
+    (marginalia-mode))
 #+end_src
 * vterm
 #+begin_src emacs-lisp
