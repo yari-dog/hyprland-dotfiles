@@ -35,8 +35,8 @@
 
   ;; window management
   (general-define-key
-   ;; for window navigation in colemac mod-dh
-   :states '(normal insert visual emacs treemacs)
+   ;; for window navigation in colemac mod-dh in insert mode
+   :states 'insert
    :keymaps 'override
    ;; moving cursor between windows
    ;; using C- prefix because I want to be able to do it no matter what mode i'm in
@@ -45,6 +45,11 @@
    "H-i" '(evil-window-up :wk "window up")
    "C-o" '(evil-window-right :wk "window right"))
 
+  (general-define-key
+   :states '(normal visual emacs treemacs)
+   :keymaps 'override
+   "/" '(consult-line :wk "search line"))
+  
   ;; general window stuff
   (yari/leader-keys
     "w" '(:ignore t :wk "windows")
@@ -114,7 +119,8 @@
   (yari/leader-keys
     "t" '(:ignore t :wk "tabs")
     "t m" '(tab-line-new-t b :wk "new tab")
-    "t k" '(tab-line-close-tab :wk "close tab")
+    ;; bury buffer is the same as closing it)
+    "t k" '(bury-buffer :wk "close tab")
     "t n" '(tab-line-switch-to-prev-tab :wk "previous tab")
     "t o" '(tab-line-switch-to-next-tab :wk "next tab"))
 
@@ -161,7 +167,7 @@
     "g r" '(vc-revert :wk "Git revert file")
     "g s" '(magit-stage-file :wk "Git stage file")
     "g t" '(git-timemachine :wk "Git time machine")
-    "g u" '(magit-stage-file :wk "Git unstage file"))
+    "g u" '(magit-unstage-file :wk "Git unstage file"))
 
   ;; open
   (yari/leader-keys
@@ -196,7 +202,7 @@
     "c k" '(kill-compilation :wk "kill compilation")
     "c n" '(next-error :wk "next error")
     "c p" '(previous-error :wk "previous error")
-    "c m" '(evil-goto-definition :wk "go to definition"))
+    "c j" '(evil-goto-definition :wk "jump to definition"))
 
   ;; find, search, etc
   (yari/leader-keys
@@ -204,6 +210,8 @@
     "f /" '(consult-line :wk "search line")
     "f g" '(consult-grep :wk "grep")
     "f r" '(consult-recent-file :wk "recent files")
+    "f m" '(consult-man :wk "man page")
+    "f i" '(consult-info :wk "info search")
     )
 ) 
 
