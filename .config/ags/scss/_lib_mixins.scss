@@ -1,6 +1,6 @@
-$rounding_small: 0.3rem;
-$rounding_medium: 0.6rem;
-$rounding_large: 1.2rem;
+$rounding_small: 0.15rem;
+$rounding_medium: 0.3rem;
+$rounding_large: 0.6rem;
 
 @mixin small-rounding {
     border-radius: $rounding_small;

@@ -5,22 +5,22 @@
 
 .txt-small {
 	@include fonts;
-	font-size: 0.8rem;
+	font-size: 0.6rem;
 }
 
 .txt-medium {
 	@include fonts;
-	font-size: 1.2rem;
+	font-size: 1rem;
 }
 
 .txt-large {
 	@include fonts;
-	font-size: 1.6rem;
+	font-size: 1.4rem;
 }
 
 .txt-huge {
 	@include fonts;
-	font-size: 2.0rem;
+	font-size: 1.8rem;
 }
 
 .icon-material {
