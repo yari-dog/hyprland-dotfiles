@@ -28,7 +28,6 @@
   (yari/leader-keys
     "." '(find-file :wk "find file")
     "SPC" '(execute-extended-command :wk "M-x")
-    "f r" '(find-file :wk "find file")
     "TAB TAB" '(comment-line :wk "comment lines"))
 
   ;; make C-i actually C-i and not tab because that's a thing for some reason
@@ -175,12 +174,12 @@
 
   ;; projectile
   (yari/leader-keys
-    ;; "p" '(:ignore t :wk "projectile")
-    ;; "p f" '(counsel-projectile-find-file :wk "find file")
-    ;; "p p" '(counsel-projectile-switch-project :wk "switch project")
-    ;; "p r" '(counsel-projectile-recentf :wk "recent files")
-    ;; "p d" '(counsel-projectile-find-dir :wk "find directory")
-    "p" '(projectile-command-map :wk "projectile mode map"))
+    "p" '(:ignore t :wk "projectile")
+    "p f" '(consult-projectile-find-file :wk "find file")
+    "p p" '(consult-projectile-switch-project :wk "switch project")
+    "p r" '(consult-projectile-recentf :wk "recent files")
+    "p d" '(consult-projectile-find-dir :wk "find directory")
+    "p m" '(projectile-command-map :wk "projectile mode map"))
 
   ;; roam
   (yari/leader-keys
@@ -188,6 +187,24 @@
     "r f" '(org-roam-node-find :wk "find node")
     "r i" '(org-roam-node-insert :wk "insert node")
     "r b" '(org-roam-buffer-toggle :wk "toggle roam buffer"))
+
+  ;; compilation, running code
+  (yari/leader-keys
+    "c" '(:ignore t :wk "compile")
+    "c c" '(compile :wk "compile")
+    "c r" '(recompile :wk "recompile")
+    "c k" '(kill-compilation :wk "kill compilation")
+    "c n" '(next-error :wk "next error")
+    "c p" '(previous-error :wk "previous error")
+    "c m" '(evil-goto-definition :wk "go to definition"))
+
+  ;; find, search, etc
+  (yari/leader-keys
+    "f" '(:ignore t :wk "find")
+    "f /" '(consult-line :wk "search line")
+    "f g" '(consult-grep :wk "grep")
+    "f r" '(consult-recent-file :wk "recent files")
+    )
 ) 
 
 (provide 'keybinds)

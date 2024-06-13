@@ -562,6 +562,9 @@ minibuffer autocompletion and shit!
   (use-package consult
     :ensure t)
 
+  (use-package consult-projectile
+    :ensure t)
+
   (use-package embark
     :ensure t
     :bind
