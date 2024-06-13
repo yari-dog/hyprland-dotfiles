@@ -36,7 +36,7 @@
   ;; window management
   (general-define-key
    ;; for window navigation in colemac mod-dh in insert mode
-   :states 'insert
+   :states '(insert emacs normal visual treemacs)
    :keymaps 'override
    ;; moving cursor between windows
    ;; using C- prefix because I want to be able to do it no matter what mode i'm in
@@ -119,7 +119,6 @@
   (yari/leader-keys
     "t" '(:ignore t :wk "tabs")
     "t m" '(tab-line-new-t b :wk "new tab")
-    ;; bury buffer is the same as closing it)
     "t k" '(bury-buffer :wk "close tab")
     "t n" '(tab-line-switch-to-prev-tab :wk "previous tab")
     "t o" '(tab-line-switch-to-next-tab :wk "next tab"))
