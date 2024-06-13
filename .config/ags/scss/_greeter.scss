@@ -1,0 +1,22 @@
+
+.greeter {
+   background-color: transparent; 
+}
+
+.greeter-box {
+    background-color: $layer0;
+    padding: 0.5rem;
+    @include normal-rounding;
+}
+
+.greeter-entry {
+    background-color: $layer1;
+    color: $onLayer1;
+    margin: 0.25rem;
+    padding: 0.5rem;
+    @include normal-rounding;
+}
+
+.greeter-error {
+    color: $error;
+}

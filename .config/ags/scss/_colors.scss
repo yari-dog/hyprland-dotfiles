@@ -64,3 +64,4 @@ $layer3: mix($background, $primary, 60%);
 $onLayer3: mix($onBackground, $primary, 60%);
 $layer3Hover: mix($layer3, $onLayer3, 85%);
 $layer3Active: mix($layer3, $onLayer3, 70%);
+$error: #FFB4AB;
