@@ -48,20 +48,20 @@ $onSecondary: $onBackground;
 
 $outline: $onBackground;
 
-$layer0: mix($background, $primary, 90%);
-$onLayer0: mix($onBackground, $primary, 90%);
+$layer0: mix($background, $primary, 100%);
+$onLayer0: mix($onBackground, $primary, 100%);
 $layer0Hover: mix($layer0, $onLayer0, 85%);
 $layer0Active: mix($layer0, $onLayer0, 70%);
-$layer1: mix($background, $primary, 80%);
-$onLayer1: mix($onBackground, $primary, 80%);
+$layer1: mix($background, $primary, 90%);
+$onLayer1: mix($onBackground, $primary, 90%);
 $layer1Hover: mix($layer1, $onLayer1, 85%);
 $layer1Active: mix($layer1, $onLayer1, 70%);
-$layer2: mix($background, $primary, 70%);
-$onLayer2: mix($onBackground, $primary, 70%);
+$layer2: mix($background, $primary, 80%);
+$onLayer2: mix($onBackground, $primary, 80%);
 $layer2Hover: mix($layer2, $onLayer2, 85%);
 $layer2Active: mix($layer2, $onLayer2, 70%);
-$layer3: mix($background, $primary, 60%);
-$onLayer3: mix($onBackground, $primary, 60%);
+$layer3: mix($background, $primary, 70%);
+$onLayer3: mix($onBackground, $primary, 70%);
 $layer3Hover: mix($layer3, $onLayer3, 85%);
 $layer3Active: mix($layer3, $onLayer3, 70%);
 $error: #FFB4AB;

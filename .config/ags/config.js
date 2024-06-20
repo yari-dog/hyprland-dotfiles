@@ -42,6 +42,7 @@ const Windows = () => [
     RightSideBar(),
 ]
 
+
 App.config({
   windows: Windows().flat(1),
 })

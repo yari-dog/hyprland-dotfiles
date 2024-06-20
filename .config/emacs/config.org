@@ -21,6 +21,7 @@
 - [[#ivy][ivy]]
 - [[#keybinds][keybinds]]
 - [[#languages][languages]]
+- [[#launcher][launcher]]
 - [[#lsp-mode-etc][lsp mode etc]]
 - [[#magit][magit]]
 - [[#modeline][modeline]]
@@ -71,9 +72,9 @@ github copilot
     :init
     (add-hook 'prog-mode-hook 'copilot-mode)
     :bind (:map copilot-completion-map
-                ("<tab>" . 'copilot-accept-completion)
-                ("TAB" . 'copilot-accept-completion)
-                ("C-<tab>" . 'copilot-accept-completion-by-word)))
+                ("C-<return>" . 'copilot-accept-completion)
+                ("C-RET" . 'copilot-accept-completion)
+                ("S-<return>" . 'copilot-accept-completion-by-word)))
 #+end_src
 * corfu
 Completion frontend
@@ -86,14 +87,10 @@ Completion frontend
     (corfu-auto-prefix 1) ;; 2 letters to start autocomplete
     (corfu-auto-delay 0.0) ;; idk 0s to start?
     :bind (:map corfu-map
-                ("RET" . nil) ;; unbind ret from insert
-                ("TAB" . corfu-quit)
-                ("<tab>" . nil)
-                ("<return>" . corfu-insert)
-                ("C-<return>" . corfu-quit))
+                ("<tab>" . corfu-insert)
+                ("<escape>" . corfu-quit))
     :init
     (global-corfu-mode))
-
 
   (use-package cape :ensure t)
   ;; get eglot to play nice with corfu
@@ -162,12 +159,24 @@ completion backend (uses lsp's, check deps)
 #+begin_src emacs-lisp
   ;; eglot is alr installed i just need to add hooks
   (use-package eglot
+    :ensure t
     :config
     (setq eglot-events-buffer-size 0)
     :init
     (add-hook 'python-mode-hook 'eglot-ensure)
     (add-hook 'js-mode-hook 'eglot-ensure)
     (add-hook 'c-mode-common-hook 'eglot-ensure))
+
+  (use-package jsonrpc
+    :ensure t)
+
+
+  ;; need to install emacs-lsp-booster from aur or whatever
+  (use-package eglot-booster
+    :ensure (:host github :repo "jdtsmith/eglot-booster")
+    :after eglot
+    :config
+    (eglot-booster-mode))
 #+end_src
 * evil mode
 vim like
@@ -289,6 +298,31 @@ for languages without native modes
 
   ;; 
   #+end_src
+
+* launcher
+using app-launcher
+#+begin_src emacs-lisp
+  (use-package app-launcher
+    :ensure '(app-launcher :type git :host github :repo "SebastienWae/app-launcher"))
+
+  (defun emacs-run-launcher ()
+    "Create and select a frame called emacs-run-launcher which consists only of a minibuffer and has specific dimensions. Runs app-launcher-run-app on that frame, which is an emacs command that prompts you to select an app and open it in a dmenu like behaviour. Delete the frame after that command has exited"
+    (interactive)
+    (with-selected-frame 
+      (make-frame '((name . "emacs-run-launcher")
+                    (minibuffer . only)
+                    (fullscreen . 0) ; no fullscreen
+                    (undecorated . t) ; remove title bar
+                    ;;(auto-raise . t) ; focus on this frame
+                    ;;(tool-bar-lines . 0)
+                    ;;(menu-bar-lines . 0)
+                    (internal-border-width . 10)
+                    (width . 80)
+                    (height . 11)))
+                    (unwind-protect
+                      (app-launcher-run-app)
+                      (delete-frame))))
+#+end_src
 * lsp mode etc
 Maybe in the future use lsp, dap-mode looks neat for C etc but the setup is such a pain in the arse that i don't think it's worth it
 #+begin_src emacs-lisp
@@ -453,11 +487,6 @@ project management
     :diminish
     :config
     (projectile-mode 1))
-
-  (use-package counsel-projectile
-    :ensure t
-    :config
-    (counsel-projectile-mode 1))
 #+end_src
 * rainbow delim
 #+begin_src emacs-lisp
@@ -524,18 +553,20 @@ be able to edit files i need sudo to edit
 #+end_src
 * treemacs
 #+begin_src emacs-lisp
-    (use-package  treemacs
-      :ensure t
-      :defer t
-      :config
-      (setq treemacs-no-png-images t)
-      (setq treemacs-follow-mode t)
-      (setq treemacs-filewatch-mode t)
-      (treemacs-fringe-indicator-mode t))
+  (use-package  treemacs
+    :ensure t
+    :defer t
+    :config
+    (setq treemacs-no-png-images t)
+    (setq treemacs-follow-mode t)
+    (setq treemacs-filewatch-mode t)
+    (setq treemacs-position 'right)
+    (setq treemacs-project-follow-cleanup t)
+    (treemacs-fringe-indicator-mode t))
 
-    (use-package treemacs-evil :ensure t :after (treemacs evil))
-    (use-package treemacs-magit :ensure t :after (treemacs magit))
-    (use-package treemacs-projectile :ensure t :after (treemacs projectile))
+  (use-package treemacs-evil :ensure t :after (treemacs evil))
+  (use-package treemacs-magit :ensure t :after (treemacs magit))
+  (use-package treemacs-projectile :ensure t :after (treemacs projectile))
 #+end_src
 * vertico & co
 minibuffer autocompletion and shit!
