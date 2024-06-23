@@ -14,6 +14,7 @@
 - [[#dired][dired]]
 - [[#diminish][diminish]]
 - [[#discord][discord]]
+- [[#drag-stuff][drag-stuff]]
 - [[#eglot][eglot]]
 - [[#evil-mode][evil mode]]
 - [[#flycheck][flycheck]]
@@ -154,6 +155,15 @@ hide minor modes
     :init
     (elcord-mode))
 #+end_src
+
+* drag-stuff
+all this really does is let me move lines/regions up/down a line lmao
+#+begin_src emacs-lisp
+  (use-package drag-stuff
+    :ensure t
+    :config
+    (drag-stuff-global-mode 1))
+#+end_src
 * eglot
 completion backend (uses lsp's, check deps)
 #+begin_src emacs-lisp
@@ -193,8 +203,6 @@ vim like
     ;; unbind RET from evil
     (with-eval-after-load 'evil-maps
     (define-key evil-motion-state-map (kbd "RET") nil))
-    ;;(setq evil-want-c-i-jump nil) ;; t breaks indenting lmao
-    ;; nvm this didn't work, just edit in C-c '
     (evil-mode 1));; start evil mode on load
 
 
@@ -276,7 +284,7 @@ minibuffer completion and fancier commands and shit, swapped for vertico+consult
   (require 'keybinds)
 #+end_src
 * languages
-for languages without native modes
+for languages without native modes, or languages i need to edit
 #+begin_src emacs-lisp
   (use-package rust-mode :ensure t)
   (use-package markdown-mode

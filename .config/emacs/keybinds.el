@@ -29,10 +29,10 @@
     "." '(find-file :wk "find file")
     "SPC" '(execute-extended-command :wk "M-x")
     "TAB TAB" '(comment-line :wk "comment lines"))
-
+  
   ;; make C-i actually C-i and not tab because that's a thing for some reason
   (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
-
+  
   ;; window management
   (general-define-key
    ;; for window navigation in colemac mod-dh in insert mode
@@ -48,8 +48,20 @@
   (general-define-key
    :states '(normal visual emacs treemacs)
    :keymaps 'override
-   "/" '(consult-line :wk "search line"))
-  
+   "/" '(consult-line :wk "search line")
+   "n" '(evil-backward-char :wk "left")
+   "o" '(evil-forward-char :wk "right")
+   "e" '(evil-next-line :wk "down")
+   "i" '(evil-previous-line :wk "up")
+   "," '(evil-backward-word-begin :wk "back word begin")
+   "<" '(evil-backward-WORD-begin :wk "back WORD begin")
+   "." '(evil-forward-word-end :wk "forward word end")
+   ">" '(evil-forward-WORD-end :wk "forward WORD end")
+   "(" '(evil-jump-item :wk "jump to paren")
+   ;; cause i rebound i to up i need to rebind evil-insert
+   "t" '(evil-append :wk "insert")
+  )
+ 
   ;; general window stuff
   (yari/leader-keys
     "w" '(:ignore t :wk "windows")
@@ -76,7 +88,7 @@
   (yari/leader-keys
     "b" '(:ignore t :wk "buffer") ;; b is the prefix for the rest, :ignore says "this isn't a real binding" 
     "b s" '(switch-to-buffer :wk "switch buffer") ;; :wk is a tool hint for which-key plugin
-    "b k" '(kill-this-buffer :wk "kill buffer")
+    "b k" '(kill-this-buffer :wk "kill buffer" )
     "b e" '(next-buffer :wk "next buffer")
     "b n" '(previous-buffer :wk "previous buffer")
     "b r" '(revert-buffer :wk "reload buffer (revert)")
@@ -108,12 +120,15 @@
   ;; move cursor
   (yari/leader-keys
     "m" '(:ignore t :wk "move")
+    "m e" '(drag-stuff-down :wk "move selection down a line")
+    "m i" '(drag-stuff-up :wk "move selection up a line")
+    "m c" '(:ignore t :wk "cursor")
     ;; page down + up
-    "m e" '(evil-scroll-page-down :wk "scroll down")
-    "m i" '(evil-scroll-page-up :wk "scroll up")
+    "m c e" '(evil-scroll-page-down :wk "scroll down")
+    "m c i" '(evil-scroll-page-up :wk "scroll up")
     ;; bottom + top of buffer
-    "m E" '(evil-goto-line :wk "go to line")
-    "m I" '(evil-goto-first-line :wk "go to first line"))
+    "m c E" '(evil-goto-line :wk "go to line")
+    "m c I" '(evil-goto-first-line :wk "go to first line"))
 
   ;; tabs
   (yari/leader-keys
@@ -142,8 +157,11 @@
     "e h" '(mark-whole-buffer :wk "mark whole buffer")
     "e c" '(:ignore t :wk "cursor")
     "e c o" '(evil-end-of-line :wk "end of line")
-    "e c n" '(evil-beginning-of-line :wk "start of line"))
-    
+    "e c n" '(evil-beginning-of-line :wk "start of line")
+    "e w" '(mark-sexp :wk "select word")
+    "e p" '(mark-paragraph :wk "select paragraph")
+    "e s" '(mark-symbol :wk "select symbol"))
+  
   ;; magit
   (yari/leader-keys
     "g" '(:ignore t :wk "Git")    

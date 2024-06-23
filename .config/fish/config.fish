@@ -10,3 +10,6 @@ thefuck --alias | source
 starship init fish | source
 
 alias emacs "command emacsclient -c -a emacs"
+alias ls "exa"
+alias cat "bat"
+alias htop "btop"
