@@ -1,9 +1,18 @@
 
-.sidebar {
+.sidebar-container { padding: 1.5rem; }
+.sidebar-wrapper {
     background-color: $layer0;
     color: $onLayer0;
     @include large-rounding;
-    margin: 0.5rem;
+    border: 1px solid $layer2Active;
+}
+
+.sidebar-wrapper:hover {
+    border-color: $foreground;
+}
+
+.sidebar {
+    //margin: 1.5rem;
     padding: 0.5rem;
 }
 

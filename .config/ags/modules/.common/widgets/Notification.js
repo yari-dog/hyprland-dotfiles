@@ -29,6 +29,7 @@ function NotificationIcon(notification) {
 		Widget.Icon({
 		    icon: icon,
 		    vpack: 'center',
+		    hexpand: true,
 		}) :
 		MaterialIcon('chat', 'hugerass', {hexpand: true})
 	       )

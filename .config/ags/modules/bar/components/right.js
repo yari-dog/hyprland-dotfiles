@@ -82,7 +82,7 @@ export function Right() {
 	spacing: 10,
         children: [DateClock(), SideBarOpener()],
     })
-    return Widget.Box({
+    return Widget.EventBox({
         hexpand: false,
         hpack: 'end', //vpack: 'start',
         class_name: 'bar-right bar-group',

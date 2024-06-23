@@ -1,4 +1,7 @@
-*:not(popover) { all: unset; }
+*:not(popover) {
+    all: unset;
+    transition: all 0.3s ease;
+}
 
 // colors & stuff
 @import 'material';
@@ -13,3 +16,4 @@
 @import './osd';
 @import './notifications';
 @import './sidebar';
+

@@ -52,9 +52,11 @@ notification-body-box{
 }
 
 .notifications-clear-button {
-    @include normal-rounding;
+    @include large-rounding;
     min-width: 2rem;
     min-height: 2rem;
+    padding: 0.5rem 0;
+    margin: 0.5rem;
     margin-left: 0.5rem;
     background-color: $layer1;
     color: $onLayer1;

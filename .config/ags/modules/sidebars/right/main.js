@@ -17,7 +17,11 @@ export default () => PopupWindow({
 	    Widget.Box({
 		hpack: 'end',
 		vpack: 'start',
-		child: Right(),
+		class_name: 'sidebar-container',
+		child: Widget.EventBox({
+		    class_name: 'sidebar-wrapper',
+		    child: Right(),
+		})
 	    })
 	],
     }),
