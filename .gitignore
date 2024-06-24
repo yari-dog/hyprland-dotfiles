@@ -2,6 +2,8 @@
 .config/ags/scss/_material.css
 .config/emacs/*.*~
 
+.config/nvim/.luarc.json
+
 README.html
 
 __pycache__/
