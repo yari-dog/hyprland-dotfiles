@@ -19,7 +19,7 @@ deleted = "D"
 
 
 [directory]
-style = "yellow"
+style = "bright-purple"
 format = "[$path]($style)"
 
 [username]

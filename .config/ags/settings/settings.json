@@ -1,6 +1,6 @@
 {
     "theme": {
-        "transparent": true,
+        "transparent": false,
         "transparency": 0.95,
         "light_mode": false,
         "backend": "haishoku",

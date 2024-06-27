@@ -15,6 +15,8 @@ vim.keymap.set("n", "<leader>sh", "<C-w>v") -- split horizontal
 vim.keymap.set("n", "<leader>sd", "<C-w>s") -- split horizontal
 vim.keymap.set("n", "<leader>so", "<C-w>c") -- close
 
+vim.keymap.set("t", "<C-space>", "<C-\\><C-n><C-w>h", { silent = true })
+
 -- change things now that we've overwritten
 vim.keymap.set("n", "t", "i")
 vim.keymap.set("n", "m", "n")

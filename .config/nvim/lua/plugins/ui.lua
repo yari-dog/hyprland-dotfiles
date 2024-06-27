@@ -26,6 +26,14 @@ return {
 					backend = "nui",
 					kind_icons = false,
 				},
+				routes = {
+					{
+						view = "cmdline",
+						filter = {
+							event = "msg_showmode",
+						},
+					},
+				},
 			})
 		end,
 	},
