@@ -4,7 +4,8 @@ This is the repo for my current hyprland setup.
 ___
 
 ## screenshots
-coming soon :3
+![IMG_7603](https://github.com/yari-dog/hyprland-dotfiles/assets/75224849/5194337e-df5a-4a47-b9fa-a3e67e58265c)
+
 
 ___
 
