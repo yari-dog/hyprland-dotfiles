@@ -57,12 +57,12 @@ bind E tabprev
 bind I tabnext
 bind O forward
 
-bind / fillcmdline find
-bind m findnext
-bind M findnext --reverse
+" bind / fillcmdline find
+" bind m findnext
+" bind M findnext --reverse
 
-bind k tabclose
-bind K tabcloseall
+bind K tabclose
+bind <C-K> tabcloseall
 
 bind h scrollpage 0.5 
 bind , scrollpage -0.5
