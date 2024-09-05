@@ -1,0 +1,110 @@
+/* type box 4 chat, disabled because i cant get animations 2 play nice */
+/* .form_a7d72e { */
+/*   transition-delay: 0s; */
+/*   box-sizing: border-box; */
+/*   width: 100% !important;  */
+/*   &:not(:is(:focus-within, :hover)) { */
+/* 	  max-height: 1px!important; */
+/* 	  padding-left: initial!important; */
+/* 	  padding-top: 10px; */
+/* 	  margin-top: -10px; */
+/* 	  &[class^='form_'] > [class^='typing_'] { */
+/* 		border-bottom: 0px !important; */
+/* 	  } */
+/* 	  & ::after { */
+/* 		display: none !important; */
+/* 	  } */
+/* 	} */
+/* } */
+
+
+[class^='form_'] > [class^='typing_'] {
+	right: 16px !important;
+	left: 16px !important;
+	width: fit-content;
+	max-width: calc(100% - 32px);
+	border-left: none !important;
+	border-right: none !important;
+}
+
+/* self explanatory */
+[aria-label="Servers sidebar"] {
+  position: fixed !important;
+  z-index: 1000 !important;
+  transition: width 0.125s ease-in-out !important;
+  margin: var(--pad) 0px!important;
+  top:0 !important;
+  max-height: calc(100% - var(--pad)*2) !important;
+  box-sizing: border-box;
+  transition-delay: 0s;
+  min-height: 50% !important;
+  margin-left: var(--pad) !important;
+  &::before {
+	  content: '';
+		position: absolute;
+		top:0;
+		bottom:0;
+		left: calc(0px - var(--pad));
+	  width: var(--pad);
+	};
+  &:not(:hover) {
+    top:0px;
+	bottom: 50%;
+    background-color: transparent !important;
+    margin: 0px !important;
+    border: none;
+    width: 0px!important;
+    padding-right: 20px;
+    &::after,
+	&::before {
+      display: none !important;
+    }
+  }
+}
+
+/* channel list & user box */
+.sidebar_a4d4d9 {
+  position: fixed !important;
+  z-index: 1000 !important;
+  transition: width 0.125s ease-in-out;
+  margin: var(--pad) 0px!important;
+  top:0 !important;
+  max-height: calc(100% - var(--pad)*2) !important;
+  box-sizing: border-box;
+  background-color: var(--background-primary);
+  transition-delay: 0s;
+  margin-left: var(--pad) !important;
+  &::before {
+	  content: '';
+		position: absolute;
+		top:0;
+		bottom:0;
+		left: calc(0px - var(--pad));
+	  width: var(--pad);
+	};
+  &:not(:hover) {
+    top: 50% !important;
+    margin-top: 0px !important;
+    border: none;
+    width: 0px!important;
+    padding-right: 20px!important;
+    background-color: transparent !important;
+    & > *{
+      opacity: 0% !important;
+    };
+    & ::after {
+      display: none !important;
+    }
+  }
+}
+
+/* fix padding on main chat bit (and associated shit)*/
+.chat_a7d72e,
+.container_c2739c {
+  margin-left: var(--pad);
+}
+
+.jumpToPresentBar_cf58b5 {
+	right: 16px !important;
+	left: 16px !important;
+}
