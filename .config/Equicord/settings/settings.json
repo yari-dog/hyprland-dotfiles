@@ -3,7 +3,11 @@
     "autoUpdateNotification": true,
     "useQuickCss": true,
     "themeLinks": [],
-    "enabledThemes": [],
+    "enabledThemes": [
+        "remove-shit.css",
+        "collapsible-ui.css",
+        "system24-gruvbox-custom.css"
+    ],
     "enabledThemeLinks": [],
     "enableReactDevtools": true,
     "frameless": true,
@@ -1020,7 +1024,7 @@
         "authenticated": true,
         "url": "https://cloud.equicord.fyi/",
         "settingsSync": true,
-        "settingsSyncVersion": 1725570681961
+        "settingsSyncVersion": 1725570895771
     },
     "userCssVars": {}
 }
