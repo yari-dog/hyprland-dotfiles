@@ -32,34 +32,47 @@
   position: fixed !important;
   z-index: 1000 !important;
   transition: width 0.125s ease-in-out !important;
-  margin: var(--pad) 0px!important;
   top:0 !important;
   max-height: calc(100% - var(--pad)*2) !important;
-  box-sizing: border-box;
   transition-delay: 0s;
   min-height: 50% !important;
   margin-left: var(--pad) !important;
-  &::before {
+  margin-top: var(--pad) !important;
+  &:hover {
+		&::before {
 	  content: '';
 		position: absolute;
 		top:0;
 		bottom:0;
 		left: calc(0px - var(--pad));
 	  width: var(--pad);
+		};
+  &::after {
+			z-index: 1001 !important;
+			background-color: var(--background-primary);
+		};
+  & > :hover {
+  		overflow: scroll;
+		scrollbar-width: none;
+	};
 	};
   &:not(:hover) {
-    top:0px;
+	top: 0;
 	bottom: 50%;
     background-color: transparent !important;
     margin: 0px !important;
     border: none;
     width: 0px!important;
-    padding-right: 20px;
-    &::after,
-	&::before {
-      display: none !important;
-    }
-  }
+  	&::after {
+		content: '';
+		position:absolute;
+		top:0;
+		bottom:0;
+		left: 0;
+		background-color: transparent;
+		width: var(--pad);
+	};
+  };
 }
 
 /* channel list & user box */
@@ -67,14 +80,13 @@
   position: fixed !important;
   z-index: 1000 !important;
   transition: width 0.125s ease-in-out;
-  margin: var(--pad) 0px!important;
   top:0 !important;
   max-height: calc(100% - var(--pad)*2) !important;
-  box-sizing: border-box;
   background-color: var(--background-primary);
   transition-delay: 0s;
   margin-left: var(--pad) !important;
-  &::before {
+  margin-top: var(--pad) !important;
+  &:hover::before { /* to stop it from constantly closing/reoppening cause of maring */
 	  content: '';
 		position: absolute;
 		top:0;
@@ -83,18 +95,24 @@
 	  width: var(--pad);
 	};
   &:not(:hover) {
-    top: 50% !important;
-    margin-top: 0px !important;
+	top: 50% !important;
+	bottom: 0;
+    background-color: transparent !important;
+    margin: 0px !important;
     border: none;
     width: 0px!important;
-    padding-right: 20px!important;
-    background-color: transparent !important;
-    & > *{
-      opacity: 0% !important;
-    };
-    & ::after {
-      display: none !important;
-    }
+	& * { /* fixes userbox showing */
+			display: none;
+		};
+  	&::after {
+		content: '';
+		position:absolute;
+		top:0;
+		bottom:0;
+		left: 0;
+		background-color: transparent;
+		width: var(--pad);
+	};
   }
 }
 

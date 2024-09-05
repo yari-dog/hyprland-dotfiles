@@ -76,3 +76,7 @@
 	--blue: #7daea3;
 	--green: #a9b665;
 }
+
+.vc-command-palette-option {
+	color: var(--txt-2) !important;
+}
