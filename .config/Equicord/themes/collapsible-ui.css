@@ -206,12 +206,12 @@
 
 /* slide out search/threads/mentions/pins/whatever the fuck */
 .toolbar_fc4f04 {
-	transition: var(--trans);
 	max-width: 100%;
+	overflow: hidden !important;
+	transition: var(--trans);
 
 	&:not(:is(:focus-within, :hover)) {
 		max-width: 0%;
-		/* opacity: 0; */
 
 		&::before {
 			content: '';
@@ -221,6 +221,11 @@
 			height: 100%;
 			width: var(--pad);
 		}
+	}
+
+	& * {
+		transition: var(--trans);
+		overflow: hidden !important;
 	}
 
 	&:hover {
