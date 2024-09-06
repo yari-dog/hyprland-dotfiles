@@ -1,128 +1,247 @@
-/* type box 4 chat, disabled because i cant get animations 2 play nice */
-/* .form_a7d72e { */
-/*   transition-delay: 0s; */
-/*   box-sizing: border-box; */
-/*   width: 100% !important;  */
-/*   &:not(:is(:focus-within, :hover)) { */
-/* 	  max-height: 1px!important; */
-/* 	  padding-left: initial!important; */
-/* 	  padding-top: 10px; */
-/* 	  margin-top: -10px; */
-/* 	  &[class^='form_'] > [class^='typing_'] { */
-/* 		border-bottom: 0px !important; */
-/* 	  } */
-/* 	  & ::after { */
-/* 		display: none !important; */
-/* 	  } */
-/* 	} */
-/* } */
+:root {
+	--trans-dur: calc(1s/10);
+	--trans: max-height var(--trans-dur) ease-in-out,
+		max-width var(--trans-dur) ease-in-out,
+		height var(--trans-dur) ease-in-out,
+		width var(--trans-dur) ease-in-out,
+		opacity var(--trans-dur) ease-in-out,
+		margin-top var(--trans-dur) ease-in-out;
+}
 
+.form_a7d72e {
+	max-height: 0px;
+	transition: var(--trans);
+	overflow: visible;
+	flex-direction: column-reverse !important;
 
-[class^='form_'] > [class^='typing_'] {
-	right: 16px !important;
-	left: 16px !important;
-	width: fit-content;
-	max-width: calc(100% - 32px);
-	border-left: none !important;
-	border-right: none !important;
+	&:has(> :is(:focus-within, :hover)) {
+		max-height: calc(var(--custom-channel-textarea-text-area-height) + 2*var(--pad));
+	}
+}
+
+/* type box 4 chat */
+.channelBottomBarArea_a7d72e {
+	position: relative;
+	transition-delay: 0s;
+	box-sizing: border-box;
+	width: 100%;
+	max-height: 100%;
+	opacity: 100;
+
+	& * {
+		max-height: 100%;
+		transition: var(--trans) !important;
+	}
+
+	transition: var(--trans) !important;
+
+	/* <x> is typing box thing */
+	&~.typing_d7ebeb.base_d7ebeb {
+		right: 16px;
+		left: 16px;
+		width: 100%;
+		max-width: calc(100% - 32px);
+		border-left: none;
+		border-right: none;
+	}
+
+	&::after {
+		position: absolute;
+		content: '';
+		top: 100%;
+		left: 0;
+		right: 0;
+		height: var(--pad);
+	}
+
+	&::before {
+		position: absolute;
+		content: '';
+		top: 0;
+		left: 0;
+		right: 0;
+		height: calc(2*var(--pad));
+	}
+
+	&:not(:is(:focus-within, :hover)) {
+		opacity: 0;
+		max-height: 0%;
+		padding-left: initial;
+		padding: 0;
+
+		& .inner_d0696b {
+			overflow: hidden !important;
+		}
+
+		& * {
+			max-height: 0px;
+		}
+	}
 }
 
 /* self explanatory */
-[aria-label="Servers sidebar"] {
-  position: fixed !important;
-  z-index: 1000 !important;
-  transition: width 0.125s ease-in-out !important;
-  top:0 !important;
-  max-height: calc(100% - var(--pad)*2) !important;
-  transition-delay: 0s;
-  min-height: 50% !important;
-  margin-left: var(--pad) !important;
-  margin-top: var(--pad) !important;
-  &:hover {
-		&::before {
-	  content: '';
-		position: absolute;
-		top:0;
-		bottom:0;
-		left: calc(0px - var(--pad));
-	  width: var(--pad);
-		};
-  &::after {
-			z-index: 1001 !important;
-			background-color: var(--background-primary);
-		};
-  & > :hover {
-  		overflow: scroll;
-		scrollbar-width: none;
-	};
-	};
-  &:not(:hover) {
+.wrapper_fea3ef.guilds_a4d4d9 {
+	position: fixed;
+	z-index: 1000;
+	transition: var(--trans);
 	top: 0;
-	bottom: 50%;
-    background-color: transparent !important;
-    margin: 0px !important;
-    border: none;
-    width: 0px!important;
-  	&::after {
-		content: '';
-		position:absolute;
-		top:0;
-		bottom:0;
-		left: 0;
+	max-height: calc(100% - var(--pad)*2);
+	transition-delay: 0s;
+	min-height: 50%;
+	margin-left: var(--pad);
+	margin-top: var(--pad);
+
+	&:not(:hover) {
+		bottom: 50%;
 		background-color: transparent;
-		width: var(--pad);
-	};
-  };
+		margin: 0px;
+		border: none;
+		width: 0px;
+
+		&::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			background-color: transparent;
+			width: var(--pad);
+		}
+	}
+
+	&:hover {
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: calc(0px - var(--pad));
+			width: var(--pad);
+		}
+
+		&::after {
+			z-index: 1001;
+			background-color: var(--background-primary);
+		}
+
+		&> :hover {
+			overflow: scroll;
+			scrollbar-width: none;
+		}
+	}
+}
+
+/* very hacky way to make notifications visible */
+:root:has(* .numberBadge_df8943) {
+	& .wrapper_fea3ef.guilds_a4d4d9:not(:hover)::before {
+		background-color: var(--status-danger);
+		position: absolute;
+		top: var(--pad);
+		left: 0;
+		content: '!';
+		padding: 0;
+		height: 16px;
+		width: 16px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		font-size: 12px;
+		font-weight: 700;
+	}
+}
+
+/* remove the "new" box thing */
+.bar_edf32f.unreadMentionsBar_fea3ef.mention_edf32f.active_edf32f {
+	display: none;
 }
 
 /* channel list & user box */
 .sidebar_a4d4d9 {
-  position: fixed !important;
-  z-index: 1000 !important;
-  transition: width 0.125s ease-in-out;
-  top:0 !important;
-  max-height: calc(100% - var(--pad)*2) !important;
-  background-color: var(--background-primary);
-  transition-delay: 0s;
-  margin-left: var(--pad) !important;
-  margin-top: var(--pad) !important;
-  &:hover::before { /* to stop it from constantly closing/reoppening cause of maring */
-	  content: '';
-		position: absolute;
-		top:0;
-		bottom:0;
-		left: calc(0px - var(--pad));
-	  width: var(--pad);
-	};
-  &:not(:hover) {
-	top: 50% !important;
-	bottom: 0;
-    background-color: transparent !important;
-    margin: 0px !important;
-    border: none;
-    width: 0px!important;
-	& * { /* fixes userbox showing */
-			display: none;
-		};
-  	&::after {
+	position: fixed;
+	z-index: 1000;
+	transition: var(--trans);
+	top: 0;
+	max-height: calc(100% - var(--pad)*2);
+	/* requires !important bcause of more specific default rule */
+	background-color: var(--background-primary) !important;
+	transition-delay: 0s;
+	margin-left: var(--pad);
+	margin-top: var(--pad);
+
+	&:hover::before {
+		/* to stop it from constantly closing/reoppening cause of maring */
 		content: '';
-		position:absolute;
-		top:0;
-		bottom:0;
-		left: 0;
-		background-color: transparent;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: calc(0px - var(--pad));
 		width: var(--pad);
-	};
-  }
+	}
+
+	&:not(:hover) {
+		top: 50%;
+		bottom: 0;
+		background-color: transparent;
+		margin: 0px;
+		border: none;
+		width: 0px;
+
+		& * {
+			/* fixes userbox showing */
+			display: none;
+		}
+
+		&::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			background-color: transparent;
+			width: var(--pad);
+		}
+	}
+}
+
+/* slide out search/threads/mentions/pins/whatever the fuck */
+.toolbar_fc4f04 {
+	transition: var(--trans);
+	max-width: 100%;
+
+	&:not(:is(:focus-within, :hover)) {
+		max-width: 0%;
+		/* opacity: 0; */
+
+		&::before {
+			content: '';
+			position: absolute;
+			right: 0;
+			top: 0;
+			height: 100%;
+			width: var(--pad);
+		}
+	}
+
+	&:hover {
+		&::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			right: 0;
+			height: 100%;
+			width: var(--pad);
+		}
+	}
 }
 
 /* fix padding on main chat bit (and associated shit)*/
 .chat_a7d72e,
 .container_c2739c {
-  margin-left: var(--pad);
+	margin-left: var(--pad);
 }
 
 .jumpToPresentBar_cf58b5 {
-	right: 16px !important;
-	left: 16px !important;
+	right: 16px;
+	left: 16px;
 }
