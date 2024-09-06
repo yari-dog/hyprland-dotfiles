@@ -41,7 +41,7 @@
             "enabled": false
         },
         "ServerListAPI": {
-            "enabled": false
+            "enabled": true
         },
         "UserSettingsAPI": {
             "enabled": true
@@ -1012,6 +1012,10 @@
         },
         "SupportHelper": {
             "enabled": true
+        },
+        "HideServers": {
+            "enabled": false,
+            "showIndicator": true
         }
     },
     "notifications": {
@@ -1024,7 +1028,7 @@
         "authenticated": true,
         "url": "https://cloud.equicord.fyi/",
         "settingsSync": true,
-        "settingsSyncVersion": 1725570895771
+        "settingsSyncVersion": 1725591678343
     },
     "userCssVars": {}
 }
