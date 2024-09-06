@@ -14,3 +14,9 @@ alias ls "exa"
 alias cat "bat"
 alias htop "btop"
 alias vim "nvim"
+
+fish_vi_key_bindings
+bind i up-or-search
+bind e down-or-search
+bind n backward-char
+bind o forward-char

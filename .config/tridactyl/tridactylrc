@@ -26,7 +26,7 @@ colorscheme gruvbox
 " binds-----------------------------
 " misc
 bind ,<Space> nohlsearch " clear search
-bind <Space>hrr source
+bind ,s source
 " tab stuff i guess
 bind t fillcmdline tabopen
 bind T fillcmdline tab
