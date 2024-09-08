@@ -1,15 +1,11 @@
 {
     "autoUpdate": true,
     "autoUpdateNotification": true,
-    "useQuickCss": true,
+    "useQuickCss": false,
     "themeLinks": [],
-    "enabledThemes": [
-        "remove-shit.css",
-        "collapsible-ui.css",
-        "system24-gruvbox-custom.css"
-    ],
+    "enabledThemes": [],
     "enabledThemeLinks": [],
-    "enableReactDevtools": true,
+    "enableReactDevtools": false,
     "frameless": true,
     "transparent": false,
     "winCtrlQ": false,
@@ -170,10 +166,10 @@
             "enabled": false
         },
         "EquicordToolbox": {
-            "enabled": false
+            "enabled": true
         },
         "Experiments": {
-            "enabled": true,
+            "enabled": false,
             "toolbarDevMenu": false
         },
         "F8Break": {
@@ -515,7 +511,7 @@
             "enabled": false
         },
         "ThemeAttributes": {
-            "enabled": true
+            "enabled": false
         },
         "TimeBarAllActivities": {
             "enabled": false
@@ -584,7 +580,13 @@
             "enabled": true
         },
         "AllCallTimers": {
-            "enabled": false
+            "enabled": false,
+            "showWithoutHover": true,
+            "showRoleColor": true,
+            "trackSelf": true,
+            "showSeconds": true,
+            "format": "stopwatch",
+            "watchLargeGuilds": false
         },
         "AltKrispSwitch": {
             "enabled": false
@@ -644,7 +646,7 @@
             "enabled": false
         },
         "CommandPalette": {
-            "enabled": true,
+            "enabled": false,
             "hotkey": [
                 "control",
                 "shift",
@@ -695,7 +697,7 @@
             "enabled": false
         },
         "EquicordCSS": {
-            "enabled": true,
+            "enabled": false,
             "betterAuthApps": false,
             "betterStatusPicker": false,
             "gradientButtons": false,
@@ -748,7 +750,7 @@
             "enabled": false
         },
         "GoogleThat": {
-            "enabled": true,
+            "enabled": false,
             "hyperlink": true,
             "defaultEngine": "Google"
         },
@@ -774,7 +776,7 @@
             "url": "com.epicgames.launcher://apps/fn%3A4fe75bbc5a674f4f9b356b5c90567da5%3AFortnite?action=launch&silent=true"
         },
         "Husk": {
-            "enabled": true,
+            "enabled": false,
             "findInServer": true,
             "emojiName": "husk",
             "emojiID": "1026532993923293184"
@@ -1008,7 +1010,7 @@
         },
         "Settings": {
             "enabled": true,
-            "settingsLocation": "aboveNitro"
+            "settingsLocation": "aboveActivity"
         },
         "SupportHelper": {
             "enabled": true
@@ -1028,7 +1030,7 @@
         "authenticated": true,
         "url": "https://cloud.equicord.fyi/",
         "settingsSync": true,
-        "settingsSyncVersion": 1725591678343
+        "settingsSyncVersion": 1725731706413
     },
     "userCssVars": {}
 }

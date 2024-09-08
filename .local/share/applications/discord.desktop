@@ -3,7 +3,8 @@ Name=Discord
 StartupWMClass=discord
 Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.
 GenericName=Internet Messenger
-Exec=env LIBVA_DRIVER_NAME=radeonsi /usr/bin/discord --ignore-gpu-blocklist --enable-features=VaapiVideoDecoder, UseOzonePlatform,VaapiIgnoreDriverChecks, VaapiVideoEncoder, VaapiVideoDecoder, UseMultiPlaneFormatForHardwareVideo, VaapiVideoDecodeLinuxGL, ignore-gpu-blocklist --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy --ozone-platform=wayland
+Exec=env LIBVA_DRIVER_NAME=radeonsi GTK_IM_MODULE=fcitx /usr/bin/discord --ignore-gpu-blocklist --enable-features=VaapiVideoDecoder, VaapiIgnoreDriverChecks, VaapiVideoEncoder, VaapiVideoDecoder, UseMultiPlaneFormatForHardwareVideo, VaapiVideoDecodeLinuxGL, ignore-gpu-blocklist --use-gl=desktop --enable-gpu-rasterization --enable-zero-copy --disable-features=UseOzonePlatform
+# --ozone-platform=wayland
 Icon=discord
 Type=Application
 Categories=Network;InstantMessaging;

@@ -6,6 +6,7 @@
 		width var(--trans-dur) ease-in-out,
 		opacity var(--trans-dur) ease-in-out,
 		margin-top var(--trans-dur) ease-in-out;
+	--pad: 16px;
 }
 
 .form_a7d72e {
@@ -79,7 +80,7 @@
 	}
 }
 
-/* self explanatory */
+/* server list */
 .wrapper_fea3ef.guilds_a4d4d9 {
 	position: fixed;
 	z-index: 1000;
@@ -88,15 +89,14 @@
 	max-height: calc(100% - var(--pad)*2);
 	transition-delay: 0s;
 	min-height: 50%;
-	margin-left: var(--pad);
-	margin-top: var(--pad);
+	margin: var(--pad);
 
 	&:not(:hover) {
 		bottom: 50%;
 		background-color: transparent;
-		margin: 0px;
 		border: none;
 		width: 0px;
+		margin-left: 0px;
 
 		&::after {
 			content: '';
@@ -110,6 +110,8 @@
 	}
 
 	&:hover {
+		margin-bottom: var(--pad);
+
 		&::before {
 			content: '';
 			position: absolute;
@@ -161,13 +163,13 @@
 	position: fixed;
 	z-index: 1000;
 	transition: var(--trans);
-	top: 0;
+	bottom: 0;
+	min-height: 50%;
 	max-height: calc(100% - var(--pad)*2);
-	/* requires !important bcause of more specific default rule */
+	/* requires !important because of more specific default rule */
 	background-color: var(--background-primary) !important;
 	transition-delay: 0s;
-	margin-left: var(--pad);
-	margin-top: var(--pad);
+	margin: var(--pad);
 
 	&:hover::before {
 		/* to stop it from constantly closing/reoppening cause of maring */
@@ -183,7 +185,7 @@
 		top: 50%;
 		bottom: 0;
 		background-color: transparent;
-		margin: 0px;
+		margin-left: 0px;
 		border: none;
 		width: 0px;
 

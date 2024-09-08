@@ -1,0 +1,65 @@
+:root {
+	--pad: 16px;
+	--trans-dur: calc(1000ms/10);
+	/* how long each pixel should take to transition */
+
+	--element-height: 100%;
+	--element-height-min: 50%;
+	--sidebar-width: 240px;
+}
+
+/* NOTE: SECTION: ------------------------------------------ general */
+/* NOTE: SUBSECTION: ------------ guilds & channels */
+/* NOTE: collapse */
+.sidebar_a4d4d9,
+.guilds_a4d4d9 {
+	--transition: width var(--trans-dur) ease-in-out;
+	content-visibility: auto;
+	will-change: width;
+	position: fixed;
+	z-index: 101;
+	min-height: calc(var(--element-height-min) - var(--pad));
+	max-height: calc(var(--element-height-min) - var(--pad)*2);
+	box-sizing: border-box;
+	overflow: hidden;
+	padding-left: var(--pad);
+	width: calc(var(--element-width) + var(--pad));
+	background-color: transparent;
+	transition: var(--transition);
+
+	&:not(:is(:hover, :focus-within, :focus)) {
+		transition: var(--transition), max-height 0ms ease-in-out var(--trans-dur);
+		width: 0px;
+	}
+
+	&:hover,
+	&:focus-within,
+	:focus {
+		max-height: calc(var(--element-height) - var(--pad)*2);
+		background-color: inherit;
+	}
+}
+
+/* NOTE: channels */
+.sidebar_a4d4d9 {
+	--element-width: 240px;
+	bottom: var(--pad);
+}
+
+/* NOTE: guilds */
+.guilds_a4d4d9 {
+	--element-width: 72px;
+	top: var(--pad);
+}
+
+/* NOTE: add bg to guilds list */
+.tree_fea3ef {
+	position: absolute;
+	top: 0;
+	background-color: var(--background-primary);
+	min-height: 100%;
+}
+
+#guild_context {
+	z-index: 102;
+}
