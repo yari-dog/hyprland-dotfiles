@@ -1,9 +1,18 @@
 {
     "autoUpdate": true,
     "autoUpdateNotification": true,
-    "useQuickCss": false,
-    "themeLinks": [],
-    "enabledThemes": [],
+    "useQuickCss": true,
+    "themeLinks": [
+        "https://raw.githubusercontent.com/yari-dog/system24/main/theme/flavors/gruvbox-material.theme.css"
+    ],
+    "enabledThemes": [
+        "test.css",
+        "remove-shit.css",
+        "main.css",
+        "unrounding.css",
+        "autohide.css",
+        "gruv.css"
+    ],
     "enabledThemeLinks": [],
     "enableReactDevtools": false,
     "frameless": true,
@@ -1030,7 +1039,7 @@
         "authenticated": true,
         "url": "https://cloud.equicord.fyi/",
         "settingsSync": true,
-        "settingsSyncVersion": 1725731706413
+        "settingsSyncVersion": 1725890411558
     },
     "userCssVars": {}
 }

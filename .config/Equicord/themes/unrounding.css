@@ -1,0 +1,126 @@
+/**
+* @name yari's system24
+* @description a rework of the system24 theme, designed to be more efficient
+* @author yari :3, (refact0r, Sophed)
+* @version 1.0.0
+*/
+
+/* NOTE: SECTION: ------------------------------------------ rounding */
+:root {
+	--radius-xs: 0;
+	--radius-sm: 0;
+	--radius-md: 0;
+	--radius-lg: 0;
+	--radius-xl: 0;
+	--radius-xxl: 0;
+	--radius-round: 0;
+	--custom-emoji-picker-border-radius: 0;
+	--custom-guild-boosting-marketing-tier-cards-tier-card-border-radius: 0;
+	--custom-reaction-picker-border-radius: 0;
+	--custom-stickers-constants-sticker-picker-preview-border-radius: 0;
+	--custom-base-tile-border-radius: 0;
+	--custom-scrollbar-border-radius: 0;
+	--custom-live-indicator-border-radius: 0;
+}
+
+.button_dd4f85,
+.embed_b0068a,
+.embedMedia_b0068a,
+.imageWrapper_d4597d,
+.reaction_ec6b19,
+.reactionInner_ec6b19,
+.clickableWrapper_d4597d,
+.loadingOverlay_d4597d,
+.lazyImg_cda674,
+.imageContainer_cf58b5,
+.itemContentContainer_cda674,
+.mosaicItemContent_e5c1dc,
+.mosaicItem_e5c1dc,
+.visualMediaItemContainer_cda674,
+.oneByOneGrid_cda674,
+.wrapper_f72aac,
+.video_f72aac,
+.iconBadge_fc4f04,
+.barBase_cf58b5,
+.lowerBadge_c5f96a,
+.numberBadge_df8943,
+.pointerEvents_c51b4e,
+.inner_c59af2,
+.bar_edf32f,
+.avatar_f9f2ca,
+.vc-mentionAvatars-icon,
+.iconActiveMedium_a64689,
+.footer_d8e2d0,
+.textContainer_d8e2d0,
+.roleCircle_a26d7b,
+.role_e4010c,
+.botTag_f9f2ca,
+.container_c18ec9,
+.searchBarComponent_f0963d,
+.topPill_a0,
+.item_c2739c,
+.themed_a0,
+.container_effbe2,
+.vc-addon-card,
+.input_cebd1c,
+.container_cebd1c,
+.banner_d5fdb1,
+.themedBackground_d0696b, 
+.channelTextArea_a7d72e {
+	border-radius: 0 !important;
+}
+
+.wrapper_c5f96a mask,
+.mask_c51b4e>svg,
+.mask_c51b4e>rect,
+.mask_c51b4e>circle,
+.mask_d5fdb1>svg,
+.mask_d5fdb1>rect,
+.mask_d5fdb1>circle {
+	display: none;
+}
+
+.mask_c51b4e>foreignObject,
+.mask_d5fdb1>foreignObject {
+	mask-image: none;
+}
+
+.wrapper_c51b4e:has(rect)::after,
+.container_e85446::after {
+	content: '';
+	display: block;
+	position: absolute;
+	height: 8px;
+	width: 8px;
+	bottom: -4px;
+	right: -4px;
+	border: var(--border-width) solid var(--bg-0);
+}
+
+.wrapper_c51b4e:has(rect[fill='#23a55a'])::after,
+.container_e85446:has(div[style='background-color: rgb(35, 165, 90);'])::after {
+	background: var(--online-dot) !important;
+}
+
+.wrapper_c51b4e:has(rect[fill='#f23f43'])::after {
+	background: var(--dnd-dot) !important;
+}
+
+.wrapper_c51b4e:has(rect[fill='#f0b232'])::after {
+	background: var(--idle-dot) !important;
+}
+
+.wrapper_c51b4e:has(rect[fill='#80848e'])::after {
+	background: var(--txt-3) !important;
+}
+
+.wrapper_c51b4e:has(rect[fill='#593695'])::after {
+	background: var(--streaming-dot) !important;
+}
+
+/* fix server list badges */
+.lowerBadge_c5f96a {
+	border: var(--border-width) solid var(--bg-0);
+	bottom: -4px;
+	right: -4px;
+}
