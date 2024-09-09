@@ -35,7 +35,6 @@
 		width: calc(var(--element-width) + var(--pad));
 		background-color: transparent;
 		transition: var(--transition);
-		container-type: size;
 
 		&:not(:is(:hover, :focus-within)) {
 			transition: var(--transition), max-height 0ms ease-in-out var(--trans-dur);
