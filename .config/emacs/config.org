@@ -150,10 +150,10 @@ hide minor modes
 #+end_src
 * discord
 #+begin_src emacs-lisp
-  (use-package elcord
-    :ensure t
-    :init
-    (elcord-mode))
+  ;;(use-package elcord
+  ;;  :ensure t
+  ;;  :init
+  ;;  (elcord-mode))
 #+end_src
 
 * drag-stuff

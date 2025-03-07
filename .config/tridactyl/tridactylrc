@@ -7,14 +7,14 @@ sanitize tridactyllocal tridactylsync
 set hintchars arstgmneio
 set smoothscroll true
 set editorcmd foot nvim 
-set allowautofocus false
+set allowautofocus true
 set browser librewolf
 set externalclipboardcmd wl-copy
 set escapehatchsidebarhack false " stops it from closing sideberry
 set completions.Tab.statusstylepretty true 
 set completions.History.autoselect true
 set hintfiltermode vimperator-reflow
-unset searchurls.twitter 
+set searchurls.amazon https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
 setnull searchurls.twitter
 set searchurlweight 10
 
@@ -53,8 +53,8 @@ bind i scrollline -5
 bind o scrollpx 50
 
 bind N back
-bind E tabprev
-bind I tabnext
+bind E tabnext
+bind I tabprev
 bind O forward
 
 " bind / fillcmdline find
@@ -66,3 +66,7 @@ bind <C-K> tabcloseall
 
 bind h scrollpage 0.5 
 bind , scrollpage -0.5
+
+unbind <C-e>
+unbind <C-b>
+unbind <C-h>
