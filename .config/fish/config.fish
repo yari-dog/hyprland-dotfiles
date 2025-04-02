@@ -1,3 +1,4 @@
+source /usr/share/cachyos-fish-config/cachyos-config.fish
 
 set fish_greeting
 
@@ -20,3 +21,4 @@ bind i up-or-search
 bind e down-or-search
 bind n backward-char
 bind o forward-char
+bind --erase --preset \cd
