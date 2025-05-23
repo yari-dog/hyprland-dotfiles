@@ -2,12 +2,7 @@
     "autoUpdate": true,
     "autoUpdateNotification": true,
     "useQuickCss": false,
-    "themeLinks": [
-        "https://raw.githubusercontent.com/refact0r/system24/refs/heads/main/theme/flavors/gruvbox-material.theme.css",
-        "https://discord-themes.com/api/91",
-        "https://discord-themes.com/api/56",
-        "https://discord-themes.com/api/124"
-    ],
+    "themeLinks": [],
     "enabledThemes": [
         "test.css",
         "remove-shit.css",
@@ -17,10 +12,7 @@
         "gruvbox-material.theme.css",
         "autohide.css"
     ],
-    "enabledThemeLinks": [
-        "https://discord-themes.com/api/56",
-        "https://discord-themes.com/api/124"
-    ],
+    "enabledThemeLinks": [],
     "enableReactDevtools": false,
     "frameless": true,
     "transparent": false,
@@ -72,7 +64,8 @@
             "enabled": true,
             "anonymiseByDefault": true,
             "method": 0,
-            "randomisedLength": 7
+            "randomisedLength": 7,
+            "spoilerMessages": false
         },
         "AppleMusicRichPresence": {
             "enabled": false
@@ -695,9 +688,6 @@
         "DoubleCounterBypass": {
             "enabled": false
         },
-        "EmojiDumper": {
-            "enabled": false
-        },
         "Encryptcord": {
             "enabled": false
         },
@@ -1156,7 +1146,8 @@
             "enabled": false
         },
         "EquicordHelper": {
-            "enabled": true
+            "enabled": true,
+            "hideClanBadges": false
         },
         "BetterBlockedUsers": {
             "enabled": false
@@ -1174,7 +1165,8 @@
             "enabled": false
         },
         "VCPanelSettings": {
-            "enabled": true
+            "enabled": true,
+            "uncollapseSettingsByDefault": false
         },
         "DisableAnimations": {
             "enabled": false
@@ -1196,6 +1188,85 @@
         },
         "Freaky": {
             "enabled": false
+        },
+        "CopyProfileColors": {
+            "enabled": false
+        },
+        "InstantScreenshare": {
+            "enabled": false
+        },
+        "LastActive": {
+            "enabled": false
+        },
+        "Morse": {
+            "enabled": false
+        },
+        "PingNotifications": {
+            "enabled": false
+        },
+        "CopyStickerLinks": {
+            "enabled": false
+        },
+        "NoOnboarding": {
+            "enabled": false
+        },
+        "ToastNotifications": {
+            "enabled": true,
+            "ignoreUsers": "",
+            "notifyFor": "",
+            "disableInStreamerMode": true,
+            "determineServerNotifications": true,
+            "friendServerNotifications": false,
+            "renderImages": true,
+            "maxNotifications": 3,
+            "position": "bottom-right",
+            "timeout": 5,
+            "opacity": 100,
+            "directMessages": true,
+            "groupMessages": true,
+            "friendActivity": true,
+            "streamingTreatment": 0
+        },
+        "GuildPickerDumper": {
+            "enabled": false
+        },
+        "NicknameIconsAPI": {
+            "enabled": false
+        },
+        "AutoJump": {
+            "enabled": false
+        },
+        "BypassPinPrompt": {
+            "enabled": false
+        },
+        "ForwardAnywhere": {
+            "enabled": false
+        },
+        "Soggy": {
+            "enabled": true,
+            "songLink": "https://github.com/Equicord/Equibored/raw/main/sounds/soggy/song.mp3?raw=true",
+            "boopLink": "https://github.com/Equicord/Equibored/raw/main/sounds/soggy/honk.wav?raw=true",
+            "tooltipText": "the soggy",
+            "imageLink": "https://soggy.cat/img/soggycat.webp",
+            "songVolume": 0.25
+        },
+        "SplitLargeMessages": {
+            "enabled": false
+        },
+        "SpotifyActivityToggle": {
+            "enabled": false
+        },
+        "FastDeleteChannels": {
+            "enabled": false
+        },
+        "Ingtoninator": {
+            "enabled": false
+        },
+        "WallpaperFree": {
+            "enabled": false
+        },
+        "BadgeAPI": {
+            "enabled": true
         }
     },
     "notifications": {
@@ -1208,7 +1279,7 @@
         "authenticated": false,
         "url": "https://cloud.equicord.org",
         "settingsSync": true,
-        "settingsSyncVersion": 1743587061098
+        "settingsSyncVersion": 1747686824574
     },
     "userCssVars": {},
     "eagerPatches": false,

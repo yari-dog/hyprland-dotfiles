@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Portal with RTX
+Comment=Play this game on Steam
+Exec=steam steam://rungameid/2012840
+Icon=steam_icon_2012840
+Terminal=false
+Type=Application
+Categories=Game;

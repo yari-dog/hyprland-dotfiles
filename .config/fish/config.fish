@@ -11,10 +11,11 @@ thefuck --alias | source
 starship init fish | source
 
 alias emacs "command emacsclient -c -a emacs"
-alias ls "exa"
-alias cat "bat"
-alias htop "btop"
-alias vim "nvim"
+alias ls exa
+alias cat bat
+alias htop btop
+alias vim nvim
+alias fastfetch "hyfetch --args '--color-keys 3 --color-title 3'"
 
 fish_vi_key_bindings
 bind i up-or-search

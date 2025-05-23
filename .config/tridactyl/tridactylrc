@@ -20,7 +20,7 @@ set searchurlweight 10
 
 " theme :3
 " they need 2 go in .config/tridactyl/themes
-colorscheme gruvbox
+colorscheme dark-soft
 
 
 " binds-----------------------------
