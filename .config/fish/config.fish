@@ -10,12 +10,21 @@ thefuck --alias | source
 
 starship init fish | source
 
-alias emacs "command emacsclient -c -a emacs"
-alias ls exa
+op completion fish | source
+
+# make fetch look pretty
+alias fastfetch "hyfetch --args='--color-keys 3 --color-title 3'"
+
+# replace with swag rust
+alias ls eza
 alias cat bat
 alias htop btop
 alias vim nvim
-alias fastfetch "hyfetch --args '--color-keys 3 --color-title 3'"
+
+# vimsism
+alias :q exit
+alias :wq exit
+alias gg "cd ../"
 
 fish_vi_key_bindings
 bind i up-or-search

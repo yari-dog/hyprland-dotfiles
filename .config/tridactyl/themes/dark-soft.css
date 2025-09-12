@@ -94,11 +94,14 @@ span.TridactylHint {
   font-family: var(--font-family-mono) !important;
   font-weight: var(--font-weight-mono-semibold) !important;
   animation: 3s linear 1s infinite running hint !important;
-}
-
-span.TridactylHint {
-  background: var(--foreground-0) !important;
-  color: var(--foreground-4) !important;
+  padding: 0.25rem 0.375rem !important;
+  border: unset !important;
+  background: var(--tridactyl-bg) !important;
+  border-radius: var(--border-radius-1) !important;
+  color: var(--yellow) !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  color-scheme: light;
 }
 
 #trinewtab>img {
@@ -117,7 +120,6 @@ span.TridactylHint {
   color: var(--yellow) !important;
   font-size: 0.75rem !important;
   font-weight: 500 !important;
-  opacity: 0.75;
   color-scheme: light;
 }
 
@@ -136,6 +138,8 @@ span.TridactylHint {
   flex-direction: column;
   align-items: stretch;
   padding: 3rem;
+  background: none;
+  border: none;
 }
 
 #command-line-holder {
@@ -147,7 +151,7 @@ span.TridactylHint {
   border-radius: 0;
   color: var(--tridactyl-bg);
   border: 2px solid var(--foreground-3);
-  border-bottom: unset;
+  border-bottom: none;
   position: relative;
 
   &::after {
