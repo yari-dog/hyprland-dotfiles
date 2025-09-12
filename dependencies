@@ -13,32 +13,22 @@ wpctl (for xf86 volume)
 swww
 
 # display manager
-none currently
+ly currently
 
 # notifications
-dunst
+mako
 ( moving over to ags widgets soon )
 
 # launcher
-anyrun
+rofi
 
-
-ags (aylurs gtk shell) (widgets and shit)
-
+# bar
+waybar
 # clipboard
-wl-clipboard
+wl-copy
 
 #screenshots
-grim
-slurp
-
-###
-# AGS
-gvfs (something to do with audio)
-cairomm (graphics stuff)
-dart-sass (compiling css)
-python-pillow (image library)
-python-materialyoucolor-git (does some sorta shit idk)
+the hyprland one
 
 ### general'
 
@@ -47,7 +37,8 @@ qt5 & 6
 also their wayland alts
 
 # policy management
-polkit-kde-agent
+cmd-polkit-git
+rofi-polkit-agent-git
 
 # shell
 fish
@@ -55,11 +46,6 @@ fish
 # term
 foot
 starship
-kitty (backup if hyprland config breaks, hyprland default term)
-
-# notifications
-dunst
-(eventually switch to ags notifications, they have a thing for it)
 
 # dot management
 stow
@@ -68,32 +54,7 @@ stow
 fctix5
 
 # fonts
-noto-fonts
-noto-fonts-cjk
-noto-fonts-emoji
-nerdfonds
-ttf-material-design-iconic-font
-ttf-material-symbols-variable-git
-
+ttf-sarasa-gothic-nerd-fonts
 
 # bootloader
 systemd
-
-# kernel
-linux-zen
-
-# storage
-ntfs-3g (read ntfs)
-apfs-fuse (read apfs)
-
-# usb automount
-udiskie
-
-
-### emacs
-python-lsp-server (python)
-bash-language-server (bash scripts)
-clang (c/c++)
-typescript-language-server (ts & js)
-pandoc (markdown live preview)
-
