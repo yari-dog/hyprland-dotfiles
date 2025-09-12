@@ -1,0 +1,8 @@
+
+/*****----- Configuration -----*****/
+@import "~/.config/rofi/base-style.rasi"
+
+
+mode-switcher{
+  enabled: false;
+}
