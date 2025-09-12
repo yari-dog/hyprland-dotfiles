@@ -1,0 +1,139 @@
+@define-color fg #ebdbb2;
+@define-color bg #282828;
+
+
+* {
+    border: none;
+    font-family: Sarasa Term J Nerd Font;
+    font-weight: 800;
+    font-size: 13px;
+    border: none;
+    border-radius: 0px;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* The whole bar */
+#waybar {
+    background-color: transparent;
+    color: #ffffff;
+    transition-property: background-color;
+    transition-duration: 0.5s;
+    border-radius: 0px;
+    margin: 0px;
+}
+
+tooltip {
+    background: #282828;
+    color: #ebdbb2;
+}
+
+#workspaces button {
+    border: none;
+    transition-duration: 0.3s;
+    background: none;
+    box-shadow: inherit;
+    text-shadow: inherit;
+    color: #928374;
+}
+
+#workspaces button.persistent {
+    color: #928374;
+}
+
+#workspaces button.empty {
+    color: #504945;
+}
+
+#workspaces button.special {
+    color: #b8bb26;
+}
+
+#workspaces button.visible {
+    color: #ebdbb2;
+}
+
+#workspaces button:hover {
+    color: #d79921;
+}
+
+#workspaces button.active {
+    color: #ebdbb2;
+}
+
+#workspaces button.urgent {
+    color: #cc241d;
+}
+
+#language,
+#custom-updates,
+#custom-weather,
+#window,
+#custom-playerctl,
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#workspaces,
+#tray,
+#cava,
+#keyboard-state,
+#idle_inhibitor,
+#custom-power {
+    background: @bg;
+    color: @fg;
+    padding: 5px;
+    margin: 0px;
+}
+
+#custom-weather,
+#cava,
+#tray {
+    padding-left: 10px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+#workspaces,
+#pulseaudio.microphone,
+#custom-power {
+    padding-right: 10px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+#custom-power {
+    padding-right: 20px;
+}
+
+#workspaces button {
+    border-radius: 2px;
+    padding: 0px 4px;
+    color: #ebdbb2;
+    background-color: #282828;
+    transition: all 0.3s ease-in-out;
+    font-size: 13px;
+    /* Slightly smaller font size */
+}
+
+#workspaces button.active {
+    color: #282828;
+    background: #8ec07c;
+}
+
+#workspaces button.active:hover {
+    background: #689d6a;
+}
+
+#workspaces button:hover {
+    background: #665c54;
+}
+
+#workspaces button.urgent {
+    background-color: #d65d0e;
+}
+
+#workspaces {
+    background-color: #282828;
+}
