@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Half-Life: Alyx
+Comment=Play this game on Steam
+Exec=steam steam://rungameid/546560
+Icon=steam_icon_546560
+Terminal=false
+Type=Application
+Categories=Game;

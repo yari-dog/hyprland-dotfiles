@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=URI-vrmonitor
+Comment=URI handler for vrmonitor://
+Exec="/home/yari/.local/share/Steam/steamapps/common/SteamVR/bin/linux64/../vrmonitor.sh" %U
+Terminal=false
+Type=Application
+Categories=Game;
+MimeType=x-scheme-handler/vrmonitor
+	

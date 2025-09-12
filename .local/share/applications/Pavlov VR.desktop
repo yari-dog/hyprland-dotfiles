@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Pavlov VR
+Comment=Play this game on Steam
+Exec=steam steam://rungameid/555160
+Icon=steam_icon_555160
+Terminal=false
+Type=Application
+Categories=Game;

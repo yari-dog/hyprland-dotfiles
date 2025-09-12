@@ -1,0 +1,1078 @@
+/**
+ * @name TUI v0
+ * @author Will Temple
+ * @version 0.1.0
+ * @description Terminal TUI-like theme for BetterDiscord, with customizable colors.
+ */
+
+/**
+ * Customize these variables in Quick CSS or your own theme :)
+ *
+ * If you find that a setting isn't working, try adding `!important`. For example:
+ *
+ * ```css
+ * :root {
+ *   --display-title-bar: block !important;
+ * }
+ * ```
+ */
+:root {
+  /**
+   * How to display the title bar.
+   *
+   * Valid values: none, block
+   */
+  --display-title-bar: none;
+
+  /**
+   * How much to push the top of the window up to account for the absence of the title bar.
+   *
+   * Set this to 32px if you had a title bar and set '--display-title-bar: none' to get rid of it. Otherwise, set it to zero.
+   */
+   --title-bar-v-offset: 32px;
+
+  /**
+   * How to display member activity.
+   *
+   * Valid values: none, block;
+   */
+  --display-member-activity: none;
+
+   /**
+    * How to display server banner images.
+    *
+    * Valid values: none, block;
+    */
+   --display-server-banner: block;
+
+   /**
+    * How much to push the server list down to account for the banner.
+    *
+    * Set this to 8em if you enabled server banners.
+    */
+   --server-banner-v-offset: 8em;
+
+   /**
+    * Primary font family. Used for most interface text except headers.
+    */
+   --font-primary: "Noto Sans Mono", monospace;
+
+   /**
+    * Default background color. This is lightened in some contexts for contrast.
+    */
+   --color-background: #121212;
+
+
+   /**
+    * Primary accent color.
+    */
+   --color-accent: #af2bdb;
+
+   /**
+    * An accent color to use for things that you're supposed to notice.
+    *
+    * - Unread message notifications.
+    * - New message pill in channel/thread.
+    */
+   /*--color-accent-notice: #f7892a;*/
+   --color-accent-notice: #cc9322;
+
+   /**
+    * The accent color used for AV-related statuses (e.g. the mute/deafen icons, the "LIVE" status indicator.
+    */
+   --color-accent-av: #e50b2c;
+
+   /**
+    * Width between bordered panes in the UI.
+    */
+   --pane-gap-width: 20px;
+
+   /**
+    * Width of the pane borders.
+    */
+   --pane-border-width: 2px;
+
+   /**
+    * Primary border radius.
+    */
+   --pane-border-radius: 5px;
+
+   /**
+    * Subtle border radius (nested panes).
+    */
+   --pane-border-radius-subtle: 3px;
+
+   /**
+    * Time for mouse over transitions to apply. Set to 0 to disable.
+    */
+   --pane-transition-time: 0.2s;
+
+   /**
+    * Whether to display the gift button.
+    *
+    * Valid values: none, block;
+    */
+   --display-message-button-gift: none;
+
+   /**
+    * Whether to display the gif button.
+    *
+    * Valid values: none, block;
+    */
+   --display-message-button-gif: none;
+
+   /**
+    * Whether to display the sticker button.
+    *
+    * Valid values: none, block;
+    */
+   --display-message-button-sticker: block;
+
+   /**
+    * Whether to display the emoji button.
+    *
+    * Valid values: none, block;
+    */
+   --display-message-button-emoji: block;
+
+   /**
+    * Whether to display the apps button.
+    *
+    * Valid values: none, block;
+    */
+   --display-message-button-apps: none;
+
+   /**
+    * Color used for the borders between panels.
+    *
+    * Default: 0x40 transparency white.
+    */
+   /*--color-panel-border: #ffffff40;*/
+
+   /**
+    * Color used for the title of panels.
+    *
+    * Default: 0x60 transparency white.
+    */
+   /*--color-panel-title: #ffffff60;*/
+
+   /**
+    * Color used for subtle borders (nested panels).
+    *
+    * Default: 0x30 transparency white.
+    */
+   /*--color-panel-border-subtle: #ffffff30 */
+}
+
+/* BEGIN THEME CODE -- Beyond this barrier, you are on your own. */
+
+:root {
+	--background-base-lowest: var(--color-background);
+	--background-base-low: var(--color-background);
+	--background-base-lower: var(--color-background);
+	--background-message-hover: color-mix(in srgb, var(--color-background) 95%, white);
+	--text-brand: var(--color-accent);
+	--button-filled-brand-background: var(--color-accent);
+	--wt-text-theme-border-inactive: var(--color-panel-border, #ffffff40);
+	--wt-text-theme-border-inactive-title: var(--color-panel-title, #ffffff60);
+	--wt-text-theme-border-subtle: var(--color-panel-border-subtle, #ffffff30);
+	--wt-text-theme-accent-bright: color-mix(in srgb, var(--color-accent) 60%, white);
+	--wt-text-theme-accent-bg: color-mix(in srgb, var(--wt-text-theme-accent-bright) 20%, transparent);
+	--wt-text-theme-accent-bg-more: color-mix(in srgb, var(--wt-text-theme-accent-bright) 40%, transparent);
+	--wt-text-theme-code-bg: color-mix(in srgb, var(--color-background) 90%, white);
+}
+
+.theme-dark {
+	--background-base-lowest: var(--color-background);
+	--background-base-low: var(--color-background);
+	--background-base-lower: var(--color-background);
+	--brand-500: var(--color-accent);
+	--background-message-hover: color-mix(in srgb, var(--color-background) 95%, white);
+	--text-brand: var(--color-accent);
+}
+
+.theme-darker {
+	--background-base-lowest: var(--color-background);
+	--background-base-low: var(--color-background);
+	--background-base-lower: var(--color-background);
+	--brand-500: var(--color-accent);
+	--bg-brand: var(--color-accent);
+	--background-message-hover: color-mix(in srgb, var(--color-background) 95%, white);
+	--text-brand: var(--color-accent);
+}
+
+::selection {
+	background: var(--wt-text-theme-accent-bg-more);
+}
+
+/* section TITLE BAR ADJUSTMENT */
+
+/* Title bar thing at the top of the window. */
+div.bar_c38106 {
+  display: var(--display-title-bar);
+}
+
+/* root content window -- really not sure if this does anything but figured it's best to align it with the top of the window. */
+div.content_c48ade {
+  margin-top: calc(-1 * var(--title-bar-v-offset));
+}
+
+/* Server info pane. */
+div.sidebarList_c48ade {
+  margin-top: calc(-1 * var(--title-bar-v-offset));
+}
+
+/* Main page, everything to the right of the server info pane. */
+div.page_c48ade {
+  margin-top: calc(-1 * var(--title-bar-v-offset));
+  height: calc(100% + var(--title-bar-v-offset))
+}
+
+/* section LESS CIRCLES MORE ROUNDED SQUARES */
+
+/* Message avatars. */
+img.avatar_c19a55 {
+  border-radius: 5%;
+}
+
+/* avatars in friend list */
+.avatar__0a06e {
+	border-radius: 5%;
+}
+
+.avatar__0a06e > svg > foreignObject {
+	mask: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22><rect width=%2232%22 height=%2232%22 rx=%222.6%22 ry=%222.6%22 fill=%22white%22 /></svg>');
+}
+
+/* Small avatars in VC list.*/
+div.userAvatar__55bab {
+	border-radius: 5%;
+}
+
+/* reply avatars WHY ARE THESE ALL DIFFERENT */
+img.replyAvatar_c19a55 {
+	border-radius: 5%;
+}
+
+/* user status avatar */
+div.avatarWrapper__37e49 > div.avatar__37e49 svg foreignObject {
+  mask: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22><rect width=%2240%22 height=%2240%22 rx=%223.2%22 ry=%223.2%22 fill=%22white%22 /></svg>');
+}
+
+/* Server icons */
+nav.guilds_c48ade div.blobContainer_e5445c svg foreignObject {
+  /* wtf discord */
+  mask: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22><rect width=%2240%22 height=%2240%22 rx=%223.2%22 ry=%223.2%22 fill=%22white%22 /></svg>');
+}
+
+/* Server member list */
+div.memberInner__5d473 svg foreignObject {
+	mask: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22><rect width=%2232%22 height=%2232%22 rx=%222.6%22 ry=%222.6%22 fill=%22white%22 /></svg>');
+}
+
+/* section NEW MESSAGE PILL */
+
+div.divider__5126c:has(span.unreadPill__908e2) {
+	border: none !important;
+	background-image: repeating-linear-gradient(
+	  to right,
+	  transparent 0px,
+	  transparent 1px,
+	  var(--color-accent-notice) 1px,
+	  var(--color-accent-notice) 7px,
+	  transparent 7px,
+	  transparent 16px
+	) !important;
+	height: var(--pane-border-width);
+	margin-right: 5.3em;
+}
+
+div.divider__5126c:has(span.unreadPill__908e2) .content__908e2 {
+        color: var(--color-accent-notice);
+	position: relative;
+	left: 2.65em;
+}
+
+span.unreadPill__908e2 {
+	font-size: 14px;
+	font-weight: var(--font-weight-extrabold);
+	color: var(--color-accent-notice);
+	background-color: unset;
+	margin-right: -5em;
+}
+
+span.unreadPill__908e2::before {
+	content: "[\00a0";
+}
+
+span.unreadPill__908e2::after {
+	content: "\00a0]";
+}
+
+svg.unreadPillCap__908e2 {
+	display: none;
+}
+
+/* section DIVIDER */
+
+div.divider__5126c[role="separator"] {
+	border: none;
+	height: var(--pane-border-width);
+	background-image: repeating-linear-gradient(
+	  to right,
+	  transparent 0px,
+	  transparent 1px,
+	  var(--wt-text-theme-border-subtle) 1px,
+	  var(--wt-text-theme-border-subtle) 7px,
+	  transparent 7px,
+	  transparent 15px
+	) !important;
+}
+
+div.divider__5126c[role="separator"] .content__908e2 {
+	padding-left: 1em;
+	padding-right: 1em;
+	font-size: 14px;
+}
+
+/* section TEXTUAL UI ELEMENTS */
+
+/* channel # icon */
+section.title_f75fb0 > div.showToolbar__9293f.upperContainer__9293f > div.showToolbar__9293f.children__9293f > .iconWrapper__9293f {
+	display: none;
+}
+
+section.title_f75fb0 > div.showToolbar__9293f.upperContainer__9293f > div.showToolbar__9293f.children__9293f > .titleWrapper__9293f > h1::before {
+	content: "#\00a0";
+	font-size: 24px;
+	font-weight: var(--font-weight-bold);
+}
+
+/* user status panel */
+div.sidebar_c48ade div.buttons__37e49 {
+
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Mute"] {
+	border-radius: 0;
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Mute"].redGlow__67645 {
+	background-color: #00000000;
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Mute"]:hover {
+	background-color: #00000000;
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Mute"] div.contents__201d5 > div {
+	display: none !important;
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Mute"] div.contents__201d5::before {
+	content: "[M]";
+	font-size: 16px;
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Mute"].redGlow__67645 div.contents__201d5::before {
+	color: var(--color-accent-av);
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Mute"].redGlow__67645:hover div.contents__201d5::before {
+	color: color-mix(in srgb, var(--color-accent-av) 60%, black);
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Deafen"] {
+	border-radius: 0;
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Deafen"].redGlow__67645 {
+	background-color: #00000000;
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Deafen"]:hover {
+	background-color: #00000000;
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Deafen"] div.contents__201d5 > div {
+	display: none !important;
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Deafen"] div.contents__201d5::before {
+	content: "[D]";
+	font-size: 16px;
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Deafen"].redGlow__67645 div.contents__201d5::before {
+	color: var(--color-accent-av);
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="Deafen"].redGlow__67645:hover div.contents__201d5::before {
+	color: color-mix(in srgb, var(--color-accent-av) 60%, black);
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="User Settings"] {
+	border-radius: 0;
+	width: 3.5em;
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="User Settings"]:hover {
+	background-color: #00000000;
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="User Settings"] div.contents__201d5 > div {
+	display: none !important;
+}
+
+div.sidebar_c48ade div.buttons__37e49 button[aria-label="User Settings"] div.contents__201d5::before {
+	content: "[CFG]";
+	font-size: 16px;
+}
+
+/* section UI PANING (and paining) */
+
+/* guilds nav */
+
+nav.guilds_c48ade {
+	position: absolute;
+	top: calc(32px - var(--title-bar-v-offset) + var(--pane-gap-width) + 1em);
+	left: 1.40em;
+	z-index: 5;
+	height: 2.5em;
+	transition: height var(--pane-transition-time) ease;
+	background: #00000000;
+	border: none;
+}
+
+nav.guilds_c48ade:hover {
+	height: 80%;
+	background: var(--color-background);
+	border-right: var(--pane-border-width) solid var(--wt-text-theme-border-inactive);
+	border-bottom: var(--pane-border-width) solid var(--wt-text-theme-border-inactive);
+}
+
+/* server info sidebar */
+.sidebarList_c48ade {
+	margin-left: var(--pane-gap-width);
+	margin-top: calc(var(--pane-gap-width) - var(--title-bar-v-offset)) !important;
+	margin-right: calc(0.5 * var(--pane-gap-width));
+	height: calc(100% - var(--pane-gap-width) - 0.5 * var(--pane-gap-width) - 4em);
+	border: var(--pane-border-width) solid var(--wt-text-theme-border-inactive) !important;
+	border-radius: var(--pane-border-radius);
+	transition: border-color var(--pane-transition-time) ease;
+}
+
+.sidebarList_c48ade:hover {
+	border-color: var(--color-accent);
+}
+
+.sidebarList_c48ade .animatedContainer_f37cb1:has(.bannerImage_f37cb1) {
+	display: var(--display-server-banner);
+	margin-top: 4.3em;
+}
+
+.sidebarList_c48ade .animatedContainer_f37cb1:has(.bannerImage_f37cb1) ~ .headerGlass_f37cb1 {
+	display: none;
+}
+
+.sidebarList_c48ade .animatedContainer_f37cb1:has(.bannerImage_f37cb1) ~ .headerEllipseBackdrop_f37cb1 {
+	display: none;
+}
+
+.sidebarList_c48ade .animatedContainer_f37cb1:has(.bannerImage_f37cb1) ~ .headerEllipseForeground_f37cb1 {
+	display: none;
+}
+
+.sidebarList_c48ade:has(.bannerImage_f37cb1) .scroller__629e4 ul > div:nth-of-type(1) {
+	display: none;
+}
+
+.sidebarList_c48ade .header_f37cb1 {
+	border: none;
+	color: #00000000;
+	border-radius: 0;
+	height: 4.3em;
+	padding-left: 4.6em;
+}
+
+.sidebarList_c48ade:has(.bannerImage_f37cb1) .header_f37cb1 {
+	margin-bottom: var(--server-banner-v-offset);
+}
+
+/* DM sidebar */
+
+nav.privateChannels__35e86 > .searchBar__35e86 {
+	padding-left: 4.6em;
+	height: 4.3em;
+}
+
+nav.privateChannels__35e86 > .scroller__99e7c {
+	margin-bottom: 0 !important;
+}
+
+/* top bar */
+
+section.title_f75fb0 {
+	margin: calc(0.5 * var(--pane-gap-width));
+	margin-top: var(--pane-gap-width);
+	margin-right: var(--pane-gap-width);
+	width: unset;
+	padding: 0;
+	border: var(--pane-border-width) solid var(--wt-text-theme-border-inactive);
+	border-radius: var(--pane-border-radius);
+	background-color: var(--color-background) !important;
+	transition: border-color var(--pane-transition-time) ease;
+	height: calc(100% - var(--pane-gap-width) - 0.5 * var(--pane-gap-width));
+}
+
+section.title_f75fb0:hover {
+	border-color: var(--color-accent);
+}
+
+/* toolbar */
+
+.toolbar__9293f {
+	border-left: var(--pane-border-width) solid var(--wt-text-theme-border-inactive);
+}
+
+
+.search__49676 {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	min-width: 18.0em;
+	border-left: var(--pane-border-width) solid var(--wt-text-theme-border-inactive);
+	border-radius: 0;
+	padding-left: var(--pane-gap-width);
+}
+
+.search__97492 {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border-left: var(--pane-border-width) solid var(--wt-text-theme-border-inactive);
+	border-radius: 0;
+}
+
+.searchBar__97492 {
+	height: 100%;
+	width: 100%;
+	border: none;
+	align-items: center;
+}
+
+.searchBar__97492 .DraftEditor-root {
+	padding-top: 0.4em;
+	font-size: 16px;
+}
+
+/* popouts */
+
+.messagesPopoutWrap__45690 {
+	background-color: var(--color-background);
+	border: var(--pane-border-width) solid var(--wt-text-theme-border-inactive);
+	border-radius: var(--pane-border-radius);
+	top: 1.22em;
+	left: 3.05em;
+	transition: border-color var(--pane-transition-time) ease;
+}
+
+.messagesPopoutWrap__45690:hover {
+	border-color: var(--color-accent);
+}
+
+.messagesPopoutWrap__45690 div {
+	background-color: var(--color-background);
+	border: none;
+}
+
+.messagesPopoutWrap__45690 .header__45690 {
+	border-bottom: var(--pane-border-width) solid var(--wt-text-theme-border-inactive) !important;
+}
+
+
+/* channel content */
+main.chatContent_f75fb0 {
+	margin: calc(0.5 * var(--pane-gap-width));
+	margin-bottom: var(--pane-gap-width);
+	padding: calc(0.5 * var(--pane-gap-width));
+	padding-bottom: 0px;
+	border: var(--pane-border-width) solid var(--wt-text-theme-border-inactive);
+	border-radius: var(--pane-border-radius);
+	background-color: var(--color-background);
+	transition: border-color var(--pane-transition-time) ease;
+	margin-right: var(--pane-gap-width);
+}
+
+.content_f75fb0:has(.membersWrap_c8ffbb) main.chatContent_f75fb0 {
+	margin-right: calc(0.5 * var(--pane-gap-width));
+}
+
+main.chatContent_f75fb0::before {
+	content: "Channel";
+	color: var(--wt-text-theme-border-inactive-title);
+	background: var(--color-background);
+	font-size: 16px;
+	font-weight: var(--font-weight-bold);
+	position: absolute;
+	width: 5em;
+	height: 20px;
+	top: -11px;
+	left: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: color var(--pane-transition-time) ease;
+}
+
+
+main.chatContent_f75fb0:hover {
+	border-color: var(--color-accent);
+}
+main.chatContent_f75fb0:hover::before {
+	color: var(--color-accent);
+}
+
+main.chatContent_f75fb0 div.messagesWrapper__36d07 *::-webkit-scrollbar {
+	width: 12px;
+}
+
+main.chatContent_f75fb0 div.scroller__36d07 {
+	margin-right: -12px;
+	padding-right: 5px;
+}
+
+/* @mentioned messages */
+div.message__5126c.mentioned__5126c {
+	border: 1px solid var(--color-accent-notice);
+	border-radius: var(--pane-border-radius);
+	background: var(--color-background);
+	padding-bottom: 15px;
+	padding-top: 15px;
+	margin-bottom: 10px;
+}
+
+div.message__5126c.mentioned__5126c::before {
+	content: "@";
+	color: var(--color-accent-notice);
+	background: var(--color-background);
+	font-size: 20px;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	top: -11px;
+	left: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* channel bottom bar */
+
+form:has(div.channelBottomBarArea_f75fb0) {
+	margin-left: calc(-0.5 * var(--pane-gap-width));
+	margin-right: calc(-0.5 * var(--pane-gap-width));
+	padding: 0;
+}
+
+div.channelTextArea_f75fb0 {
+	margin-bottom: 0;
+	border-top: var(--pane-border-width) solid var(--wt-text-theme-border-inactive);
+	border-radius: 0;
+	background: #00000000;
+}
+
+div.channelTextArea_f75fb0 div.textArea__74017 {
+	min-height: 4em;
+	display: flex;
+	align-items: center;
+}
+
+div.channelTextArea_f75fb0 div.textArea__74017 > div {
+	width: 100%;
+}
+
+div.channelTextArea_f75fb0 div.scrollableContainer__74017 {
+	background-color: #00000000;
+}
+
+div.channelTextArea_f75fb0 div.inner__74017 div.attachWrapper__0923f {
+	height: 4em;
+	display: flex;
+	align-items: center;
+}
+
+div.channelTextArea_f75fb0 div.inner__74017 div.buttons__74017 {
+	height: 4em;
+}
+
+/* member list */
+div.container_c8ffbb:has(> aside.membersWrap_c8ffbb) {
+	border: none;
+}
+
+aside.membersWrap_c8ffbb {
+	border: var(--pane-border-width) solid var(--wt-text-theme-border-inactive);
+	border-radius: var(--pane-border-radius);
+	margin: calc(0.5 * var(--pane-gap-width));
+	margin-bottom: var(--pane-gap-width);
+	margin-right: var(--pane-gap-width);
+	padding-top: 10px;
+	background-color: var(--color-background);
+	transition: border-color var(--pane-transition-time) ease;
+	min-height: 0;
+}
+
+aside.membersWrap_c8ffbb:hover {
+	border-color: var(--color-accent);
+}
+
+aside.membersWrap_c8ffbb::before {
+	content: "Members";
+	color: var(--wt-text-theme-border-inactive-title);
+	background: var(--color-background);
+	font-size: 16px;
+	font-weight: var(--font-weight-bold);
+	position: absolute;
+	width: 5em;
+	height: 20px;
+	top: -11px;
+	left: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: color var(--pane-transition-time) ease;
+}
+
+aside.membersWrap_c8ffbb:hover::before {
+	color: var(--color-accent);
+}
+
+.members_c8ffbb {
+	width: 100%;
+	padding-right: 0px !important;
+}
+
+div[role="list"]:has(.member__5d473) {
+	width: 100%;
+}
+
+.member__5d473 {
+	border-radius: 0;
+	width: 100%;
+	margin: 0;
+	padding: 0.1em;
+}
+
+/* user status  */
+section.panels_c48ade {
+	background: var(--color-background);
+	border: var(--pane-border-width) solid var(--wt-text-theme-border-inactive);
+	border-radius: var(--pane-border-radius);
+	position: absolute;
+	left: var(--pane-gap-width);
+	bottom: var(--pane-gap-width);
+	width: calc(100% - var(--pane-gap-width) - 0.5 * var(--pane-gap-width));
+	min-height: 4em;
+	padding: 3px;
+	transition: border-color var(--pane-transition-time) ease;
+}
+
+section.panels_c48ade:hover {
+	border-color: var(--color-accent);
+}
+
+/* activities */
+.activityPanelContainer__49094 {
+	padding: calc(0.5 * var(--pane-gap-width));
+	border: var(--pane-border-width) solid var(--wt-text-theme-border-inactive);
+	border-radius: var(--pane-border-radius);
+	margin: calc(0.5 * var(--pane-gap-width));
+	margin-right: var(--pane-gap-width);
+}
+
+/* section EMBEDS */
+article.embed__623de {
+	background: var(--color-background-low);
+	border-color: var(--wt-text-theme-border-subtle);
+	border-width: var(--pane-border-width);
+	border-radius: var(--pane-border-radius-subtle);
+	margin-top: 0.7em;
+	padding-top: 3px;
+}
+
+article.embed__623de div.embedProvider__623de {
+	position: absolute;
+	background: var(--color-background);
+	top: -17px;
+	left: 7px;
+	font-size: 14px;
+	padding-left: 5px;
+	padding-right: 5px;
+	max-width: 17em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-weight: var(--font-weight-bold);
+}
+
+.message__5126c:hover article.embed__623de div.embedProvider__623de {
+	background: var(--background-message-hover);
+}
+
+/* have to override code block styling for embeds, because it's just too much with very small blocks */
+article.embed__623de code.hljs {
+	border: 1px solid var(--wt-text-theme-border-subtle);
+	background-color: #00000000;
+	padding: 5px;
+	margin-top: 10px;
+}
+
+article.embed__623de code.hljs::before {
+	display: none;
+}
+
+/* section IMAGE ATTACHMENTS -- this was a big failure. Maybe you can fix it :) */
+
+/* TODO: this kind of fucked up embed image attachments in some cases where the image is small */
+
+div.message__5126c div.visualMediaItemContainer_f4758a {
+	overflow: visible;
+	border-radius: 0;
+}
+
+.message__5126c .visualMediaItemContainer_f4758a .oneByOneGrid_f4758a {
+	overflow: visible;
+	border-radius: 0;
+	margin-top: 0.7em;
+}
+
+.message__5126c .imageContainer__0f481 {
+	overflow: visible;
+}
+
+.message__5126c .mosaicItem__6c706  {
+	overflow: visible;
+}
+
+.message__5126c .imageWrapper {
+	overflow: visible;
+	padding: 0.5em;
+	padding-top: 0.8em;
+	border: var(--pane-border-width) solid var(--wt-text-theme-border-subtle);
+	border-radius: var(--pane-border-radius);
+}
+
+.message__5126c .imageWrapper::before {
+	content: "<img />";
+	padding-left: 5px;
+	padding-right: 5px;
+	color: var(--wt-text-theme-border-inactive-title);
+	position: absolute;
+	font-size: 14px;
+	font-weight: var(--font-weight-bold);
+	background-color: var(--color-background);
+	top: -0.6em;
+	z-index: 5;
+	overflow: visible;
+}
+
+.message__5126c:hover .imageWrapper::before {
+	background-color: var(--background-message-hover);
+}
+
+/* section REACTIONS */
+
+div.reactions__23977 {
+	border: var(--pane-border-width) solid var(--wt-text-theme-border-subtle);
+	border-radius: var(--pane-border-radius-subtle);
+	padding: 0;
+	margin-top: 5px;
+	margin-bottom: 0px;
+}
+
+div.reaction__23977 {
+	margin: 0;
+	margin-right: 5px;
+	background: #00000000;
+	border-radius: 0;
+}
+
+div.reaction__23977.reactionMe__23977 {
+	border: none;
+	background-color: var(--wt-text-theme-accent-bg);
+}
+
+div.reaction__23977.reactionMe__23977 div.reactionCount__23977 {
+	color: var(--wt-text-theme-accent-bright);
+}
+
+div.reactions__23977 div.reactionBtn__23977 {
+	margin: 0;
+	background: #00000000;
+	border: none;
+	border-radius: 0;
+	margin-left: -5px;
+}
+
+div.reactions__23977 div.reactionBtn__23977 > svg {
+	display: none;
+}
+
+div.reactions__23977 div.reactionBtn__23977::before {
+	content: "[+]";
+	display: block;
+	font-weight: var(--font-weight-bold);
+}
+
+/* Correct incorrect sizing when message has reactions */
+div.message__5126c:has(div.reactions__23977) {
+	padding-bottom: 5px;
+}
+
+/* section MISC */
+
+/* Little right angle message spine thing that connects messages to replies. */
+div.repliedMessageClickableSpine_c19a55 {
+	border-top-left-radius: 0;
+}
+
+/* the ones in pinned messages are different?? */
+.messageSpine_c19a55::before {
+	border-top-left-radius: 0;
+}
+
+span.edited_c19a55 {
+	/* kind of a bad hack */
+	font-size: 0;
+}
+
+/* (edited) tag */
+span.edited_c19a55::before {
+	content: "[edited]";
+	font-size: 12px;
+	position: relative;
+	top: -2px;
+}
+
+/* mentions, generally */
+span.mention {
+	border: none;
+	background-color: var(--wt-text-theme-accent-bg);
+	color: var(--wt-text-theme-accent-bright);
+}
+
+/* banish Activity */
+
+div.members_c8ffbb > div.content__99f8c h3:nth-of-type(1) {
+	display: var(--display-member-activity);
+}
+
+div.members_c8ffbb > div.content__99f8c h3:nth-of-type(1) + div {
+	display: var(--display-member-activity);
+}
+
+/* inline code */
+
+code.inline {
+	font-size: 16px !important;
+	border: 0;
+	background-color: var(--wt-text-theme-code-bg);
+	border-radius: 0 !important;
+	font-weight: var(--font-weight-bold);
+	color: #ffffffc0;
+}
+
+/* code blocks */
+
+code.hljs {
+	border: var(--pane-border-width) solid var(--wt-text-theme-border-subtle);
+	background-color: #00000000;
+	padding: 10px;
+	padding-top: 15px;
+	margin-bottom: 5px;
+	margin-top: -10px;
+}
+
+code.hljs::before {
+	content: "{code}";
+	font-weight: var(--font-weight-bold);
+	position: absolute;
+	color: var(--wt-text-theme-border-inactive-title);
+	background-color: var(--color-background);
+	top: -7px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+div.codeActions__75297 div[role="button"] svg path {
+	display: none !important;
+}
+
+div.codeActions__75297 div[role="button"]::before {
+	content: "[copy]";
+	color: var(--wt-text-theme-border-inactive-title);
+	font-size: 14px;
+	font-weight: var(--font-weight-bold);
+	margin-right: -10px;
+}
+
+div.codeActions__75297 div[role="button"]:hover::before {
+	color: color-mix(in srgb, var(--wt-text-theme-border-inactive-title) 70%, white);
+}
+
+/* blockquotes */
+.blockquoteContainer__75297 .blockquoteDivider__75297 {
+	border-radius: 0;
+	background-color: var(--wt-text-theme-border-inactive-title);
+	width: 3px;
+	min-width: unset;
+	max-width: 3px;
+}
+
+.jumpToPresentBar__0f481 {
+	background-color: #00000000;
+	border: none;
+	border-radius: unset;
+	min-width: unset;
+	padding: 0;
+	margin-left: auto;
+	margin-right: 0;
+	margin-bottom: 0;
+}
+
+/* jump to present bar */
+.jumpToPresentBar__0f481 .barButtonMain__0f481 {
+	display: none;
+}
+
+.jumpToPresentBar__0f481 button {
+	background-color: #00000000;
+	border: none;
+}
+
+.jumpToPresentBar__0f481 button:hover {
+	background-color: #00000000;
+	border: none;
+	color: var(--color-accent);
+}
+
+.jumpToPresentBar__0f481 button:active {
+	background-color: #00000000;
+}
+
+
+.jumpToPresentBar__0f481 button::before {
+	content: "[";
+}
+
+.jumpToPresentBar__0f481 button::after {
+	content: "]";
+}
+
+/* safety settings notice */
+.safetySettingsNotice__9536c {
+	border: var(--pane-border-width) solid var(--wt-text-theme-border-inactive);
+	border-radius: var(--pane-border-radius);
+}

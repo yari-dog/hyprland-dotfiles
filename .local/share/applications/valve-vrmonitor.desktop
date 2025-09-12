@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=vrmonitor
+Comment=Application for the vrmonitor subcomponent of SteamVR
+Exec="/home/yari/.local/share/Steam/steamapps/common/SteamVR/bin/linux64/../vrmonitor.sh" %U
+Icon=application-x-vrmonitor
+Terminal=false
+Type=Application
+Categories=Game;
+MimeType=application/x-vrmonitor
+	

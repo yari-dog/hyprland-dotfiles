@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=HITMAN World of Assassination
+Comment=Play this game on Steam
+Exec=steam steam://rungameid/1659040
+Icon=steam_icon_1659040
+Terminal=false
+Type=Application
+Categories=Game;
