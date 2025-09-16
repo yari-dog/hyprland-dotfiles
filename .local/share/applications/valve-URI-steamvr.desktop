@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=URI-steamvr
+Comment=URI handler for steamvr://
+Exec="/home/yari/.local/share/Steam/steamapps/common/SteamVR/bin/linux64/vrurlhandler" %U
+Terminal=false
+Type=Application
+Categories=Game;
+MimeType=x-scheme-handler/steamvr
+	

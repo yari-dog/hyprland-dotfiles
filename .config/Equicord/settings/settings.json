@@ -786,9 +786,6 @@
         "IrcColors": {
             "enabled": false
         },
-        "JumpToStart": {
-            "enabled": false
-        },
         "Jumpscare": {
             "enabled": false,
             "imageSource": "https://github.com/Equicord/Equibored/blob/main/misc/troll.gif?raw=true",
@@ -833,7 +830,7 @@
             "enabled": false
         },
         "NewPluginsManager": {
-            "enabled": true
+            "enabled": false
         },
         "NoAppsAllowed": {
             "enabled": false
@@ -860,7 +857,7 @@
             "enabled": true
         },
         "OnePingPerDM": {
-            "enabled": false
+            "enabled": true
         },
         "PlatformSpoofer": {
             "enabled": false,
@@ -1011,7 +1008,7 @@
             "enabled": false
         },
         "UserMessagesPronouns": {
-            "enabled": true,
+            "enabled": false,
             "showSelf": true,
             "pronounsFormat": "LOWERCASE"
         },
@@ -1158,7 +1155,9 @@
         },
         "EquicordHelper": {
             "enabled": true,
-            "hideClanBadges": false
+            "hideClanBadges": false,
+            "disableCreateDMButton": false,
+            "disableDMContextMenu": false
         },
         "BetterBlockedUsers": {
             "enabled": false
@@ -1407,6 +1406,12 @@
         },
         "TimelessClips": {
             "enabled": false
+        },
+        "JumpTo": {
+            "enabled": false
+        },
+        "ToneIndicators": {
+            "enabled": false
         }
     },
     "notifications": {
@@ -1419,7 +1424,7 @@
         "authenticated": false,
         "url": "https://cloud.equicord.org",
         "settingsSync": true,
-        "settingsSyncVersion": 1757260687870
+        "settingsSyncVersion": 1758049129333
     },
     "userCssVars": {},
     "eagerPatches": false,

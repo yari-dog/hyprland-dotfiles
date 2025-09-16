@@ -1,0 +1,105 @@
+/* ==UserStyle==
+@name           x.com
+@namespace      github.com/openstyles/stylus
+@version        1.0.0
+@description    A new userstyle
+@author         Me
+==/UserStyle== */
+@-moz-document domain("x.com") {
+  .r-sdzlij,
+  .r-1867qdf,
+  .r-1q9bdsx {
+    border-radius: 0px !important;
+  }
+  /* good little puppy its ok to be abused you was made for it dont whine now its ok it will be over soon dont cry or try to escape this your life now */
+  [role="banner"] [role="heading"],
+  [aria-label="Account menu"],
+  [aria-label="Lists"],
+  [aria-label="Grok"],
+  [aria-label="Search and explore"],
+  [role="link"][href$="communities"],
+  [role="link"][href="/i/verified-orgs-signup"],
+  [role="link"][href="/i/premium_sign_up"],
+  [role="link"][href="/jobs"],
+  [role="link"][href*="ads.x.com"],
+  [role="link"][href="/settings/monetization"] {
+    display: none !important;
+  }
+  div[data-testid="GrokDrawer"] {
+    display: none !important;
+  }
+  div.css-175oi2r > button[aria-label="Grok actions"] {
+    display: none !important;
+  }
+  /* Display ONLY search bar/profile media in right column */
+  [data-testid="sidebarColumn"] {
+    visibility: hidden;
+  }
+  [role="search"],
+  [aria-label="Image"] {
+    visibility: visible;
+  }
+
+  [role="search"] {
+    background: #000;
+  }
+
+  [aria-label="Add a GIF"] {
+    display: none;
+  }
+
+  [aria-label="Search Twitter"]
+    > .css-1dbjc4n:nth-of-type(2)
+    > .css-1dbjc4n
+    > .css-1dbjc4n {
+    display: none;
+  }
+  /* Explicitly show accounts */
+  [aria-label="Search Twitter"]
+    > .css-1dbjc4n:nth-of-type(2)
+    > .css-1dbjc4n
+    > .css-1dbjc4n:last-of-type {
+    display: block;
+  }
+
+  [aria-label="Primary"][role="navigation"] > * > div {
+    width: 100%;
+    justify-content: left;
+  }
+
+  body::after {
+    content: "You are worthless puppy meat";
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff4d4d;
+    text-shadow:
+      0 0 5px #ff4d4d,
+      0 0 10px #ff1a1a,
+      0 0 20px #ff0000;
+    animation: glow 1.5s ease-in-out infinite alternate;
+    z-index: 9999;
+  }
+
+  @keyframes glow {
+    from {
+      text-shadow:
+        0 0 5px #ff4d4d,
+        0 0 10px #ff1a1a,
+        0 0 20px #ff0000;
+    }
+    to {
+      text-shadow:
+        0 0 10px #ff8080,
+        0 0 20px #ff4d4d,
+        0 0 30px #ff1a1a;
+    }
+  }
+  * {
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+    box-shadow: none !important;
+  }
+}

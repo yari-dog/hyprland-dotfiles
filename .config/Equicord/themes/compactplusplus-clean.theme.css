@@ -6,132 +6,142 @@
  */
 
 :root {
-    /* Message header width */
-    --compactplusplus-header-width: 160px;
-    /* Message header left margin */
-    --compactplusplus-header-margin-left: 10px;
-    /* Message header right margin */
-    --compactplusplus-header-margin-right: 5px;
-    /* Message container right margin */
-    --compactplusplus-message-margin-right: 15px;
-    /* Message avatar size */
-    --compactplusplus-avatar-size: 1.25rem;
-    /* Reply link line offset */
-    --compactplusplus-reply-link-line-offset: 30px;
-    /* UserMessagesPronouns pronouns width */
-    --compactplusplus-pronoundb-pronouns-width: 45px;
+  /* Message header width */
+  --compactplusplus-header-width: 250px;
+  /* Message header left margin */
+  --compactplusplus-header-margin-left: 15px;
+  /* Message header right margin */
+  --compactplusplus-header-margin-right: 10px;
+  /* Message container right margin */
+  --compactplusplus-message-margin-right: 15px;
+  /* Message avatar size */
+  --compactplusplus-avatar-size: 1.65rem;
+  /* Reply link line offset */
+  --compactplusplus-reply-link-line-offset: 20px;
+  /* UserMessagesPronouns pronouns width */
+  --compactplusplus-pronoundb-pronouns-width: 55px;
+}
+
+.contents_c19a55 {
+  margin-right: calc(var(--compactplusplus-header-width) - 45px);
 }
 
 /* Message container */
 .compact_c19a55.wrapper_c19a55 {
-    padding-left: 0;
-    padding-right: var(--compactplusplus-message-margin-right) !important;
+  padding-left: 0;
+  padding-right: var(--compactplusplus-message-margin-right) !important;
 }
 
 /* Message content container */
 .compact_c19a55 .contents_c19a55 {
-    margin-left: 0;
-    padding-left: 0;
-    text-indent: 0;
+  margin-left: 0;
+  padding-left: 0;
+  text-indent: 0;
 }
 
 /* Message markup first header 1 */
 .compact_c19a55 .markup__75297 h1:first-child,
 .compact_c19a55 .markup__75297 h2:first-child,
 .compact_c19a55 .markup__75297 h3:first-child {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 /* Message markup last header 1 */
 .compact_c19a55 .markup__75297 h1:last-child,
 .compact_c19a55 .markup__75297 h2:last-child,
 .compact_c19a55 .markup__75297 h3:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 /* Message markup first unordered list */
 .compact_c19a55 .markup__75297 ul:first-child,
 .compact_c19a55 .markup__75297 ol:first-child {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 /* Message markup list last element */
 .compact_c19a55 .markup__75297 li:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 /* Message markup unordered list */
 .compact_c19a55 .markup__75297 ul,
 .compact_c19a55 .markup__75297 ol {
-    margin-bottom: 4px;
+  margin-bottom: 4px;
 }
 
 /* Message markup last unordered list */
 .compact_c19a55 .markup__75297 ul:last-child,
 .compact_c19a55 .markup__75297 ol:last-child {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 /* Message markup code block */
 .compact_c19a55 .markup__75297 pre {
-    max-width: unset;
+  max-width: unset;
 }
 
 /* Message markup quote container */
 .compact_c19a55 .markup__75297 blockquote {
-    padding-right: 0;
-    max-width: unset;
-    min-width: 0;
+  padding-right: 0;
+  max-width: unset;
+  min-width: 0;
 }
 
 /* Message markup quote line */
 .compact_c19a55 .blockquoteContainer__75297 .blockquoteDivider__75297 {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 /* Message header container */
 .compact_c19a55 .header_c19a55,
 .zalgo_c19a55.gradient_c19a55.compact_c19a55 .header_c19a55 {
-    margin-left: var(--compactplusplus-header-margin-left);
-    position: absolute;
-    display: flex;
-    width: var(--compactplusplus-header-width);
-    align-items: center;
+  margin-left: var(--compactplusplus-header-margin-left);
+  position: absolute;
+  display: flex;
+  width: var(--compactplusplus-header-width);
+  align-items: center;
+  justify-content: right;
 }
 
 /* Message timestamp */
 .compact_c19a55 .header_c19a55 .timestamp_c19a55 {
-    flex-grow: 1;
-    margin-right: 0;
-    text-align: left;
-    white-space: nowrap;
-    width: unset;
+  margin-right: 0;
+  text-align: right;
+  white-space: nowrap;
+  width: unset;
+  position: absolute;
+  left: calc(
+    100vw - var(--custom-guild-sidebar-width) - 120px -
+      var(--compactplusplus-header-width)
+  );
 }
 
 /* Hidden message timestamp */
 .compact_c19a55 .timestampVisibleOnHover_c19a55 {
-    opacity: unset;
+  opacity: unset;
 }
 
 /* Message avatar */
 .compact_c19a55 .avatar_c19a55 {
-    position: static;
-    width: var(--compactplusplus-avatar-size);
-    height: var(--compactplusplus-avatar-size);
-    margin-left: 5px;
-    margin-right: 0;
-    z-index: auto;
-    order: 1;
+  position: static;
+  width: var(--compactplusplus-avatar-size);
+  height: var(--compactplusplus-avatar-size);
+  margin-left: 5px;
+  margin-right: 0;
+  z-index: auto;
+  order: 1;
 }
 
 /* Message username container */
 .compact_c19a55 .headerText_c19a55 {
-    display: flex;
-    align-items: center;
-    margin-left: 5px;
-    margin-right: 0;
-    min-width: 0;
-    order: 2;
+  display: flex;
+  /* flex-grow: 1; */
+  /* justify-content: right; */
+  margin-left: 5px;
+  margin-right: 0;
+  min-width: 0;
+  order: 2;
 }
 
 /* Message tag */
@@ -139,177 +149,192 @@
 .compact_c19a55 .systemTag__44492,
 .compact_c19a55 .systemTag_df2817,
 .compact_c19a55 .clanTagChiplet_c19a55 {
-    display: none;
+  display: none;
 }
 
 /* Message username */
 .compact_c19a55 .headerText_c19a55 .username_c19a55 {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    /* Gradient glow is absolute, we want it relative to the username */
-    position: relative;
-    flex-shrink: 1;
-    z-index: 1;
-    order: 2;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  /* Gradient glow is absolute, we want it relative to the username */
+  position: relative;
+  flex-shrink: 1;
+  z-index: 1;
+  order: 2;
 }
 
 /* Message username on hover */
 .mouse-mode .compact_c19a55 .headerText_c19a55 .username_c19a55:hover,
-.mouse-mode .compact__44492.usernameContainer__44492> :nth-child(2):hover,
-.mouse-mode .compact_df2817.usernameContainer_df2817> :nth-child(2):hover,
+.mouse-mode .compact__44492.usernameContainer__44492 > :nth-child(2):hover,
+.mouse-mode .compact_df2817.usernameContainer_df2817 > :nth-child(2):hover,
 .mouse-mode .compact_c19a55 .headerText_c19a55 .timestamp_c19a55:hover {
-    /* Show full username */
-    overflow: visible;
-    /* Not background-color to override gradient */
-    background: var(--background-secondary-alt);
-    outline: 3px solid var(--background-secondary-alt);
-    border-radius: 3px;
-    /* Disable gradient, as it's in conflict with the full username popup */
-    -webkit-text-fill-color: unset;
-    color: var(--custom-gradient-color-1);
+  /* Show full username */
+  overflow: visible;
+  /* Not background-color to override gradient */
+  background: var(--background-secondary-alt);
+  outline: 3px solid var(--background-secondary-alt);
+  border-radius: 3px;
+  /* Disable gradient, as it's in conflict with the full username popup */
+  -webkit-text-fill-color: unset;
+  color: var(--custom-gradient-color-1);
 }
 
 /* Role and new member icon container */
 .compact_c19a55 .headerText_c19a55 :has(.newMemberBadge_f80704),
 .compact_c19a55 .headerText_c19a55 :has(.roleIcon_c19a55) {
-    order: 1;
+  order: 1;
 }
 
 /* Role icon */
 .compact_c19a55 .roleIcon_c19a55,
 .compact_c19a55 .newMemberBadge_f80704 {
-    display: none;
+  display: none;
 }
 
 /* Message tag in username container (like the Remix tag) */
 .compact_c19a55 .headerText_c19a55 .botTag_c19a55 {
-    order: 0;
+  order: 0;
 }
 
 /* Silent message icon container */
 .compact_c19a55 .badgesContainer_c19a55 {
-    margin-right: 0;
-    margin-left: 5px;
+  margin-right: 0;
+  margin-left: 5px;
 }
 
 /* Silent message icon */
 .compact_c19a55 .badge__6ba43 {
-    display: none;
+  display: none;
 }
 
 /* Silent message icon */
 /* Message content */
 .compact_c19a55 .contents_c19a55 .messageContent_c19a55 {
-    display: block;
+  display: block;
 }
 
 /* Message content */
 .compact_c19a55 .contents_c19a55 .messageContent_c19a55,
-.compact_c19a55>.container_b7e1cb,
+.compact_c19a55 > .container_b7e1cb,
 .compact__44492.messageContent__44492,
 .compact__44492.footerContainer__44492,
 .compact_c19a55 .channelTextArea__5126c,
 .compact_c19a55 .operations_bab751,
 .embedCard_df2817.compact_df2817 {
-    margin-left: calc(var(--compactplusplus-header-width) + var(--compactplusplus-header-margin-left) + var(--compactplusplus-header-margin-right));
+  margin-left: calc(
+    var(--compactplusplus-header-width) +
+      var(--compactplusplus-header-margin-left) +
+      var(--compactplusplus-header-margin-right)
+  );
 }
 
 /* Message content of message with empty embed container */
-.compact_c19a55:has(> .container_b7e1cb:empty) .contents_c19a55 .messageContent_c19a55 {
-    /* Make the content have at least 1 line of height, in case the client
+.compact_c19a55:has(> .container_b7e1cb:empty)
+  .contents_c19a55
+  .messageContent_c19a55 {
+  /* Make the content have at least 1 line of height, in case the client
      * renders a message with no content and no embeds */
-    /* This has happened before with the 2023-09_soundmoji experiment. If a
+  /* This has happened before with the 2023-09_soundmoji experiment. If a
      * client without the experiment enabled received a message with only a
      * soundmoji, it got rendered without content. */
-    min-height: 1lh;
+  min-height: 1lh;
 }
 
 /* AutoMod blocked message notice container */
 .blockedNoticeContainer_b7ab2c.compact_b7ab2c {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 /* AutoMod blocked message accessories container */
 .ephemeralAccessories_b7ab2c.compact_b7ab2c {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 /* System message container */
 .compact__235ca {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 /* System message content */
-.compact_c19a55.systemMessage__5126c>.contents_c19a55>.messageContent_c19a55,
+.compact_c19a55.systemMessage__5126c
+  > .contents_c19a55
+  > .messageContent_c19a55,
 .compact_c19a55 .blockedSystemMessage__7a70a {
-    margin-left: calc(var(--compactplusplus-header-width) + var(--compactplusplus-header-margin-left) - var(--compactplusplus-avatar-size));
+  margin-left: calc(
+    var(--compactplusplus-header-width) +
+      var(--compactplusplus-header-margin-left) -
+      var(--compactplusplus-avatar-size)
+  );
 }
 
 /* System message icon */
 .compact__235ca .iconContainer__235ca {
-    margin-right: var(--compactplusplus-header-margin-right);
-    width: var(--compactplusplus-avatar-size);
-    height: var(--compactplusplus-avatar-size);
-    align-items: center;
-    padding-top: 0;
+  margin-right: var(--compactplusplus-header-margin-right);
+  width: var(--compactplusplus-avatar-size);
+  height: var(--compactplusplus-avatar-size);
+  align-items: center;
+  padding-top: 0;
 }
 
 /* Non-AutoMod system message container */
 .compact__235ca.container__235ca:not(.mainContainer__44492) {
-    align-items: center;
+  align-items: center;
 }
 
 /* Message reply container */
 .compact_c19a55 .repliedMessage_c19a55 {
-    margin-left: calc(var(--compactplusplus-header-margin-left) + var(--compactplusplus-reply-link-line-offset));
+  margin-left: calc(
+    var(--compactplusplus-header-margin-left) +
+      var(--compactplusplus-reply-link-line-offset)
+  );
 }
 
 /* Vencord UserMessagesPronouns plugin: Reply pronouns */
 .compact_c19a55 .repliedMessage_c19a55 .timestamp_c19a55 {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 /* Message thread link line next to the message content */
 .compact_c19a55.hasThread_c19a55 .contents_c19a55::before {
-    display: none;
+  display: none;
 }
 
 /* Message thread link line next to the message embed container */
 .compact_c19a55 .spine__9271d {
-    display: none;
+  display: none;
 }
 
 /* Message thread embed */
 .compact_c19a55 .container__9271d {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 /* Edit input */
 .compact_c19a55 .channelTextArea__5126c {
-    width: unset;
+  width: unset;
 }
 
 /* Vencord MessageLatency plugin: Latency indicator */
-.compact_c19a55 .headerText_c19a55>svg {
-    flex-shrink: 0;
-    margin-right: 5px !important;
+.compact_c19a55 .headerText_c19a55 > svg {
+  flex-shrink: 0;
+  margin-right: 5px !important;
 }
 
 /* Vencord UserMessagesPronouns plugin: Message pronouns */
 .compact_c19a55 .headerText_c19a55 .timestamp_c19a55 {
-    width: var(--compactplusplus-pronoundb-pronouns-width);
-    max-width: fit-content;
-    flex-grow: 1;
-    flex-shrink: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    order: 1;
-    margin-left: -2px;
-    margin-right: 4px;
+  width: var(--compactplusplus-pronoundb-pronouns-width);
+  max-width: fit-content;
+  flex-grow: 1;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  order: 1;
+  margin-left: -2px;
+  margin-right: 4px;
 }
 
 /* Vencord UserMessagesPronouns plugin: Message pronouns on hover */
 .compact_c19a55 .headerText_c19a55 .timestamp_c19a55:hover {
-    width: unset;
+  width: unset;
 }
