@@ -1412,19 +1412,23 @@
         },
         "ToneIndicators": {
             "enabled": false
+        },
+        "AudioPlayerAPI": {
+            "enabled": true
         }
     },
     "notifications": {
         "timeout": 5000,
         "position": "bottom-right",
         "useNative": "not-focused",
-        "logLimit": 50
+        "logLimit": 50,
+        "missed": true
     },
     "cloud": {
         "authenticated": false,
         "url": "https://cloud.equicord.org",
         "settingsSync": true,
-        "settingsSyncVersion": 1758049129333
+        "settingsSyncVersion": 1758538474268
     },
     "userCssVars": {},
     "eagerPatches": false,

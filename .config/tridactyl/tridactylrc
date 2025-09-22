@@ -70,3 +70,5 @@ bind , scrollpage -0.5
 unbind <C-e>
 unbind <C-b>
 unbind <C-h>
+
+bind qq <Esc>
