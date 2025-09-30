@@ -481,9 +481,6 @@
         "SilentTyping": {
             "enabled": false
         },
-        "SortFriendRequests": {
-            "enabled": false
-        },
         "SpotifyControls": {
             "enabled": true,
             "hoverControls": false
@@ -1187,9 +1184,6 @@
         "RandomVoice": {
             "enabled": false
         },
-        "Remix": {
-            "enabled": false
-        },
         "Equissant": {
             "enabled": false
         },
@@ -1415,6 +1409,12 @@
         },
         "AudioPlayerAPI": {
             "enabled": true
+        },
+        "SortFriends": {
+            "enabled": false
+        },
+        "RemixRevived": {
+            "enabled": false
         }
     },
     "notifications": {
@@ -1428,7 +1428,7 @@
         "authenticated": false,
         "url": "https://cloud.equicord.org",
         "settingsSync": true,
-        "settingsSyncVersion": 1758538474268
+        "settingsSyncVersion": 1759251664480
     },
     "userCssVars": {},
     "eagerPatches": false,
