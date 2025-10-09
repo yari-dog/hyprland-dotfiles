@@ -901,9 +901,6 @@
         "SoundBoardLogger": {
             "enabled": false
         },
-        "StatusWhilePlaying": {
-            "enabled": false
-        },
         "SteamStatusSync": {
             "enabled": false
         },
@@ -1415,6 +1412,9 @@
         },
         "RemixRevived": {
             "enabled": false
+        },
+        "AutoDNDWhilePlaying": {
+            "enabled": false
         }
     },
     "notifications": {
@@ -1428,7 +1428,7 @@
         "authenticated": false,
         "url": "https://cloud.equicord.org",
         "settingsSync": true,
-        "settingsSyncVersion": 1759251664480
+        "settingsSyncVersion": 1759598938801
     },
     "userCssVars": {},
     "eagerPatches": false,
