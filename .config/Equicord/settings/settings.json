@@ -12,8 +12,6 @@
         "gruvbox-material.theme.css",
         "autohide.css",
         "system24.theme.css",
-        "midnight.css",
-        "system24.css",
         "compactplusplus-clean.theme.css"
     ],
     "enabledThemeLinks": [],
@@ -595,7 +593,8 @@
             "dms": true,
             "billing": true,
             "gift": true,
-            "emojiList": true
+            "emojiList": true,
+            "serverBoost": true
         },
         "DecodeBase64": {
             "enabled": false
@@ -854,7 +853,12 @@
             "enabled": true
         },
         "OnePingPerDM": {
-            "enabled": true
+            "enabled": true,
+            "ignoreUsers": "",
+            "channelToAffect": "both_dms",
+            "allowMentions": false,
+            "allowEveryone": false,
+            "alwaysPlaySound": false
         },
         "PlatformSpoofer": {
             "enabled": false,
@@ -1151,7 +1155,9 @@
             "enabled": true,
             "hideClanBadges": false,
             "disableCreateDMButton": false,
-            "disableDMContextMenu": false
+            "disableDMContextMenu": false,
+            "noMirroredCamera": false,
+            "removeActivitySection": false
         },
         "BetterBlockedUsers": {
             "enabled": false
@@ -1246,7 +1252,8 @@
             "boopLink": "https://github.com/Equicord/Equibored/raw/main/sounds/soggy/honk.wav?raw=true",
             "tooltipText": "the soggy",
             "imageLink": "https://soggy.cat/img/soggycat.webp",
-            "songVolume": 0.25
+            "songVolume": 0.25,
+            "boopVolume": 0.2
         },
         "SplitLargeMessages": {
             "enabled": false
@@ -1415,6 +1422,21 @@
         },
         "AutoDNDWhilePlaying": {
             "enabled": false
+        },
+        "ListenBrainzRPC": {
+            "enabled": false
+        },
+        "RecentDMSwitcher": {
+            "enabled": false
+        },
+        "StatusWhileActive": {
+            "enabled": false
+        },
+        "VoiceButtons": {
+            "enabled": false
+        },
+        "ZipPreview": {
+            "enabled": false
         }
     },
     "notifications": {
@@ -1428,7 +1450,7 @@
         "authenticated": false,
         "url": "https://cloud.equicord.org",
         "settingsSync": true,
-        "settingsSyncVersion": 1759598938801
+        "settingsSyncVersion": 1760277231321
     },
     "userCssVars": {},
     "eagerPatches": false,

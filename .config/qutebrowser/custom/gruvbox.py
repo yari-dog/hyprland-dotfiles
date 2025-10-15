@@ -139,11 +139,12 @@ c.colors.downloads.error.fg = bright_red
 c.colors.hints.fg = bg0
 
 # Background color for hints.
-c.colors.hints.bg = "rgba(250, 191, 47, 200)"  # bright_yellow
+c.colors.hints.bg = bright_purple  # bright_yellow
 
 # Font color for the matched part of hints.
 c.colors.hints.match.fg = bg4
 
+c.hints.border = bright_purple
 ### Keyhint widget
 
 # Text color for the keyhint widget.
@@ -154,6 +155,11 @@ c.colors.keyhint.suffix.fg = fg0
 
 # Background color of the keyhint widget.
 c.colors.keyhint.bg = bg0
+
+c.keyhint.delay = 0
+
+c.keyhint.radius = 0
+
 
 ### Messages
 
@@ -289,13 +295,13 @@ c.colors.tabs.indicator.error = bright_red
 c.colors.tabs.odd.fg = fg2
 
 # Background color of unselected odd tabs.
-c.colors.tabs.odd.bg = bg2
+c.colors.tabs.odd.bg = bg0
 
 # Foreground color of unselected even tabs.
 c.colors.tabs.even.fg = c.colors.tabs.odd.fg
 
 # Background color of unselected even tabs.
-c.colors.tabs.even.bg = bg3
+c.colors.tabs.even.bg = bg0
 
 # Foreground color of selected odd tabs.
 c.colors.tabs.selected.odd.fg = bg0

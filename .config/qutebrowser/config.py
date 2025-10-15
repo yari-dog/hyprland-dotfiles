@@ -13,16 +13,16 @@ c.input.spatial_navigation = False
 c.qt.workarounds.disable_hangouts_extension = True
 
 c.scrolling.bar = "when-searching"
-c.scrolling.smooth = True
+c.scrolling.smooth = False
 
 # c.statusbar.show = "in-mode"
 c.statusbar.show = "always"
 
-c.tabs.background = False
+c.tabs.background = True
 c.tabs.last_close = "close"
-c.tabs.min_width = 600
-c.tabs.max_width = 800
-c.tabs.position = "right"
+# c.tabs.min_width = 600
+# c.tabs.max_width = 800
+c.tabs.position = "top"
 c.tabs.select_on_remove = "last-used"
 c.tabs.show = "multiple"
 
